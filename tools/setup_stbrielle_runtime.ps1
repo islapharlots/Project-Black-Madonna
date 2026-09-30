@@ -64,14 +64,35 @@ foreach ($Dll in $RuntimeDlls) {
 
     Write-Host "[GET] $Dll"
 
+    $DownloadedOk = $false
+
     try {
         Invoke-WebRequest -UseBasicParsing -Uri $Url -OutFile $Temp
+        $DownloadedOk = $true
     } catch {
+        Write-Host "[WARN] Invoke-WebRequest failed for $Dll: $($_.Exception.Message)"
+    }
+
+    if (-not $DownloadedOk) {
         if (Test-Path $Temp) {
             Remove-Item -Force $Temp
         }
 
-        Write-Error "Could not download $Dll from the official dhewm3 dependency bundle. $($_.Exception.Message)"
+        $Curl = Get-Command curl.exe -ErrorAction SilentlyContinue
+        if ($Curl) {
+            Write-Host "[TRY] curl.exe $Dll"
+            & $Curl.Source -L --fail --silent --show-error $Url -o $Temp
+            if (($LASTEXITCODE -eq 0) -and (Test-Path $Temp)) {
+                $DownloadedOk = $true
+            }
+        }
+    }
+
+    if (-not $DownloadedOk) {
+        if (Test-Path $Temp) {
+            Remove-Item -Force $Temp
+        }
+        throw "Could not download $Dll from the official dhewm3 dependency bundle."
     }
 
     $Item = Get-Item $Temp
@@ -84,6 +105,19 @@ foreach ($Dll in $RuntimeDlls) {
     $Downloaded++
 }
 
+$Missing = @()
+foreach ($Dll in $RuntimeDlls) {
+    $Path = Join-Path $Destination $Dll
+    if (-not (Test-Path $Path)) {
+        $Missing += $Dll
+    }
+}
+
+if ($Missing.Count -gt 0) {
+    throw "Runtime setup incomplete. Missing: $($Missing -join ', ')"
+}
+
 Write-Host ""
 Write-Host "Runtime dependencies ready. Existing: $Existing  Downloaded: $Downloaded"
+Write-Host "Verified: $($RuntimeDlls.Count) DLLs present in $Destination"
 Write-Host ""
