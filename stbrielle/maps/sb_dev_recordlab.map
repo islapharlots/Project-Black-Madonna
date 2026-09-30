@@ -96,12 +96,40 @@ brushDef3
 "classname" "target_stbrielle_record"
 "name" "sb_set_record"
 "target" "sb_confirm_light"
+"target1" "sb_add_awareness"
 "record_key" "sb_test_door"
 "record_mode" "set"
 "record_value" "1"
 "record_once" "0"
 "record_debug" "1"
 "origin" "-160 0 32"
+}
+{
+"classname" "target_stbrielle_record"
+"name" "sb_add_awareness"
+"record_key" "sb_awareness"
+"record_mode" "add"
+"record_value" "1"
+"record_once" "0"
+"record_debug" "1"
+"origin" "-120 64 32"
+}
+{
+"classname" "stbrielle_awareness_director"
+"name" "sb_awareness_director"
+"tier1_target" "sb_awareness_light"
+"fire_current_on_spawn" "1"
+"awareness_debug" "1"
+"origin" "0 64 32"
+}
+{
+"classname" "light"
+"name" "sb_awareness_light"
+"origin" "150 100 180"
+"_color" "0.55 0.15 0.75"
+"light" "220"
+"start_off" "1"
+"noshadows" "1"
 }
 {
 "classname" "light"
