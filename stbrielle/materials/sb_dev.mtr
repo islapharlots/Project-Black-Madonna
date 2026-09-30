@@ -20,6 +20,12 @@ _white
 	}
 }
 
+_tracemodel
+{
+	noDraw
+	noShadows
+}
+
 console
 {
 	noShadows
