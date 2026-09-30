@@ -1,0 +1,23 @@
+// Minimal original development materials for St. Brielle.
+// These use engine-provided internal images so the Record lab does not require
+// any commercial Skin Deep texture files.
+
+textures/stbrielle/dev_wall
+{
+	qer_editorimage	_white
+	diffusemap		_white
+	{
+		map			_white
+		rgb			0.12
+	}
+}
+
+textures/stbrielle/dev_floor
+{
+	qer_editorimage	_white
+	diffusemap		_white
+	{
+		map			_white
+		rgb			0.08
+	}
+}
