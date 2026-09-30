@@ -22,7 +22,6 @@ _white
 
 _tracemodel
 {
-	noDraw
 	noShadows
 }
 
@@ -200,6 +199,26 @@ ui/assets/scrollbar_up
 }
 
 ui/assets/scrollbar_down
+{
+	noShadows
+	{
+		blend		blend
+		map			_white
+		rgba		0
+	}
+}
+
+guis/assets/scrollbarv
+{
+	noShadows
+	{
+		blend		blend
+		map			_white
+		rgba		0
+	}
+}
+
+guis/assets/scrollbar_thumb
 {
 	noShadows
 	{
