@@ -23,3 +23,19 @@ entityDef target_stbrielle_recordcheck {
 	"editor_bool record_once"		"Remove after a successful activation."
 	"editor_bool record_debug"		"Print the check result to the console."
 }
+
+// Invisible per-map Awareness interpreter. Place one in any map that should
+// react to the global sb_awareness value.
+entityDef stbrielle_awareness_director {
+	"spawnclass"					"idStBrielleAwarenessDirector"
+	"editor_displayFolder"			"St. Brielle/System"
+	"editor_usage"					"Activates tier-specific map entities when persistent Awareness changes."
+	"editor_var tier0_target"		"Entity name to activate for Dormant Awareness. Add numeric suffixes for more targets."
+	"editor_var tier1_target"		"Entity name to activate for Noticed Awareness. Add numeric suffixes for more targets."
+	"editor_var tier2_target"		"Entity name to activate for Observing Awareness. Add numeric suffixes for more targets."
+	"editor_var tier3_target"		"Entity name to activate for Correcting Awareness. Add numeric suffixes for more targets."
+	"editor_var tier4_target"		"Entity name to activate for Rupture Awareness. Add numeric suffixes for more targets."
+	"editor_int check_interval_ms"	"Polling interval in milliseconds. Default 250."
+	"editor_bool fire_current_on_spawn" "Fire the current tier once after map spawn. Default 1."
+	"editor_bool awareness_debug"	"Print Awareness tier transitions to the console."
+}
