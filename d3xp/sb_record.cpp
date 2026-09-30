@@ -1,0 +1,254 @@
+#include "sys/platform.h"
+
+#include "Game_local.h"
+#include "sb_record.h"
+
+static const char *SB_KEY_CAMPAIGN_VERSION = "sb_campaign_version";
+static const char *SB_KEY_CYCLE = "sb_cycle";
+static const char *SB_KEY_AWARENESS = "sb_awareness";
+static const char *SB_KEY_RECORD_STABILITY = "sb_record_stability";
+
+void idStBrielleRecord::EnsureDefaults() {
+	if ( !Has( SB_KEY_CAMPAIGN_VERSION ) ) {
+		SetInt( SB_KEY_CAMPAIGN_VERSION, CAMPAIGN_VERSION );
+	}
+	if ( !Has( SB_KEY_CYCLE ) ) {
+		SetInt( SB_KEY_CYCLE, CYCLE_WATER );
+	}
+	if ( !Has( SB_KEY_AWARENESS ) ) {
+		SetInt( SB_KEY_AWARENESS, 0 );
+	}
+	if ( !Has( SB_KEY_RECORD_STABILITY ) ) {
+		SetInt( SB_KEY_RECORD_STABILITY, 100 );
+	}
+}
+
+bool idStBrielleRecord::Has( const char *key ) {
+	return key && key[0] && gameLocal.persistentLevelInfo.FindKey( key ) != NULL;
+}
+
+idStr idStBrielleRecord::GetString( const char *key, const char *defaultValue ) {
+	if ( !key || !key[0] ) {
+		return defaultValue ? defaultValue : "";
+	}
+	return gameLocal.persistentLevelInfo.GetString( key, defaultValue ? defaultValue : "" );
+}
+
+int idStBrielleRecord::GetInt( const char *key, int defaultValue ) {
+	if ( !key || !key[0] ) {
+		return defaultValue;
+	}
+	idStr fallback = va( "%d", defaultValue );
+	return gameLocal.persistentLevelInfo.GetInt( key, fallback.c_str() );
+}
+
+bool idStBrielleRecord::GetBool( const char *key, bool defaultValue ) {
+	if ( !key || !key[0] ) {
+		return defaultValue;
+	}
+	return gameLocal.persistentLevelInfo.GetBool( key, defaultValue ? "1" : "0" );
+}
+
+void idStBrielleRecord::SetString( const char *key, const char *value ) {
+	if ( !key || !key[0] ) {
+		gameLocal.Warning( "StBrielleRecord: refusing to set an empty key." );
+		return;
+	}
+
+	if ( idStr::Icmpn( key, "sb_", 3 ) != 0 ) {
+		gameLocal.Warning( "StBrielleRecord: key '%s' does not use the recommended sb_ prefix.", key );
+	}
+
+	gameLocal.persistentLevelInfo.Set( key, value ? value : "" );
+}
+
+void idStBrielleRecord::SetInt( const char *key, int value ) {
+	if ( !key || !key[0] ) {
+		gameLocal.Warning( "StBrielleRecord: refusing to set an empty key." );
+		return;
+	}
+	gameLocal.persistentLevelInfo.SetInt( key, value );
+}
+
+void idStBrielleRecord::SetBool( const char *key, bool value ) {
+	if ( !key || !key[0] ) {
+		gameLocal.Warning( "StBrielleRecord: refusing to set an empty key." );
+		return;
+	}
+	gameLocal.persistentLevelInfo.SetBool( key, value );
+}
+
+int idStBrielleRecord::AddInt( const char *key, int delta ) {
+	const int newValue = GetInt( key, 0 ) + delta;
+	SetInt( key, newValue );
+	return newValue;
+}
+
+bool idStBrielleRecord::ToggleBool( const char *key ) {
+	const bool newValue = !GetBool( key, false );
+	SetBool( key, newValue );
+	return newValue;
+}
+
+void idStBrielleRecord::Clear( const char *key ) {
+	if ( !key || !key[0] ) {
+		return;
+	}
+	gameLocal.persistentLevelInfo.Delete( key );
+}
+
+idStBrielleRecord::cycle_t idStBrielleRecord::GetCycle() {
+	int value = GetInt( SB_KEY_CYCLE, CYCLE_WATER );
+	if ( value < CYCLE_INK ) {
+		value = CYCLE_INK;
+	} else if ( value > CYCLE_CODE ) {
+		value = CYCLE_CODE;
+	}
+	return static_cast<cycle_t>( value );
+}
+
+void idStBrielleRecord::SetCycle( cycle_t cycle ) {
+	int value = static_cast<int>( cycle );
+	if ( value < CYCLE_INK ) {
+		value = CYCLE_INK;
+	} else if ( value > CYCLE_CODE ) {
+		value = CYCLE_CODE;
+	}
+	SetInt( SB_KEY_CYCLE, value );
+}
+
+int idStBrielleRecord::GetAwareness() {
+	return GetInt( SB_KEY_AWARENESS, 0 );
+}
+
+int idStBrielleRecord::AddAwareness( int amount ) {
+	int value = GetAwareness() + amount;
+	if ( value < 0 ) {
+		value = 0;
+	} else if ( value > 100 ) {
+		value = 100;
+	}
+	SetInt( SB_KEY_AWARENESS, value );
+	return value;
+}
+
+CLASS_DECLARATION( idTarget, idTarget_StBrielleRecord )
+	EVENT( EV_Activate, idTarget_StBrielleRecord::Event_Activate )
+END_CLASS
+
+void idTarget_StBrielleRecord::Spawn( void ) {
+	idStBrielleRecord::EnsureDefaults();
+}
+
+void idTarget_StBrielleRecord::Event_Activate( idEntity *activator ) {
+	const char *key = spawnArgs.GetString( "record_key", "" );
+	const char *mode = spawnArgs.GetString( "record_mode", "set" );
+	const char *value = spawnArgs.GetString( "record_value", "1" );
+
+	if ( !key || !key[0] ) {
+		gameLocal.Warning( "idTarget_StBrielleRecord '%s' has no record_key.", GetName() );
+		return;
+	}
+
+	if ( idStr::Icmp( mode, "set" ) == 0 ) {
+		idStBrielleRecord::SetString( key, value );
+	} else if ( idStr::Icmp( mode, "add" ) == 0 ) {
+		idStBrielleRecord::AddInt( key, atoi( value ) );
+	} else if ( idStr::Icmp( mode, "toggle" ) == 0 ) {
+		idStBrielleRecord::ToggleBool( key );
+	} else if ( idStr::Icmp( mode, "clear" ) == 0 ) {
+		idStBrielleRecord::Clear( key );
+	} else {
+		gameLocal.Warning( "idTarget_StBrielleRecord '%s' has unknown record_mode '%s'.", GetName(), mode );
+		return;
+	}
+
+	if ( spawnArgs.GetBool( "record_debug", "0" ) ) {
+		gameLocal.Printf( "[ST. BRIELLE RECORD] %s (%s) => '%s'\n",
+			key, mode, idStBrielleRecord::GetString( key, "<missing>" ).c_str() );
+	}
+
+	ActivateTargets( activator );
+
+	if ( spawnArgs.GetBool( "record_once", "1" ) ) {
+		PostEventMS( &EV_Remove, 0 );
+	}
+}
+
+CLASS_DECLARATION( idTarget, idTarget_StBrielleRecordCheck )
+	EVENT( EV_Activate, idTarget_StBrielleRecordCheck::Event_Activate )
+END_CLASS
+
+void idTarget_StBrielleRecordCheck::Spawn( void ) {
+	idStBrielleRecord::EnsureDefaults();
+}
+
+bool idTarget_StBrielleRecordCheck::EvaluateCondition( void ) const {
+	const char *key = spawnArgs.GetString( "record_key", "" );
+	const char *compare = spawnArgs.GetString( "record_compare", "equals" );
+	const char *expected = spawnArgs.GetString( "record_value", "1" );
+
+	if ( !key || !key[0] ) {
+		return false;
+	}
+
+	if ( idStr::Icmp( compare, "exists" ) == 0 ) {
+		return idStBrielleRecord::Has( key );
+	}
+	if ( idStr::Icmp( compare, "missing" ) == 0 ) {
+		return !idStBrielleRecord::Has( key );
+	}
+	if ( idStr::Icmp( compare, "true" ) == 0 ) {
+		return idStBrielleRecord::GetBool( key, false );
+	}
+	if ( idStr::Icmp( compare, "false" ) == 0 ) {
+		return !idStBrielleRecord::GetBool( key, false );
+	}
+
+	const idStr actual = idStBrielleRecord::GetString( key, "" );
+
+	if ( idStr::Icmp( compare, "equals" ) == 0 ) {
+		return idStr::Icmp( actual.c_str(), expected ) == 0;
+	}
+	if ( idStr::Icmp( compare, "not_equals" ) == 0 ) {
+		return idStr::Icmp( actual.c_str(), expected ) != 0;
+	}
+
+	const int actualInt = atoi( actual.c_str() );
+	const int expectedInt = atoi( expected );
+
+	if ( idStr::Icmp( compare, "gt" ) == 0 ) {
+		return actualInt > expectedInt;
+	}
+	if ( idStr::Icmp( compare, "gte" ) == 0 ) {
+		return actualInt >= expectedInt;
+	}
+	if ( idStr::Icmp( compare, "lt" ) == 0 ) {
+		return actualInt < expectedInt;
+	}
+	if ( idStr::Icmp( compare, "lte" ) == 0 ) {
+		return actualInt <= expectedInt;
+	}
+
+	gameLocal.Warning( "idTarget_StBrielleRecordCheck '%s' has unknown record_compare '%s'.", GetName(), compare );
+	return false;
+}
+
+void idTarget_StBrielleRecordCheck::Event_Activate( idEntity *activator ) {
+	const bool passed = EvaluateCondition();
+
+	if ( spawnArgs.GetBool( "record_debug", "0" ) ) {
+		gameLocal.Printf( "[ST. BRIELLE RECORD CHECK] %s => %s\n",
+			spawnArgs.GetString( "record_key", "" ), passed ? "TRUE" : "FALSE" );
+	}
+
+	if ( !passed ) {
+		return;
+	}
+
+	ActivateTargets( activator );
+
+	if ( spawnArgs.GetBool( "record_once", "0" ) ) {
+		PostEventMS( &EV_Remove, 0 );
+	}
+}
