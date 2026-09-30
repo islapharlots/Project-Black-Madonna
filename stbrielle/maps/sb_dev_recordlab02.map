@@ -104,6 +104,23 @@ brushDef3
 "origin" "-160 0 32"
 }
 {
+"classname" "stbrielle_awareness_director"
+"name" "sb_awareness_director"
+"tier1_target" "sb_awareness_persist_light"
+"fire_current_on_spawn" "1"
+"awareness_debug" "1"
+"origin" "0 64 32"
+}
+{
+"classname" "light"
+"name" "sb_awareness_persist_light"
+"origin" "180 100 180"
+"_color" "0.75 0.30 0.90"
+"light" "220"
+"start_off" "1"
+"noshadows" "1"
+}
+{
 "classname" "light"
 "name" "sb_persist_light"
 "origin" "80 0 180"
