@@ -588,6 +588,7 @@
     <ClCompile Include="$(ProjectDir)\..\..\neo\d3xp\bc_mech.cpp" />
     <ClCompile Include="$(ProjectDir)\..\..\neo\d3xp\bc_meta.cpp" />
     <ClCompile Include="..\d3xp\sb_record.cpp" />
+    <ClCompile Include="..\d3xp\sb_awareness.cpp" />
     <ClCompile Include="$(ProjectDir)\..\..\neo\d3xp\bc_mushroom.cpp" />
     <ClCompile Include="$(ProjectDir)\..\..\neo\d3xp\bc_notewall.cpp" />
     <ClCompile Include="$(ProjectDir)\..\..\neo\d3xp\bc_nudgepoint.cpp" />
@@ -933,6 +934,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\d3xp\sb_record.h" />
+    <ClInclude Include="..\d3xp\sb_awareness.h" />
     <ClInclude Include="..\d3xp\bc_algaeball.h" />
     <ClInclude Include="..\d3xp\bc_banana.h" />
     <ClInclude Include="..\d3xp\bc_cassetteplayer.h" />
