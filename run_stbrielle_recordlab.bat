@@ -14,5 +14,5 @@ if not exist "stbrielle.exe" (
 )
 
 echo Compiling St. Brielle Record Laboratory...
-stbrielle.exe +set developer 1 +set si_pure 0 +dmap sb_dev_recordlab +dmap sb_dev_recordlab02 +devmap sb_dev_recordlab
+stbrielle.exe +set developer 1 +set fs_copyfiles 0 +set si_pure 0 +dmap sb_dev_recordlab +dmap sb_dev_recordlab02 +devmap sb_dev_recordlab
 endlocal
