@@ -924,11 +924,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(ProjectDir)\..\solution\idlib.vcxproj">
-      <Project>{0F98DEB8-DB06-381E-AFC5-0AEBBD8813EF}  <Target Name="StBrielleRuntimeDependencies" AfterTargets="Build" Condition="Exists('$(ProjectDir)..\tools\setup_stbrielle_runtime.ps1')">
-    <Message Text="Preparing ST. BRIELLE runtime dependencies..." Importance="high" />
-    <Exec Command="powershell.exe -NoProfile -ExecutionPolicy Bypass -File &quot;$(ProjectDir)..\tools\setup_stbrielle_runtime.ps1&quot; -Destination &quot;$(OutDir)&quot;" ContinueOnError="WarnAndContinue" />
-  </Target>
-</Project>
+      <Project>{0F98DEB8-DB06-381E-AFC5-0AEBBD8813EF}</Project>
       <Name>idlib</Name>
     </ProjectReference>
   </ItemGroup>
@@ -984,4 +980,8 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <Target Name="StBrielleRuntimeDependencies" AfterTargets="Build" Condition="Exists('$(ProjectDir)..\tools\setup_stbrielle_runtime.ps1')">
+    <Message Text="Preparing ST. BRIELLE runtime dependencies..." Importance="high" />
+    <Exec Command="powershell.exe -NoProfile -ExecutionPolicy Bypass -File &quot;$(ProjectDir)..\tools\setup_stbrielle_runtime.ps1&quot; -Destination &quot;$(OutDir)&quot;" ContinueOnError="WarnAndContinue" />
+  </Target>
 </Project>
