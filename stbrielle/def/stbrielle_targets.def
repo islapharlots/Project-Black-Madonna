@@ -1,3 +1,9 @@
+// Minimal standalone engine declarations required before map-specific defs.
+entityDef aas_types {
+	// Intentionally empty for the current non-AI systems laboratory.
+	// Navigation types will be added when the first hostile AI enters the slice.
+}
+
 // St. Brielle project entity declarations.
 // Copy/package this directory into the active game content folder when building
 // the standalone St. Brielle data pack.
