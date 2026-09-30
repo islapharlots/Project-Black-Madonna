@@ -34,7 +34,7 @@
     <ProjectGUID>{8809CAB5-DC54-3203-AC1C-F2C3902335E9}</ProjectGUID>
     <Keyword>Win32Proj</Keyword>
     <Platform>x64</Platform>
-    <ProjectName>monstergame</ProjectName>
+    <ProjectName>stbrielle</ProjectName>
     <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -95,8 +95,8 @@
     <OutDir Condition="'$(Configuration)|$(Platform)'=='DebugAsan|x64'">..\..\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">dhewm3.dir\Debug\</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='DebugAsan|x64'">dhewm3.dir\Debug\</IntDir>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">skindeep</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='DebugAsan|x64'">skindeep</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stbrielle</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='DebugAsan|x64'">stbrielle</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.exe</TargetExt>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='DebugAsan|x64'">.exe</TargetExt>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
@@ -105,13 +105,13 @@
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='DebugAsan|x64'">true</GenerateManifest>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\..\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">dhewm3.dir\Release\</IntDir>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">skindeep</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">stbrielle</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.exe</TargetExt>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</GenerateManifest>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">..\..\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">dhewm3.dir\MinSizeRel\</IntDir>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">skindeep</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">stbrielle</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">.exe</TargetExt>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkIncremental>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">true</GenerateManifest>
@@ -121,9 +121,9 @@
     <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">dhewm3.dir\RelWithDebInfo\</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='RelEpicWithDebInfo|x64'">dhewm3.dir\RelEpicWithDebInfo\</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='DemoRelWithDebInfo|x64'">dhewm3.dir\RelWithDebInfo\</IntDir>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">skindeep</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelEpicWithDebInfo|x64'">skindeep</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='DemoRelWithDebInfo|x64'">skindeep</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">stbrielle</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelEpicWithDebInfo|x64'">stbrielle</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='DemoRelWithDebInfo|x64'">stbrielle</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">.exe</TargetExt>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelEpicWithDebInfo|x64'">.exe</TargetExt>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='DemoRelWithDebInfo|x64'">.exe</TargetExt>
