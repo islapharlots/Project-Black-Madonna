@@ -334,9 +334,9 @@ const int SAVE_WKF_WINIDS[3] = {
 	CSIDL_LOCAL_APPDATA
 };
 const char* SAVE_WKF_SUB_PATHS[3] = {
-	"/skindeep",
-	"/My Games/skindeep",
-	"/skindeep"
+	"/StBrielle",
+	"/My Games/StBrielle",
+	"/StBrielle"
 };
 
 static int GetHomeDir( char *dst, size_t size, saveWindowsKnownFolders_t knownFolder = WKF_DEFAULT )
@@ -360,7 +360,7 @@ static int GetHomeDir( char *dst, size_t size, saveWindowsKnownFolders_t knownFo
 
 	if (bytesFree.QuadPart < minBytes.QuadPart)
 	{
-		idStr errorMsg = idStr::Format("Insufficient disk space for My Documents path %s. Skin deep requires at least %d MB free.", dst, win32.win_mindiskspace.GetInteger());
+		idStr errorMsg = idStr::Format("Insufficient disk space for My Documents path %s. St. Brielle requires at least %d MB free.", dst, win32.win_mindiskspace.GetInteger());
 		MessageBox(NULL, errorMsg.c_str(), "Fatal Error", MB_OK | MB_ICONERROR);
 		exit(1);
 	}
@@ -483,7 +483,7 @@ bool Sys_GetPath(sysPath_t type, idStr &path) {
 					return true;
 				}
 			}
-			Sys_Error("FATAL ERROR:\n\nSkin Deep was unable to access any potential save folder.\nThis may be because of anti-virus or firewall software. For solutions, please visit: https://blendogames.com/skindeep/support.htm");
+			Sys_Error("FATAL ERROR:\n\nSt. Brielle was unable to access any potential save folder.\nThis may be because of anti-virus, firewall, or folder-permission software.");
 			return false;
 		}
 	#endif
@@ -842,7 +842,7 @@ BOOL CALLBACK CrashHandlerProc( HWND hwndDlg, UINT message, WPARAM wParam, LPARA
 		case IDC_DUMP:
 		{
 			// Create the crash dump file
-			HANDLE dmpFile = CreateFile( "skindeep.dmp", GENERIC_WRITE, 0, NULL, CREATE_ALWAYS,
+			HANDLE dmpFile = CreateFile( "stbrielle.dmp", GENERIC_WRITE, 0, NULL, CREATE_ALWAYS,
 				FILE_ATTRIBUTE_NORMAL, NULL );
 			MINIDUMP_EXCEPTION_INFORMATION dumpInfo;
 			dumpInfo.ThreadId = GetCurrentThreadId();
@@ -875,7 +875,7 @@ BOOL CALLBACK CrashHandlerProc( HWND hwndDlg, UINT message, WPARAM wParam, LPARA
 			const int MAX_ZIP_NAME = 1024;
 			char fileName[MAX_ZIP_NAME];
 			
-			idStr::snPrintf( fileName, MAX_ZIP_NAME, "SkinDeep-Crash-%s.zip", dateStr );
+			idStr::snPrintf( fileName, MAX_ZIP_NAME, "StBrielle-Crash-%s.zip", dateStr );
 			OPENFILENAME openInfo;
 			ZeroMemory( &openInfo, sizeof( openInfo ) );
 			openInfo.lStructSize = sizeof( OPENFILENAME );
@@ -907,15 +907,15 @@ BOOL CALLBACK CrashHandlerProc( HWND hwndDlg, UINT message, WPARAM wParam, LPARA
 						if (!success && errorMsg.Length() == 0)
 							errorMsg = "Failed to add crashinfo.txt to zip";
 						
-						success &= AddFileToZip( &zip, "skindeep.pdb" );
+						success &= AddFileToZip( &zip, "stbrielle.pdb" );
 						if (!success && errorMsg.Length() == 0)
 							errorMsg = "Failed to add skindeep.pdb to zip";
 						
-						success &= AddFileToZip( &zip, "skindeep.dmp" );
+						success &= AddFileToZip( &zip, "stbrielle.dmp" );
 						if (!success && errorMsg.Length() == 0)
 							errorMsg = "Failed to add skindeep.dmp to zip";
 						
-						success &= AddFileToZip( &zip, "skindeep.exe" );
+						success &= AddFileToZip( &zip, "stbrielle.exe" );
 						if (!success && errorMsg.Length() == 0)
 							errorMsg = "Failed to add skindeep.exe to zip";
 						
