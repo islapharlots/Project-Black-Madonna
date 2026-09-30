@@ -45,7 +45,7 @@ If you have questions concerning this license or the applicable additional terms
 #endif
 
 // paths
-#define	BASE_GAMEDIR					"base"
+#define	BASE_GAMEDIR					"stbrielle"
 
 // filenames
 #ifndef CONFIG_FILE
@@ -53,7 +53,7 @@ If you have questions concerning this license or the applicable additional terms
 #endif
 
 // base folder where the source code lives
-#define SOURCE_CODE_BASE_FOLDER			"neo"
+#define SOURCE_CODE_BASE_FOLDER			"."
 
 
 // default idnet host address
