@@ -50,11 +50,14 @@ wipeMaterial
 
 textures/bigchars
 {
+	// The commercial font atlas is not part of the public source release.
+	// Keep console glyph quads invisible in the standalone bootstrap instead
+	// of drawing each character as a solid debug rectangle.
 	noShadows
 	{
 		blend		blend
 		map			_white
-		colored
+		rgba		0
 	}
 }
 
