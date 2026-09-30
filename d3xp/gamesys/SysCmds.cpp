@@ -653,13 +653,6 @@ void Cmd_Noclip_f( const idCmdArgs &args ) {
 
 	player->noclip = !player->noclip;
 
-	// St. Brielle campaign development commands
-	cmdSystem->AddCommand( "sb_recordDump",			Cmd_SBRecordDump_f,		CMD_FL_GAME | CMD_FL_CHEAT,	"List all persistent St. Brielle Record keys." );
-	cmdSystem->AddCommand( "sb_recordGet",			Cmd_SBRecordGet_f,		CMD_FL_GAME | CMD_FL_CHEAT,	"Read a St. Brielle Record key." );
-	cmdSystem->AddCommand( "sb_recordSet",			Cmd_SBRecordSet_f,		CMD_FL_GAME | CMD_FL_CHEAT,	"Set a St. Brielle Record key." );
-	cmdSystem->AddCommand( "sb_recordAdd",			Cmd_SBRecordAdd_f,		CMD_FL_GAME | CMD_FL_CHEAT,	"Add an integer to a St. Brielle Record key." );
-	cmdSystem->AddCommand( "sb_recordClear",			Cmd_SBRecordClear_f,		CMD_FL_GAME | CMD_FL_CHEAT,	"Clear one St. Brielle key, or all sb_ keys when called without an argument." );
-
 	//BC
 	if (player->noclip && player->GetAirtics() <= 0)
 	{
@@ -4668,6 +4661,47 @@ void Cmd_SBRecordClear_f( const idCmdArgs &args ) {
 	common->Printf( "Cleared %d St. Brielle Record keys.\n", cleared );
 }
 
+void Cmd_SBAwareness_f( const idCmdArgs &args ) {
+	const int value = idStBrielleRecord::GetAwareness();
+	const idStBrielleRecord::awarenessTier_t tier = idStBrielleRecord::GetAwarenessTier();
+
+	common->Printf( "St. Brielle Awareness: %d/100 (%s)\n",
+		value, idStBrielleRecord::GetAwarenessTierName( tier ) );
+}
+
+void Cmd_SBCycle_f( const idCmdArgs &args ) {
+	if ( args.Argc() < 2 ) {
+		const idStBrielleRecord::cycle_t current = idStBrielleRecord::GetCycle();
+		const char *name = "water";
+		switch ( current ) {
+			case idStBrielleRecord::CYCLE_INK: name = "ink"; break;
+			case idStBrielleRecord::CYCLE_BRASS: name = "brass"; break;
+			case idStBrielleRecord::CYCLE_CODE: name = "code"; break;
+			case idStBrielleRecord::CYCLE_WATER:
+			default: name = "water"; break;
+		}
+		common->Printf( "St. Brielle Cycle: %s (%d)\n", name, static_cast<int>( current ) );
+		return;
+	}
+
+	idStBrielleRecord::cycle_t cycle;
+	if ( idStr::Icmp( args.Argv( 1 ), "ink" ) == 0 || idStr::Icmp( args.Argv( 1 ), "0" ) == 0 ) {
+		cycle = idStBrielleRecord::CYCLE_INK;
+	} else if ( idStr::Icmp( args.Argv( 1 ), "brass" ) == 0 || idStr::Icmp( args.Argv( 1 ), "1" ) == 0 ) {
+		cycle = idStBrielleRecord::CYCLE_BRASS;
+	} else if ( idStr::Icmp( args.Argv( 1 ), "water" ) == 0 || idStr::Icmp( args.Argv( 1 ), "2" ) == 0 ) {
+		cycle = idStBrielleRecord::CYCLE_WATER;
+	} else if ( idStr::Icmp( args.Argv( 1 ), "code" ) == 0 || idStr::Icmp( args.Argv( 1 ), "3" ) == 0 ) {
+		cycle = idStBrielleRecord::CYCLE_CODE;
+	} else {
+		common->Printf( "Usage: sb_cycle <ink|brass|water|code>\n" );
+		return;
+	}
+
+	idStBrielleRecord::SetCycle( cycle );
+	common->Printf( "St. Brielle Cycle set to %s.\n", args.Argv( 1 ) );
+}
+
 // ===============================================================
 
 /*
@@ -4785,6 +4819,15 @@ void idGameLocal::InitConsoleCommands( void ) {
 	cmdSystem->AddCommand( "setActorState",			Cmd_SetActorState_f,		CMD_FL_GAME|CMD_FL_CHEAT,	"Manually sets an actors script state", idGameLocal::ArgCompletion_EntityName );
 #endif
 
+
+	// St. Brielle campaign development commands
+	cmdSystem->AddCommand( "sb_recordDump",			Cmd_SBRecordDump_f,		CMD_FL_GAME | CMD_FL_CHEAT,	"List all persistent St. Brielle Record keys." );
+	cmdSystem->AddCommand( "sb_recordGet",			Cmd_SBRecordGet_f,		CMD_FL_GAME | CMD_FL_CHEAT,	"Read a St. Brielle Record key." );
+	cmdSystem->AddCommand( "sb_recordSet",			Cmd_SBRecordSet_f,		CMD_FL_GAME | CMD_FL_CHEAT,	"Set a St. Brielle Record key." );
+	cmdSystem->AddCommand( "sb_recordAdd",			Cmd_SBRecordAdd_f,		CMD_FL_GAME | CMD_FL_CHEAT,	"Add an integer to a St. Brielle Record key." );
+	cmdSystem->AddCommand( "sb_recordClear",			Cmd_SBRecordClear_f,		CMD_FL_GAME | CMD_FL_CHEAT,	"Clear one St. Brielle key, or all sb_ keys when called without an argument." );
+	cmdSystem->AddCommand( "sb_awareness",			Cmd_SBAwareness_f,		CMD_FL_GAME | CMD_FL_CHEAT,	"Print the hidden St. Brielle Awareness value and tier." );
+	cmdSystem->AddCommand( "sb_cycle",				Cmd_SBCycle_f,			CMD_FL_GAME | CMD_FL_CHEAT,	"Print or set the dominant St. Brielle Cycle." );
 
 	//BC
 	cmdSystem->AddCommand("debugArrow",				Cmd_Debugarrow_f, CMD_FL_GAME, "Draw debug arrow at x y z");
