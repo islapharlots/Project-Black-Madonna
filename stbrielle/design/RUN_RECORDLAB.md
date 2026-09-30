@@ -9,6 +9,9 @@ The two tiny maps verify the campaign feature that matters most before full leve
 3. Walking to the far end loads Map 2.
 4. Map 2 checks `sb_test_door`.
 5. If persistent state survived the transition, the green confirmation light turns on.
+6. Map 1 also increments `sb_awareness` without showing a HUD meter.
+7. The Awareness director reacts to tier 1 with a violet light.
+8. Map 2 independently reacts to the already-persistent Awareness tier, proving that systemic world reactions can follow the player between locations.
 
 The maps are intentionally ugly greybox laboratories.
 
@@ -76,7 +79,7 @@ Console should print a Record mutation for:
 
 `sb_test_door`
 
-The previously disabled blue light should activate.
+The previously disabled blue light should activate. A violet Awareness reaction light should also activate after the director detects that `sb_awareness` crossed into the **Noticed** tier.
 
 Continue to the far end of the room to transition to:
 
@@ -86,7 +89,7 @@ Continue to the far end of the room to transition to:
 
 Walk forward through its first trigger.
 
-The Record check should report TRUE and activate the green light.
+The Record check should report TRUE and activate the green light. The second map's Awareness director should also fire its own violet reaction because the persistent Awareness tier is already **Noticed**.
 
 If the check reports FALSE, dump the Record and verify whether persistent level info survived the transition.
 
