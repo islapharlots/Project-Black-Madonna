@@ -53,6 +53,7 @@ If you have questions concerning this license or the applicable additional terms
 #include "bc_catcage.h"
 #include "bc_glasspiece.h"
 #include "bc_meta.h"
+#include "sb_record.h"
 #include "bc_pirateship.h"
 #include "bc_vrvisor.h"
 #include "renderer/tr_local.h"
@@ -651,6 +652,13 @@ void Cmd_Noclip_f( const idCmdArgs &args ) {
 	}
 
 	player->noclip = !player->noclip;
+
+	// St. Brielle campaign development commands
+	cmdSystem->AddCommand( "sb_recordDump",			Cmd_SBRecordDump_f,		CMD_FL_GAME | CMD_FL_CHEAT,	"List all persistent St. Brielle Record keys." );
+	cmdSystem->AddCommand( "sb_recordGet",			Cmd_SBRecordGet_f,		CMD_FL_GAME | CMD_FL_CHEAT,	"Read a St. Brielle Record key." );
+	cmdSystem->AddCommand( "sb_recordSet",			Cmd_SBRecordSet_f,		CMD_FL_GAME | CMD_FL_CHEAT,	"Set a St. Brielle Record key." );
+	cmdSystem->AddCommand( "sb_recordAdd",			Cmd_SBRecordAdd_f,		CMD_FL_GAME | CMD_FL_CHEAT,	"Add an integer to a St. Brielle Record key." );
+	cmdSystem->AddCommand( "sb_recordClear",			Cmd_SBRecordClear_f,		CMD_FL_GAME | CMD_FL_CHEAT,	"Clear one St. Brielle key, or all sb_ keys when called without an argument." );
 
 	//BC
 	if (player->noclip && player->GetAirtics() <= 0)
@@ -4583,6 +4591,84 @@ void Cmd_DebugEmailGive(const idCmdArgs& args)
 	common->Printf("Giving email: '%s'\n", emailname.c_str());
 	gameLocal.GetLocalPlayer()->GiveEmail(emailname.c_str());
 }
+
+// ========================= ST. BRIELLE =========================
+
+void Cmd_SBRecordDump_f( const idCmdArgs &args ) {
+	common->Printf( "---- ST. BRIELLE RECORD ----\n" );
+
+	int count = 0;
+	for ( int i = 0; i < gameLocal.persistentLevelInfo.GetNumKeyVals(); i++ ) {
+		const idKeyValue *kv = gameLocal.persistentLevelInfo.GetKeyVal( i );
+		if ( !kv || idStr::Icmpn( kv->GetKey().c_str(), "sb_", 3 ) != 0 ) {
+			continue;
+		}
+
+		common->Printf( "%s = %s\n", kv->GetKey().c_str(), kv->GetValue().c_str() );
+		count++;
+	}
+
+	common->Printf( "---- %d St. Brielle keys ----\n", count );
+}
+
+void Cmd_SBRecordGet_f( const idCmdArgs &args ) {
+	if ( args.Argc() < 2 ) {
+		common->Printf( "Usage: sb_recordGet <key>\n" );
+		return;
+	}
+
+	const char *key = args.Argv( 1 );
+	if ( !idStBrielleRecord::Has( key ) ) {
+		common->Printf( "%s = <missing>\n", key );
+		return;
+	}
+
+	common->Printf( "%s = %s\n", key, idStBrielleRecord::GetString( key ).c_str() );
+}
+
+void Cmd_SBRecordSet_f( const idCmdArgs &args ) {
+	if ( args.Argc() < 3 ) {
+		common->Printf( "Usage: sb_recordSet <key> <value>\n" );
+		return;
+	}
+
+	idStBrielleRecord::SetString( args.Argv( 1 ), args.Argv( 2 ) );
+	common->Printf( "%s = %s\n", args.Argv( 1 ), idStBrielleRecord::GetString( args.Argv( 1 ) ).c_str() );
+}
+
+void Cmd_SBRecordAdd_f( const idCmdArgs &args ) {
+	if ( args.Argc() < 3 ) {
+		common->Printf( "Usage: sb_recordAdd <key> <integer>\n" );
+		return;
+	}
+
+	const int value = idStBrielleRecord::AddInt( args.Argv( 1 ), atoi( args.Argv( 2 ) ) );
+	common->Printf( "%s = %d\n", args.Argv( 1 ), value );
+}
+
+void Cmd_SBRecordClear_f( const idCmdArgs &args ) {
+	if ( args.Argc() >= 2 ) {
+		idStBrielleRecord::Clear( args.Argv( 1 ) );
+		common->Printf( "Cleared %s\n", args.Argv( 1 ) );
+		return;
+	}
+
+	int cleared = 0;
+	for ( int i = gameLocal.persistentLevelInfo.GetNumKeyVals() - 1; i >= 0; i-- ) {
+		const idKeyValue *kv = gameLocal.persistentLevelInfo.GetKeyVal( i );
+		if ( !kv || idStr::Icmpn( kv->GetKey().c_str(), "sb_", 3 ) != 0 ) {
+			continue;
+		}
+
+		const idStr key = kv->GetKey();
+		gameLocal.persistentLevelInfo.Delete( key.c_str() );
+		cleared++;
+	}
+
+	common->Printf( "Cleared %d St. Brielle Record keys.\n", cleared );
+}
+
+// ===============================================================
 
 /*
 =================
