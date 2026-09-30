@@ -91,8 +91,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">..\..\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='DebugAsan|x64'">..\..\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)\..\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='DebugAsan|x64'">$(ProjectDir)\..\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">dhewm3.dir\Debug\</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='DebugAsan|x64'">dhewm3.dir\Debug\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stbrielle</TargetName>
@@ -103,21 +103,21 @@
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='DebugAsan|x64'">true</LinkIncremental>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateManifest>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='DebugAsan|x64'">true</GenerateManifest>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\..\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)\..\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">dhewm3.dir\Release\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">stbrielle</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.exe</TargetExt>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</GenerateManifest>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">..\..\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">$(ProjectDir)\..\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">dhewm3.dir\MinSizeRel\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">stbrielle</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">.exe</TargetExt>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkIncremental>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">true</GenerateManifest>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">..\..\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelEpicWithDebInfo|x64'">..\..\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='DemoRelWithDebInfo|x64'">..\..\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">$(ProjectDir)\..\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelEpicWithDebInfo|x64'">$(ProjectDir)\..\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='DemoRelWithDebInfo|x64'">$(ProjectDir)\..\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">dhewm3.dir\RelWithDebInfo\</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='RelEpicWithDebInfo|x64'">dhewm3.dir\RelEpicWithDebInfo\</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='DemoRelWithDebInfo|x64'">dhewm3.dir\RelWithDebInfo\</IntDir>
@@ -170,7 +170,7 @@
     <Link>
       <AdditionalOptions>%(AdditionalOptions)  /machine:x64</AdditionalOptions>
       <AdditionalDependencies>dbghelp.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;Debug\idlib.lib;dependencies/lib/openal32.lib;dependencies/lib/vorbisfile.lib;dependencies/lib/vorbis.lib;dependencies/lib/ogg.lib;dependencies/lib/jpeg.lib;dependencies/lib/zlib1.lib;dependencies/lib/sdl2.lib;winmm.lib;iphlpapi.lib;wsock32.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>{$ProjectDir}\..\..\..\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>Debug</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <ImportLibrary>$(ProjectDir)\../solution/Debug/dhewm3.lib</ImportLibrary>
@@ -224,7 +224,7 @@
     <Link>
       <AdditionalOptions>%(AdditionalOptions)  /machine:x64</AdditionalOptions>
       <AdditionalDependencies>dbghelp.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;Debug\idlib.lib;dependencies/lib/openal32.lib;dependencies/lib/vorbisfile.lib;dependencies/lib/vorbis.lib;dependencies/lib/ogg.lib;dependencies/lib/jpeg.lib;dependencies/lib/zlib1.lib;dependencies/lib/sdl2.lib;winmm.lib;iphlpapi.lib;wsock32.lib;ole32.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>{$ProjectDir}\..\..\..\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>Debug</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <ImportLibrary>$(ProjectDir)\../solution/Debug/dhewm3.lib</ImportLibrary>
@@ -284,7 +284,7 @@
     <Link>
       <AdditionalOptions>%(AdditionalOptions)  /machine:x64</AdditionalOptions>
       <AdditionalDependencies>dbghelp.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;Release\idlib.lib;dependencies/lib/openal32.lib;dependencies/lib/vorbisfile.lib;dependencies/lib/vorbis.lib;dependencies/lib/ogg.lib;dependencies/lib/jpeg.lib;dependencies/lib/zlib1.lib;dependencies/lib/sdl2.lib;winmm.lib;iphlpapi.lib;wsock32.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>{$ProjectDir}\..\..\..\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>No</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <ImportLibrary>$(ProjectDir)\../solution/Release/dhewm3.lib</ImportLibrary>
@@ -336,7 +336,7 @@
     <Link>
       <AdditionalOptions>%(AdditionalOptions)  /machine:x64</AdditionalOptions>
       <AdditionalDependencies>dbghelp.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;MinSizeRel\idlib.lib;dependencies/lib/openal32.lib;dependencies/lib/vorbisfile.lib;dependencies/lib/vorbis.lib;dependencies/lib/ogg.lib;dependencies/lib/jpeg.lib;dependencies/lib/zlib1.lib;dependencies/lib/sdl2.lib;winmm.lib;iphlpapi.lib;wsock32.lib;ole32.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>{$ProjectDir}\..\..\..\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>No</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <ImportLibrary>$(ProjectDir)\../solution/MinSizeRel/dhewm3.lib</ImportLibrary>
@@ -386,7 +386,7 @@
     <Link>
       <AdditionalOptions>%(AdditionalOptions)  /machine:x64</AdditionalOptions>
       <AdditionalDependencies>dbghelp.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;RelWithDebInfo\idlib.lib;dependencies/lib/openal32.lib;dependencies/lib/vorbisfile.lib;dependencies/lib/vorbis.lib;dependencies/lib/ogg.lib;dependencies/lib/jpeg.lib;dependencies/lib/zlib1.lib;dependencies/lib/sdl2.lib;winmm.lib;iphlpapi.lib;wsock32.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>{$ProjectDir}\..\..\..\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>Debug</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <ImportLibrary>$(ProjectDir)\../solution/RelWithDebInfo/dhewm3.lib</ImportLibrary>
@@ -436,7 +436,7 @@
     <Link>
       <AdditionalOptions>%(AdditionalOptions)  /machine:x64</AdditionalOptions>
       <AdditionalDependencies>dbghelp.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;RelWithDebInfo\idlib.lib;dependencies/lib/openal32.lib;dependencies/lib/vorbisfile.lib;dependencies/lib/vorbis.lib;dependencies/lib/ogg.lib;dependencies/lib/jpeg.lib;dependencies/lib/zlib1.lib;dependencies/lib/sdl2.lib;winmm.lib;iphlpapi.lib;wsock32.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>{$ProjectDir}\..\..\..\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>Debug</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <ImportLibrary>$(ProjectDir)\../solution/RelWithDebInfo/dhewm3.lib</ImportLibrary>
@@ -486,7 +486,7 @@
     <Link>
       <AdditionalOptions>%(AdditionalOptions)  /machine:x64</AdditionalOptions>
       <AdditionalDependencies>dbghelp.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;RelWithDebInfo\idlib.lib;dependencies/lib/openal32.lib;dependencies/lib/vorbisfile.lib;dependencies/lib/vorbis.lib;dependencies/lib/ogg.lib;dependencies/lib/jpeg.lib;dependencies/lib/zlib1.lib;dependencies/lib/sdl2.lib;winmm.lib;iphlpapi.lib;wsock32.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>{$ProjectDir}\..\..\..\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>Debug</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <ImportLibrary>$(ProjectDir)\../solution/RelWithDebInfo/dhewm3.lib</ImportLibrary>
