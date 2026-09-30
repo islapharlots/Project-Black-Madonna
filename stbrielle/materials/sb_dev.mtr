@@ -93,3 +93,10 @@ textures/stbrielle/dev_floor
 		rgb			0.08
 	}
 }
+
+textures/common/trigger
+{
+	trigger
+	nonsolid
+	noShadows
+}
