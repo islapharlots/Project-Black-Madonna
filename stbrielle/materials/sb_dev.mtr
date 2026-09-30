@@ -1,3 +1,75 @@
+// -----------------------------------------------------------------------------
+// Engine bootstrap materials.
+//
+// The commercial data package normally supplies these declarations.  St. Brielle
+// defines its own minimal versions using only renderer-generated images so the
+// standalone source build can initialize without Skin Deep assets.
+// -----------------------------------------------------------------------------
+
+_default
+{
+	{
+		map			_default
+	}
+}
+
+_white
+{
+	{
+		map			_white
+	}
+}
+
+console
+{
+	noShadows
+	{
+		blend		blend
+		map			_black
+		rgb			0.08
+		alpha		1
+	}
+}
+
+wipeMaterial
+{
+	noShadows
+	{
+		blend		blend
+		map			_white
+		rgb			0
+		alpha		1
+	}
+}
+
+textures/bigchars
+{
+	noShadows
+	{
+		blend		blend
+		map			_white
+		colored
+	}
+}
+
+lights/defaultPointLight
+{
+	lightFalloffImage	_noFalloff
+	{
+		map			_white
+		colored
+	}
+}
+
+lights/defaultProjectedLight
+{
+	lightFalloffImage	_noFalloff
+	{
+		map			_white
+		colored
+	}
+}
+
 // Minimal original development materials for St. Brielle.
 // These use engine-provided internal images so the Record lab does not require
 // any commercial Skin Deep texture files.
