@@ -3024,6 +3024,7 @@ idPlayer::Init
 void idPlayer::Init( void ) {
 	const char			*value;
 	const idKeyValue	*kv;
+	const bool stbrielleMinimalPlayer = spawnArgs.GetBool( "stbrielle_minimal_player", "0" );
 
 	noclip					= false;
 	godmode					= false;
@@ -3110,7 +3111,9 @@ void idPlayer::Init( void ) {
 	nextHealthTake	= 0;
 	healthTake		= false;
 
-	SetupWeaponEntity();
+	if ( !stbrielleMinimalPlayer ) {
+		SetupWeaponEntity();
+	}
 	currentWeaponSlot = -1;
 	previousWeaponSlot = -1;
 
@@ -3192,22 +3195,28 @@ void idPlayer::Init( void ) {
 		renderEntity.shaderParms[6] = 0.0f;
 	}
 
-	value = spawnArgs.GetString( "bone_hips", "" );
-	hipJoint = animator.GetJointHandle( value );
-	if ( hipJoint == INVALID_JOINT ) {
-		gameLocal.Error( "Joint '%s' not found for 'bone_hips' on '%s'", value, name.c_str() );
-	}
+	if ( stbrielleMinimalPlayer ) {
+		hipJoint = INVALID_JOINT;
+		chestJoint = INVALID_JOINT;
+		headJoint = INVALID_JOINT;
+	} else {
+		value = spawnArgs.GetString( "bone_hips", "" );
+		hipJoint = animator.GetJointHandle( value );
+		if ( hipJoint == INVALID_JOINT ) {
+			gameLocal.Error( "Joint '%s' not found for 'bone_hips' on '%s'", value, name.c_str() );
+		}
 
-	value = spawnArgs.GetString( "bone_chest", "" );
-	chestJoint = animator.GetJointHandle( value );
-	if ( chestJoint == INVALID_JOINT ) {
-		gameLocal.Error( "Joint '%s' not found for 'bone_chest' on '%s'", value, name.c_str() );
-	}
+		value = spawnArgs.GetString( "bone_chest", "" );
+		chestJoint = animator.GetJointHandle( value );
+		if ( chestJoint == INVALID_JOINT ) {
+			gameLocal.Error( "Joint '%s' not found for 'bone_chest' on '%s'", value, name.c_str() );
+		}
 
-	value = spawnArgs.GetString( "bone_head", "" );
-	headJoint = animator.GetJointHandle( value );
-	if ( headJoint == INVALID_JOINT ) {
-		gameLocal.Error( "Joint '%s' not found for 'bone_head' on '%s'", value, name.c_str() );
+		value = spawnArgs.GetString( "bone_head", "" );
+		headJoint = animator.GetJointHandle( value );
+		if ( headJoint == INVALID_JOINT ) {
+			gameLocal.Error( "Joint '%s' not found for 'bone_head' on '%s'", value, name.c_str() );
+		}
 	}
 
 	// initialize the script variables
@@ -3284,6 +3293,14 @@ void idPlayer::Init( void ) {
 	cvarSystem->SetCVarBool("ui_chat", false);
 
 
+
+	if ( stbrielleMinimalPlayer ) {
+		hiddenWeapon = true;
+		weaponEnabled = false;
+		tipUp = false;
+		objectiveUp = false;
+		return;
+	}
 
 	//BC INIT
 	
@@ -3591,6 +3608,7 @@ Prepare any resources used by the player.
 void idPlayer::Spawn( void ) {
 	idStr		temp;
 	idBounds	bounds;
+	const bool stbrielleMinimalPlayer = spawnArgs.GetBool( "stbrielle_minimal_player", "0" );
 	
 
 	if ( entityNumber >= MAX_CLIENTS ) {
@@ -3649,14 +3667,20 @@ void idPlayer::Spawn( void ) {
 			cursor->Activate( true, gameLocal.time );
 		}
 
-		objectiveSystem = uiManager->FindGui( "guis/pda.gui", true, false, true );
+		if ( !stbrielleMinimalPlayer ) {
+			objectiveSystem = uiManager->FindGui( "guis/pda.gui", true, false, true );
+		} else {
+			objectiveSystem = NULL;
+		}
 		objectiveSystemOpen = false;
 	}
 
 	SetLastHitTime( 0 );
 
 	// load the armor sound feedback
-	declManager->FindSound( "player_hitarmor" );
+	if ( !stbrielleMinimalPlayer ) {
+		declManager->FindSound( "player_hitarmor" );
+	}
 
 	// set up conditions for animation
 	LinkScriptVariables();
@@ -3670,7 +3694,9 @@ void idPlayer::Spawn( void ) {
 	}
 
 	// create combat collision hull for exact collision detection
-	SetCombatModel();
+	if ( !stbrielleMinimalPlayer ) {
+		SetCombatModel();
+	}
 
 	// init the damage effects
 	playerView.SetPlayerEntity( this );
@@ -3698,8 +3724,18 @@ void idPlayer::Spawn( void ) {
 			assert( spectating );
 		}
 	} else {
-		SetupWeaponEntity();
+		if ( !stbrielleMinimalPlayer ) {
+			SetupWeaponEntity();
+		}
 		SpawnFromSpawnSpot();
+	}
+
+	if ( stbrielleMinimalPlayer ) {
+		hiddenWeapon = true;
+		weaponEnabled = false;
+		tipUp = false;
+		objectiveUp = false;
+		return;
 	}
 
 	// trigger playtesting item gives, if we didn't get here from a previous level
