@@ -1,0 +1,5 @@
+// ST. BRIELLE minimal global game script.
+
+void doom_main() {
+	// Intentionally empty for the systems laboratory.
+}
