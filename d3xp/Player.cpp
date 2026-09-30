@@ -6357,7 +6357,7 @@ void idPlayer::SpawnToPoint( const idVec3 &spawn_origin, const idAngles &spawn_a
 	physicsObj.SetClipModelAxis();
 	physicsObj.EnableClip();
 
-	if ( !spectating ) {
+	if ( !spectating && !spawnArgs.GetBool( "stbrielle_minimal_player", "0" ) ) {
 		SetCombatContents( true );
 	}
 
@@ -16891,7 +16891,8 @@ void idPlayer::UpdateViewAngles( void ) {
 	if ( !noclip && ((leanState == LEANSTATE_TRANSITIONON || leanState == LEANSTATE_ACTIVE) || eventlogMenuActive || levelselectMenuActive || emailFullscreenState == EFS_ACTIVE || 
 		(contextMenuActive && contextMenuState == CONTEXTMENU_ACTIVE)
 		|| gameLocal.inCinematic || privateCameraView || gameLocal.GetCamera() 
-		|| influenceActive == INFLUENCE_LEVEL2 || objectiveSystemOpen || static_cast<idMeta*>(gameLocal.metaEnt.GetEntity())->GetHightlighterActive()) )
+		|| influenceActive == INFLUENCE_LEVEL2 || objectiveSystemOpen
+		|| ( gameLocal.metaEnt.IsValid() && static_cast<idMeta*>(gameLocal.metaEnt.GetEntity())->GetHightlighterActive() ) ) )
 	{
 		// no view changes at all, but we still want to update the deltas or else when
 		// we get out of this mode, our view will snap to a kind of random angle
@@ -20253,7 +20254,7 @@ bool idPlayer::HandleESC( void ) {
 	}
 
 	//exit highlighter.
-	if (static_cast<idMeta*>(gameLocal.metaEnt.GetEntity())->GetHightlighterActive())
+	if ( gameLocal.metaEnt.IsValid() && static_cast<idMeta*>(gameLocal.metaEnt.GetEntity())->GetHightlighterActive() )
 	{
 		static_cast<idMeta*>(gameLocal.metaEnt.GetEntity())->SkipHighlighter();
 		return true;
@@ -23140,7 +23141,7 @@ void idPlayer::Think( void ) {
 		common->Printf("%f\n", luminance);
 	}
 
-	if (gameLocal.menuPause && static_cast<idMeta*>(gameLocal.metaEnt.GetEntity())->GetHightlighterActive())
+	if ( gameLocal.menuPause && gameLocal.metaEnt.IsValid() && static_cast<idMeta*>(gameLocal.metaEnt.GetEntity())->GetHightlighterActive() )
 	{
 		//This allows the highlighter to think regardless of whether the world is paused.
 		static_cast<idMeta*>(gameLocal.metaEnt.GetEntity())->DoHightlighterThink();
