@@ -39,3 +39,16 @@ entityDef stbrielle_awareness_director {
 	"editor_bool fire_current_on_spawn" "Fire the current tier once after map spawn. Default 1."
 	"editor_bool awareness_debug"	"Print Awareness tier transitions to the console."
 }
+
+entityDef stbrielle_cycle_director {
+	"spawnclass"					"idStBrielleCycleDirector"
+	"editor_displayFolder"			"St. Brielle/System"
+	"editor_usage"					"Activates map entities when the persistent dominant Cycle changes."
+	"editor_var ink_target"			"Entity name to activate for Ink. Add numeric suffixes for more targets."
+	"editor_var brass_target"		"Entity name to activate for Brass. Add numeric suffixes for more targets."
+	"editor_var water_target"		"Entity name to activate for Water. Add numeric suffixes for more targets."
+	"editor_var code_target"		"Entity name to activate for Code. Add numeric suffixes for more targets."
+	"editor_int check_interval_ms"	"Polling interval in milliseconds. Default 250."
+	"editor_bool fire_current_on_spawn" "Fire the current Cycle once after map spawn. Default 1."
+	"editor_bool cycle_debug"		"Print Cycle transitions to the console."
+}
