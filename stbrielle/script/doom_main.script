@@ -43,7 +43,7 @@ object player
 
 void player::init()
 {
-	sys.waitFrame();
+	// Intentionally empty for the standalone greybox player.
 }
 
 
