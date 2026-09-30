@@ -106,3 +106,102 @@ textures/common/trigger
 	nonsolid
 	noShadows
 }
+
+
+guis/assets/white.tga
+{
+	noShadows
+	{
+		map			_white
+	}
+}
+
+ui/assets/guicursor_arrow
+{
+	noShadows
+	{
+		blend		blend
+		map			_white
+		rgba		0
+	}
+}
+
+ui/assets/guicursor_hand
+{
+	noShadows
+	{
+		blend		blend
+		map			_white
+		rgba		0
+	}
+}
+
+ui/assets/scrollbarh
+{
+	noShadows
+	{
+		blend		blend
+		map			_white
+		rgba		0
+	}
+}
+
+ui/assets/scrollbarv
+{
+	noShadows
+	{
+		blend		blend
+		map			_white
+		rgba		0
+	}
+}
+
+ui/assets/scrollbar_thumb
+{
+	noShadows
+	{
+		blend		blend
+		map			_white
+		rgba		0
+	}
+}
+
+ui/assets/scrollbar_right
+{
+	noShadows
+	{
+		blend		blend
+		map			_white
+		rgba		0
+	}
+}
+
+ui/assets/scrollbar_left
+{
+	noShadows
+	{
+		blend		blend
+		map			_white
+		rgba		0
+	}
+}
+
+ui/assets/scrollbar_up
+{
+	noShadows
+	{
+		blend		blend
+		map			_white
+		rgba		0
+	}
+}
+
+ui/assets/scrollbar_down
+{
+	noShadows
+	{
+		blend		blend
+		map			_white
+		rgba		0
+	}
+}
