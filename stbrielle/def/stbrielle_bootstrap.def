@@ -1,0 +1,43 @@
+// ST. BRIELLE standalone bootstrap entity declarations.
+// These definitions intentionally contain only what the current greybox
+// systems laboratory needs.
+
+entityDef worldspawn {
+	"spawnclass" "idWorldspawn"
+}
+
+entityDef info_player_start {
+	"spawnclass" "idPlayerStart"
+}
+
+entityDef trigger_once {
+	"spawnclass" "idTrigger_Multi"
+	"wait" "-1"
+}
+
+entityDef light {
+	"spawnclass" "idLight"
+}
+
+entityDef target_endlevel {
+	"spawnclass" "idTarget_EndLevel"
+	"noGui" "1"
+}
+
+entityDef player_doommarine {
+	"spawnclass" "idPlayer"
+	"hud" "guis/hud.gui"
+	"health" "100"
+}
+
+entityDef player_doommarine_mp {
+	"spawnclass" "idPlayer"
+	"hud" "guis/hud.gui"
+	"health" "100"
+}
+
+entityDef player_doommarine_ctf {
+	"spawnclass" "idPlayer"
+	"hud" "guis/hud.gui"
+	"health" "100"
+}
