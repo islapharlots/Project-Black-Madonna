@@ -159,6 +159,7 @@ brushDef3
 {
 "classname" "target_endlevel"
 "name" "sb_exit_recordlab"
+"noGui" "1"
 "nextMap" "sb_dev_recordlab02"
 "origin" "440 0 32"
 }
