@@ -2,6 +2,9 @@
 setlocal
 cd /d "%~dp0"
 
+call "%~dp0setup_stbrielle_runtime.bat"
+if errorlevel 1 exit /b 1
+
 if not exist "stbrielle.exe" (
     echo.
     echo ST. BRIELLE executable not found.
