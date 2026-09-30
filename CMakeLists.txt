@@ -555,6 +555,7 @@ set(src_d3xp
 	d3xp/Trigger.cpp
 	d3xp/Weapon.cpp
 	d3xp/WorldSpawn.cpp
+	d3xp/nullutilities.cpp
 	d3xp/sb_record.cpp
 	d3xp/sb_awareness.cpp
 	d3xp/sb_cycle.cpp
@@ -728,7 +729,7 @@ if(CORE)
 		${src_sys_core}
 	)
 
-	set_target_properties(${DHEWM3BINARY} PROPERTIES COMPILE_DEFINITIONS "__DOOM_DLL__")
+	set_target_properties(${DHEWM3BINARY} PROPERTIES COMPILE_DEFINITIONS "__DOOM_DLL__;NOSTEAM")
 	set_target_properties(${DHEWM3BINARY} PROPERTIES LINK_FLAGS "${ldflags}")
 	set_target_properties(${DHEWM3BINARY} PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${PROJECT_SOURCE_DIR}/sys/osx/Info.plist)
 
@@ -762,7 +763,7 @@ if(DEDICATED)
 		${src_sys_base}
 	)
 
-	set_target_properties(${DHEWM3BINARY}ded PROPERTIES COMPILE_DEFINITIONS "ID_DEDICATED;__DOOM_DLL__")
+	set_target_properties(${DHEWM3BINARY}ded PROPERTIES COMPILE_DEFINITIONS "ID_DEDICATED;__DOOM_DLL__;NOSTEAM")
 	set_target_properties(${DHEWM3BINARY}ded PROPERTIES LINK_FLAGS "${ldflags}")
 	target_link_libraries(${DHEWM3BINARY}ded
 		idlib
@@ -793,7 +794,7 @@ if(D3XP)
 		add_library(d3xp SHARED ${src_d3xp})
 	endif()
 	set_target_properties(d3xp PROPERTIES PREFIX "")
-	set_target_properties(d3xp PROPERTIES COMPILE_DEFINITIONS "GAME_DLL;_D3XP;CTF")
+	set_target_properties(d3xp PROPERTIES COMPILE_DEFINITIONS "GAME_DLL;_D3XP;CTF;NOSTEAM")
 	set_target_properties(d3xp PROPERTIES COMPILE_FLAGS "-I${CMAKE_SOURCE_DIR}/d3xp")
 	set_target_properties(d3xp PROPERTIES LINK_FLAGS "${ldflags}")
 	set_target_properties(d3xp PROPERTIES INSTALL_NAME_DIR "@executable_path")
