@@ -12,6 +12,7 @@ The two tiny maps verify the campaign feature that matters most before full leve
 6. Map 1 also increments `sb_awareness` without showing a HUD meter.
 7. The Awareness director reacts to tier 1 with a violet light.
 8. Map 2 independently reacts to the already-persistent Awareness tier, proving that systemic world reactions can follow the player between locations.
+9. Map 2 contains a Cycle director. Water is the default and activates its Water-state light; entering `sb_cycle code` activates the Code-state reaction without reloading the map.
 
 The maps are intentionally ugly greybox laboratories.
 
@@ -69,6 +70,12 @@ Useful Record commands:
 
 `sb_recordClear sb_test_door`
 
+`sb_awareness`
+
+`sb_cycle`
+
+`sb_cycle code`
+
 ## Expected map behavior
 
 ### Map 1
@@ -89,7 +96,7 @@ Continue to the far end of the room to transition to:
 
 Walk forward through its first trigger.
 
-The Record check should report TRUE and activate the green light. The second map's Awareness director should also fire its own violet reaction because the persistent Awareness tier is already **Noticed**.
+The Record check should report TRUE and activate the green light. The second map's Awareness director should also fire its own violet reaction because the persistent Awareness tier is already **Noticed**. The Water Cycle light should activate on spawn. Run `sb_cycle code` to verify that the Cycle director detects the persistent state change and fires the Code reaction.
 
 If the check reports FALSE, dump the Record and verify whether persistent level info survived the transition.
 
