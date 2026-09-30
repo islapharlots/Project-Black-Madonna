@@ -586,7 +586,7 @@
     <ClCompile Include="$(ProjectDir)\..\..\neo\d3xp\bc_maintpanel.cpp" />
     <ClCompile Include="$(ProjectDir)\..\..\neo\d3xp\bc_manifeststation.cpp" />
     <ClCompile Include="$(ProjectDir)\..\..\neo\d3xp\bc_mech.cpp" />
-    <ClCompile Include="$(ProjectDir)\..\..\neo\d3xp\bc_meta.cpp" />
+    <ClCompile Include="$(ProjectDir)\..\..\neo\d3xp\bc_meta.cpp" />\n    <ClCompile Include="..\d3xp\sb_record.cpp" />
     <ClCompile Include="$(ProjectDir)\..\..\neo\d3xp\bc_mushroom.cpp" />
     <ClCompile Include="$(ProjectDir)\..\..\neo\d3xp\bc_notewall.cpp" />
     <ClCompile Include="$(ProjectDir)\..\..\neo\d3xp\bc_nudgepoint.cpp" />
@@ -931,7 +931,7 @@
     <Image Include="..\sys\win32\rc\res\doom.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\d3xp\bc_algaeball.h" />
+    <ClInclude Include="..\d3xp\sb_record.h" />\n    <ClInclude Include="..\d3xp\bc_algaeball.h" />
     <ClInclude Include="..\d3xp\bc_banana.h" />
     <ClInclude Include="..\d3xp\bc_cassetteplayer.h" />
     <ClInclude Include="..\d3xp\bc_cassettetape.h" />
