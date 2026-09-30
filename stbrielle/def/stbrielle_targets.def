@@ -1,0 +1,25 @@
+// St. Brielle project entity declarations.
+// Copy/package this directory into the active game content folder when building
+// the standalone St. Brielle data pack.
+
+entityDef target_stbrielle_record {
+	"spawnclass"				"idTarget_StBrielleRecord"
+	"editor_displayFolder"		"St. Brielle/Targets"
+	"editor_usage"				"Mutates persistent St. Brielle Record state when activated."
+	"editor_var record_key"		"Persistent key. Use sb_ prefix."
+	"editor_var record_mode"	"set, add, toggle, or clear"
+	"editor_var record_value"	"Value used by set/add."
+	"editor_bool record_once"	"Remove after activation. Defaults to 1."
+	"editor_bool record_debug"	"Print the resulting value to the console."
+}
+
+entityDef target_stbrielle_recordcheck {
+	"spawnclass"					"idTarget_StBrielleRecordCheck"
+	"editor_displayFolder"			"St. Brielle/Targets"
+	"editor_usage"					"Activates its targets only when a persistent Record condition is true."
+	"editor_var record_key"			"Persistent key to inspect."
+	"editor_var record_compare"		"equals, not_equals, gt, gte, lt, lte, true, false, exists, or missing"
+	"editor_var record_value"		"Expected comparison value."
+	"editor_bool record_once"		"Remove after a successful activation."
+	"editor_bool record_debug"		"Print the check result to the console."
+}
