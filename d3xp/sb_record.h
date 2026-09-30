@@ -18,6 +18,14 @@ public:
 		CYCLE_CODE
 	};
 
+	enum awarenessTier_t {
+		AWARENESS_DORMANT = 0,
+		AWARENESS_NOTICED,
+		AWARENESS_OBSERVING,
+		AWARENESS_CORRECTING,
+		AWARENESS_RUPTURE
+	};
+
 	static void			EnsureDefaults();
 
 	static bool			Has( const char *key );
@@ -36,6 +44,9 @@ public:
 	static void			SetCycle( cycle_t cycle );
 	static int			GetAwareness();
 	static int			AddAwareness( int amount );
+	static awarenessTier_t	GetAwarenessTier();
+	static awarenessTier_t	GetAwarenessTierForValue( int value );
+	static const char *	GetAwarenessTierName( awarenessTier_t tier );
 };
 
 // Map target that mutates the persistent Record when activated.
