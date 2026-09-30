@@ -12,11 +12,20 @@ if ([string]::IsNullOrWhiteSpace($Destination)) {
 $Destination = [System.IO.Path]::GetFullPath($Destination)
 New-Item -ItemType Directory -Force -Path $Destination | Out-Null
 
-# Pin the dependency bundle so local builds are reproducible.
-$DhewmLibsCommit = "57c565984c41356e8b1c4d31f182e763b6ea210a"
-$BaseUrl = "https://raw.githubusercontent.com/dhewm/dhewm3-libs/$DhewmLibsCommit/x86_64-w64-mingw32/bin"
+$LogPath = Join-Path $Destination "stbrielle_runtime_setup.log"
+try {
+    Start-Transcript -Path $LogPath -Force | Out-Null
+} catch {
+    # Transcript logging is helpful but not required.
+}
 
-# Runtime DLLs imported by the current MSVC St. Brielle executable.
+# Pin the official dhewm3 dependency bundle so the build is reproducible.
+$DhewmLibsCommit = "57c565984c41356e8b1c4d31f182e763b6ea210a"
+$Repo = "dhewm/dhewm3-libs"
+$RelativeBase = "x86_64-w64-mingw32/bin"
+$RawBase = "https://raw.githubusercontent.com/$Repo/$DhewmLibsCommit/$RelativeBase"
+$ApiBase = "https://api.github.com/repos/$Repo/contents/$RelativeBase"
+
 $RuntimeDlls = @(
     "OpenAL32.dll",
     "SDL2.dll",
@@ -27,97 +36,134 @@ $RuntimeDlls = @(
     "zlib1.dll"
 )
 
-# PowerShell 5.1 on older Windows configurations may otherwise negotiate an
-# obsolete TLS version with GitHub.
 try {
     [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 } catch {
-    # Newer PowerShell/.NET versions do not need this.
 }
 
-Write-Host ""
-Write-Host "ST. BRIELLE runtime dependency setup"
-Write-Host "Destination: $Destination"
-Write-Host ""
+function Get-StBrielleRuntimeFile {
+    param(
+        [Parameter(Mandatory=$true)][string]$Name,
+        [Parameter(Mandatory=$true)][string]$Output
+    )
 
-$Downloaded = 0
-$Existing = 0
-
-foreach ($Dll in $RuntimeDlls) {
-    $Output = Join-Path $Destination $Dll
-
-    if ((Test-Path $Output) -and -not $Force) {
-        $Item = Get-Item $Output
-        if ($Item.Length -gt 0) {
-            Write-Host "[OK] $Dll"
-            $Existing++
-            continue
-        }
+    $Temp = "$Output.download"
+    if (Test-Path $Temp) {
+        Remove-Item -Force $Temp
     }
 
-    $Url = "$BaseUrl/$Dll"
-    $Temp = "$Output.download"
+    # Route 1: raw.githubusercontent.com with PowerShell.
+    $RawUrl = "$RawBase/$Name"
+    Write-Host "[TRY 1] PowerShell raw: $Name"
+    try {
+        Invoke-WebRequest -UseBasicParsing -Uri $RawUrl -OutFile $Temp -TimeoutSec 45
+        if ((Test-Path $Temp) -and ((Get-Item $Temp).Length -gt 0)) {
+            Move-Item -Force $Temp $Output
+            return
+        }
+    } catch {
+        Write-Host "[WARN] Raw PowerShell failed: $($_.Exception.Message)"
+    }
 
     if (Test-Path $Temp) {
         Remove-Item -Force $Temp
     }
 
-    Write-Host "[GET] $Dll"
-
-    $DownloadedOk = $false
-
-    try {
-        Invoke-WebRequest -UseBasicParsing -Uri $Url -OutFile $Temp
-        $DownloadedOk = $true
-    } catch {
-        Write-Host "[WARN] Invoke-WebRequest failed for $Dll: $($_.Exception.Message)"
-    }
-
-    if (-not $DownloadedOk) {
+    # Route 2: curl.exe against raw.githubusercontent.com.
+    $Curl = Get-Command curl.exe -ErrorAction SilentlyContinue
+    if ($Curl) {
+        Write-Host "[TRY 2] curl raw: $Name"
+        & $Curl.Source -L --fail --silent --show-error --connect-timeout 20 --max-time 60 $RawUrl -o $Temp
+        if (($LASTEXITCODE -eq 0) -and (Test-Path $Temp) -and ((Get-Item $Temp).Length -gt 0)) {
+            Move-Item -Force $Temp $Output
+            return
+        }
         if (Test-Path $Temp) {
             Remove-Item -Force $Temp
         }
+    }
 
-        $Curl = Get-Command curl.exe -ErrorAction SilentlyContinue
-        if ($Curl) {
-            Write-Host "[TRY] curl.exe $Dll"
-            & $Curl.Source -L --fail --silent --show-error $Url -o $Temp
-            if (($LASTEXITCODE -eq 0) -and (Test-Path $Temp)) {
-                $DownloadedOk = $true
+    # Route 3: GitHub Contents API, requesting raw media.
+    $ApiUrl = "$ApiBase/$Name?ref=$DhewmLibsCommit"
+    Write-Host "[TRY 3] GitHub API raw: $Name"
+    try {
+        $Headers = @{
+            "Accept" = "application/vnd.github.raw+json"
+            "User-Agent" = "stbrielle-runtime-setup"
+        }
+        Invoke-WebRequest -UseBasicParsing -Headers $Headers -Uri $ApiUrl -OutFile $Temp -TimeoutSec 45
+        if ((Test-Path $Temp) -and ((Get-Item $Temp).Length -gt 0)) {
+            Move-Item -Force $Temp $Output
+            return
+        }
+    } catch {
+        Write-Host "[WARN] GitHub API failed: $($_.Exception.Message)"
+    }
+
+    if (Test-Path $Temp) {
+        Remove-Item -Force $Temp
+    }
+
+    throw "Unable to download $Name using all configured GitHub routes."
+}
+
+try {
+    Write-Host ""
+    Write-Host "ST. BRIELLE runtime dependency setup"
+    Write-Host "Destination: $Destination"
+    Write-Host "Log: $LogPath"
+    Write-Host ""
+
+    $Downloaded = 0
+    $Existing = 0
+
+    foreach ($Dll in $RuntimeDlls) {
+        $Output = Join-Path $Destination $Dll
+
+        if ((Test-Path $Output) -and -not $Force) {
+            $Item = Get-Item $Output
+            if ($Item.Length -gt 0) {
+                Write-Host "[OK] $Dll"
+                $Existing++
+                continue
             }
         }
+
+        Write-Host "[GET] $Dll"
+        Get-StBrielleRuntimeFile -Name $Dll -Output $Output
+        $Downloaded++
     }
 
-    if (-not $DownloadedOk) {
-        if (Test-Path $Temp) {
-            Remove-Item -Force $Temp
+    $Missing = @()
+    foreach ($Dll in $RuntimeDlls) {
+        $Path = Join-Path $Destination $Dll
+        if (-not (Test-Path $Path)) {
+            $Missing += $Dll
         }
-        throw "Could not download $Dll from the official dhewm3 dependency bundle."
     }
 
-    $Item = Get-Item $Temp
-    if ($Item.Length -le 0) {
-        Remove-Item -Force $Temp
-        throw "Downloaded file $Dll was empty."
+    if ($Missing.Count -gt 0) {
+        throw "Runtime setup incomplete. Missing: $($Missing -join ', ')"
     }
 
-    Move-Item -Force $Temp $Output
-    $Downloaded++
+    Write-Host ""
+    Write-Host "Runtime dependencies ready."
+    Write-Host "Existing: $Existing"
+    Write-Host "Downloaded: $Downloaded"
+    Write-Host "Verified: $($RuntimeDlls.Count) DLLs present in $Destination"
+    Write-Host ""
 }
-
-$Missing = @()
-foreach ($Dll in $RuntimeDlls) {
-    $Path = Join-Path $Destination $Dll
-    if (-not (Test-Path $Path)) {
-        $Missing += $Dll
+catch {
+    Write-Host ""
+    Write-Host "ST. BRIELLE runtime setup FAILED." -ForegroundColor Red
+    Write-Host $_.Exception.Message -ForegroundColor Red
+    Write-Host "See log: $LogPath"
+    Write-Host ""
+    exit 1
+}
+finally {
+    try {
+        Stop-Transcript | Out-Null
+    } catch {
     }
 }
-
-if ($Missing.Count -gt 0) {
-    throw "Runtime setup incomplete. Missing: $($Missing -join ', ')"
-}
-
-Write-Host ""
-Write-Host "Runtime dependencies ready. Existing: $Existing  Downloaded: $Downloaded"
-Write-Host "Verified: $($RuntimeDlls.Count) DLLs present in $Destination"
-Write-Host ""
