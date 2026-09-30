@@ -27,6 +27,7 @@ entityDef target_endlevel {
 entityDef player_doommarine {
 	"spawnclass" "idPlayer"
 	"scriptobject" "player"
+	"stbrielle_minimal_player" "1"
 	"hud" "guis/hud.gui"
 	"health" "100"
 }
@@ -34,6 +35,7 @@ entityDef player_doommarine {
 entityDef player_doommarine_mp {
 	"spawnclass" "idPlayer"
 	"scriptobject" "player"
+	"stbrielle_minimal_player" "1"
 	"hud" "guis/hud.gui"
 	"health" "100"
 }
@@ -41,6 +43,7 @@ entityDef player_doommarine_mp {
 entityDef player_doommarine_ctf {
 	"spawnclass" "idPlayer"
 	"scriptobject" "player"
+	"stbrielle_minimal_player" "1"
 	"hud" "guis/hud.gui"
 	"health" "100"
 }
