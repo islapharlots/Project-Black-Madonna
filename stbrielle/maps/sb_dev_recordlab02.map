@@ -104,6 +104,33 @@ brushDef3
 "origin" "-160 0 32"
 }
 {
+"classname" "stbrielle_cycle_director"
+"name" "sb_cycle_director"
+"water_target" "sb_water_cycle_light"
+"code_target" "sb_code_cycle_light"
+"fire_current_on_spawn" "1"
+"cycle_debug" "1"
+"origin" "0 -64 32"
+}
+{
+"classname" "light"
+"name" "sb_water_cycle_light"
+"origin" "-40 -120 180"
+"_color" "0.10 0.45 0.65"
+"light" "180"
+"start_off" "1"
+"noshadows" "1"
+}
+{
+"classname" "light"
+"name" "sb_code_cycle_light"
+"origin" "200 -120 180"
+"_color" "0.75 0.90 1.00"
+"light" "180"
+"start_off" "1"
+"noshadows" "1"
+}
+{
 "classname" "stbrielle_awareness_director"
 "name" "sb_awareness_director"
 "tier1_target" "sb_awareness_persist_light"
