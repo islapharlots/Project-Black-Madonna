@@ -132,6 +132,42 @@ int idStBrielleRecord::AddAwareness( int amount ) {
 	return value;
 }
 
+idStBrielleRecord::awarenessTier_t idStBrielleRecord::GetAwarenessTier() {
+	return GetAwarenessTierForValue( GetAwareness() );
+}
+
+idStBrielleRecord::awarenessTier_t idStBrielleRecord::GetAwarenessTierForValue( int value ) {
+	if ( value >= 50 ) {
+		return AWARENESS_RUPTURE;
+	}
+	if ( value >= 25 ) {
+		return AWARENESS_CORRECTING;
+	}
+	if ( value >= 10 ) {
+		return AWARENESS_OBSERVING;
+	}
+	if ( value >= 1 ) {
+		return AWARENESS_NOTICED;
+	}
+	return AWARENESS_DORMANT;
+}
+
+const char *idStBrielleRecord::GetAwarenessTierName( awarenessTier_t tier ) {
+	switch ( tier ) {
+		case AWARENESS_NOTICED:
+			return "noticed";
+		case AWARENESS_OBSERVING:
+			return "observing";
+		case AWARENESS_CORRECTING:
+			return "correcting";
+		case AWARENESS_RUPTURE:
+			return "rupture";
+		case AWARENESS_DORMANT:
+		default:
+			return "dormant";
+	}
+}
+
 CLASS_DECLARATION( idTarget, idTarget_StBrielleRecord )
 	EVENT( EV_Activate, idTarget_StBrielleRecord::Event_Activate )
 END_CLASS
