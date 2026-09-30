@@ -38,6 +38,26 @@ Do **not** redistribute commercial Skin Deep assets with St. Brielle.
 
 The goal is to replace inherited content progressively with original St. Brielle data until the project no longer requires the commercial data layer.
 
+## Windows runtime DLLs
+
+The Visual Studio project now runs `tools/setup_stbrielle_runtime.ps1` after a build. It downloads the required x64 runtime DLLs from the official `dhewm/dhewm3-libs` bundle when they are missing and places them beside `stbrielle.exe`.
+
+You can also run this directly from the repository root:
+
+`setup_stbrielle_runtime.bat`
+
+Current runtime set:
+
+- `OpenAL32.dll`
+- `SDL2.dll`
+- `libjpeg-8.dll`
+- `libogg-0.dll`
+- `libvorbis-0.dll`
+- `libvorbisfile-3.dll`
+- `zlib1.dll`
+
+Do not use random DLL download sites. The setup script is pinned to a known commit of the official dhewm3 dependency repository.
+
 ## Launch
 
 From the repository root run:
