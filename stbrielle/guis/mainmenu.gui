@@ -1,0 +1,37 @@
+windowDef Desktop {
+	rect 0, 0, 640, 480
+	visible 1
+	noCursor 0
+	backcolor 0.015, 0.015, 0.02, 1
+
+	windowDef title {
+		rect 48, 50, 544, 60
+		text "ST. BRIELLE: THE INTERVAL"
+		textscale 0.55
+		forecolor 0.92, 0.92, 0.92, 1
+	}
+
+	windowDef subtitle {
+		rect 50, 118, 540, 28
+		text "DEVELOPMENT BUILD"
+		textscale 0.24
+		forecolor 0.55, 0.55, 0.58, 1
+	}
+
+	windowDef hint {
+		rect 50, 385, 540, 48
+		text "Run run_stbrielle_recordlab.bat to enter the current systems test."
+		textscale 0.22
+		forecolor 0.75, 0.75, 0.78, 1
+	}
+
+	listDef mapList {
+		rect 0, 0, 1, 1
+		visible 0
+	}
+
+	listDef serverList {
+		rect 0, 0, 1, 1
+		visible 0
+	}
+}
