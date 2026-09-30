@@ -172,7 +172,9 @@ static std::string readFile( const std::string& fileName )
 		}
 	}
 
-	fileSystem->FreeFile(glslBuffer);
+	if ( glslBuffer != NULL ) {
+		fileSystem->FreeFile( glslBuffer );
+	}
 
 	return contents;
 }
