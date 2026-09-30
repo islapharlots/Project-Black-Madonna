@@ -556,6 +556,7 @@ set(src_d3xp
 	d3xp/Weapon.cpp
 	d3xp/WorldSpawn.cpp
 	d3xp/sb_record.cpp
+	d3xp/sb_awareness.cpp
 	d3xp/ai/AAS.cpp
 	d3xp/ai/AAS_debug.cpp
 	d3xp/ai/AAS_pathing.cpp
