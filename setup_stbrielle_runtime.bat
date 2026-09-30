@@ -2,7 +2,7 @@
 setlocal
 cd /d "%~dp0"
 
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0tools\setup_stbrielle_runtime.ps1" -Destination "%~dp0"
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0tools\setup_stbrielle_runtime.ps1"
 if errorlevel 1 (
     echo.
     echo ST. BRIELLE runtime dependency setup failed.
