@@ -137,15 +137,15 @@ idFont::idFont( const char * n ) : name( n ) {
 	}
 
 	if ( !LoadFont() ) {
-		if ( name.Icmp( DEFAULT_FONT ) == 0 ) {
-			idLib::Error( "Could not load default font \"%s\"", DEFAULT_FONT );
-		} else {
-			// SM: If the name is empty, this is okay, so just silently accept it
-			if ( name.Length() > 0 ) {
-				idLib::Warning( "Could not load font %s", name.c_str() );
-			}
-			alias = renderSystem->RegisterFont( DEFAULT_FONT );
+		// St. Brielle standalone bootstrap:
+		// the public source release does not include Skin Deep's proprietary
+		// font data. Missing fonts therefore degrade to an empty font object
+		// instead of aborting engine startup. Original St. Brielle font assets
+		// can be added later under newfonts/.
+		if ( name.Length() > 0 ) {
+			idLib::Warning( "Could not load font %s; continuing without glyph data.", name.c_str() );
 		}
+		alias = NULL;
 	}
 }
 
@@ -312,6 +312,9 @@ idFont::GetGlyphIndex
 ==============================
 */
 int	idFont::GetGlyphIndex( uint32 idx ) const {
+	if ( fontInfo == NULL ) {
+		return -1;
+	}
 	if ( idx < 128 ) {
 		return fontInfo->ascii[idx];
 	}
