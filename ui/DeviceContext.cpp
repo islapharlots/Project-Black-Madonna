@@ -966,6 +966,14 @@ void idDeviceContext::PaintChar( float x, float y, const scaledGlyphInfo_t & gly
 		hShader = activeFontMaterial;
 	}
 
+	// St. Brielle standalone bootstrap: missing proprietary font data produces
+	// empty glyphs. Do not submit a null/zero-area draw call, because the
+	// renderer substitutes the default debug image and floods the screen with
+	// repeated fallback tiles.
+	if ( hShader == NULL || w <= 0.0f || h <= 0.0f ) {
+		return;
+	}
+
 	if (ClippedCoords( &x, &y, &w, &h, &s, &t, &s2, &t2 )) {
 		return;
 	}
