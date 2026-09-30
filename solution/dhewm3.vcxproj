@@ -980,8 +980,11 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
-  <Target Name="StBrielleRuntimeDependencies" AfterTargets="Build" Condition="Exists('$(ProjectDir)..\tools\setup_stbrielle_runtime.ps1')">
-    <Message Text="Preparing ST. BRIELLE runtime dependencies..." Importance="high" />
-    <Exec Command="powershell.exe -NoProfile -ExecutionPolicy Bypass -File &quot;$(ProjectDir)..\tools\setup_stbrielle_runtime.ps1&quot; -Destination &quot;$(OutDir)&quot;" ContinueOnError="WarnAndContinue" />
+  <Target Name="StBrielleRuntimeDependencies" AfterTargets="Link" Condition="Exists('$(ProjectDir)..\tools\setup_stbrielle_runtime.ps1')">
+    <Message Text="Preparing ST. BRIELLE runtime dependencies in $(TargetDir)" Importance="high" />
+    <Exec Command="powershell.exe -NoProfile -ExecutionPolicy Bypass -File &quot;$(ProjectDir)..\tools\setup_stbrielle_runtime.ps1&quot; -Destination &quot;$(TargetDir).&quot;" />
+    <Error Condition="!Exists('$(TargetDir)libvorbisfile-3.dll')" Text="ST. BRIELLE runtime setup did not place libvorbisfile-3.dll beside $(TargetFileName)." />
+    <Error Condition="!Exists('$(TargetDir)SDL2.dll')" Text="ST. BRIELLE runtime setup did not place SDL2.dll beside $(TargetFileName)." />
+    <Error Condition="!Exists('$(TargetDir)OpenAL32.dll')" Text="ST. BRIELLE runtime setup did not place OpenAL32.dll beside $(TargetFileName)." />
   </Target>
 </Project>
