@@ -85,20 +85,22 @@ lights/defaultProjectedLight
 textures/stbrielle/dev_wall
 {
 	qer_editorimage	_white
-	diffusemap		_white
+	noShadows
 	{
+		blend		add
 		map			_white
-		rgb			0.12
+		rgb			0.22
 	}
 }
 
 textures/stbrielle/dev_floor
 {
 	qer_editorimage	_white
-	diffusemap		_white
+	noShadows
 	{
+		blend		add
 		map			_white
-		rgb			0.08
+		rgb			0.12
 	}
 }
 
