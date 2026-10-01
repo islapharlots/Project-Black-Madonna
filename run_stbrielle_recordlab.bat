@@ -27,7 +27,7 @@ echo Base path: %SBROOT%
 echo Dev path:  %SBROOT%
 echo.
 
-stbrielle.exe +set fs_basepath "%SBROOT%" +set fs_devpath "%SBROOT%" +set fs_game stbrielle +set developer 1 +set con_noPrint 1 +set com_showFPS 0 +set fs_copyfiles 0 +set si_pure 0 +dmap sb_dev_recordlab +dmap sb_dev_recordlab02 +quit
+stbrielle.exe +set fs_basepath "%SBROOT%" +set fs_devpath "%SBROOT%" +set fs_game stbrielle +set developer 1 +set con_noPrint 1 +set com_showFPS 0 +set fs_copyfiles 0 +set si_pure 0 +dmap2 sb_dev_recordlab +dmap2 sb_dev_recordlab02 +quit
 
 if exist "%SBSAVE%\qconsole.log" copy /y "%SBSAVE%\qconsole.log" "%SBROOT%\recordlab_compile.log" >nul
 
