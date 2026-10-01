@@ -7231,8 +7231,18 @@ void idGameLocal::OnMapChange()
 			}
 		}
 	}
+	idPlayer *localPlayer = GetLocalPlayer();
+	if ( localPlayer && localPlayer->spawnArgs.GetBool( "stbrielle_minimal_player", "0" ) ) {
+		// ST. BRIELLE standalone greybox maps intentionally omit Skin Deep's
+		// Event Log and PDA GUIs. Core map/player initialization is complete;
+		// these commercial UI systems are not required for gameplay.
+		return;
+	}
+
 	InitEventLog();
-	GetLocalPlayer()->UpdatePDAInfo( false );
+	if ( localPlayer ) {
+		localPlayer->UpdatePDAInfo( false );
+	}
 }
 
 void idGameLocal::CloseEventLogFile(void)
@@ -7250,9 +7260,15 @@ void idGameLocal::CloseEventLogFile(void)
 
 void idGameLocal::InitEventLog(void)
 {
+	idPlayer *localPlayer = gameLocal.GetLocalPlayer();
+	if ( localPlayer == NULL || localPlayer->eventlogMenu == NULL ) {
+		Warning( "InitEventLog skipped: no Event Log GUI is available for the local player." );
+		return;
+	}
+
 	eventlogGuiList = uiManager->AllocListGUI();
 	eventlogGuiList->Clear();
-	eventlogGuiList->Config(gameLocal.GetLocalPlayer()->eventlogMenu, "eventlist");
+	eventlogGuiList->Config(localPlayer->eventlogMenu, "eventlist");
 	eventlogGuiList->SetSelection(0);
 
 	if (g_eventLog_logToFile.GetBool())
