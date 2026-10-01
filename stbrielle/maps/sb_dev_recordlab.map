@@ -124,6 +124,14 @@ brushDef3
 }
 {
 "classname" "light"
+"name" "sb_room_fill"
+"origin" "-80 0 170"
+"_color" "0.55 0.58 0.65"
+"light" "900"
+"noshadows" "1"
+}
+{
+"classname" "light"
 "name" "sb_awareness_light"
 "origin" "150 100 180"
 "_color" "0.55 0.15 0.75"
