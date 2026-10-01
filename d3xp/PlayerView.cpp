@@ -699,6 +699,15 @@ void idPlayerView::SingleView( idUserInterface *hud, const renderView_t *view ) 
 	renderView_t	hackedView = *view;
 	hackedView.viewaxis = hackedView.viewaxis * ShakeAxis();
 
+	// ST. BRIELLE standalone greybox path:
+	// render the world directly and skip Skin Deep's fullscreen FX / overlay /
+	// HUD stack. Those systems depend on commercial materials and UI assets that
+	// are intentionally not part of this standalone project.
+	if ( player->spawnArgs.GetBool( "stbrielle_minimal_player", "0" ) ) {
+		gameRenderWorld->RenderScene( &hackedView );
+		return;
+	}
+
 #ifdef _D3XP
 	if ( gameLocal.portalSkyEnt.GetEntity() && g_enablePortalSky.GetBool() )
 	{
