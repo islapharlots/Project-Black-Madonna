@@ -21213,6 +21213,46 @@ void idPlayer::Think( void ) {
 	renderEntity_t *headRenderEnt;
 	int isBaffled = 0;
 
+	// ST. BRIELLE standalone greybox player:
+	// run only the core first-person loop. The public source release does not
+	// include Skin Deep's player models, animation state machine, weapons,
+	// equipment UI, meta/highlighter manager, or other commercial gameplay data.
+	// Keeping this path deliberately small lets St. Brielle own those systems
+	// instead of depending on placeholder Skin Deep objects.
+	if ( spawnArgs.GetBool( "stbrielle_minimal_player", "0" ) ) {
+		oldButtons = usercmd.buttons;
+
+		usercmd = gameLocal.usercmds[ entityNumber ];
+		buttonMask &= usercmd.buttons;
+		usercmd.buttons &= ~buttonMask;
+
+		if ( !spawnAnglesSet ) {
+			spawnAnglesSet = true;
+			SetViewAngles( spawnAngles );
+			oldFlags = usercmd.flags;
+		}
+
+		physicsObj.SetSpeed( pm_walkspeed.GetFloat(), pm_crouchspeed.GetFloat() );
+
+		UpdateViewAngles();
+
+		if ( !gameLocal.menuPause || gameLocal.spectatePause ) {
+			Move();
+		}
+
+		if ( !g_stopTime.GetBool() && !noclip && !spectating && health > 0 && !IsHidden() ) {
+			TouchTriggers();
+		}
+
+		CalculateFirstPersonView();
+		CalculateRenderView();
+
+		Present();
+
+		oldFlags = usercmd.flags;
+		return;
+	}
+
 	//debug draw player velocity
 	if (g_showPlayerSpeed.GetBool())
 	{
