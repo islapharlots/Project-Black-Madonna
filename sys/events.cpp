@@ -318,7 +318,11 @@ void Sys_InitInput() {
 	memset(buttonStates, 0, sizeof(buttonStates));
 	memset(joyAxis, 0, sizeof(joyAxis));
 
-#if !SDL_VERSION_ATLEAST(2, 0, 0)
+#if SDL_VERSION_ATLEAST(2, 0, 0)
+	// SDL2 only emits SDL_TEXTINPUT/SE_CHAR events after text input is started.
+	// Without this the console can open, but typed characters never reach it.
+	SDL_StartTextInput();
+#else
 	SDL_EnableUNICODE(1);
 	SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
 #endif
@@ -339,6 +343,10 @@ Sys_ShutdownInput
 =================
 */
 void Sys_ShutdownInput() {
+#if SDL_VERSION_ATLEAST(2, 0, 0)
+	SDL_StopTextInput();
+#endif
+
 	kbd_polls.Clear();
 	mouse_polls.Clear();
 	joystick_polls.Clear();
