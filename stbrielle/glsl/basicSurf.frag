@@ -2,7 +2,6 @@
 out vec4 fragColor;
 
 void main() {
-    // ST. BRIELLE standalone greybox: deterministic neutral surface.
-    // Do not inherit Skin Deep program-env color state during bootstrap.
-    fragColor = vec4(0.22, 0.23, 0.26, 1.0);
+    // Deterministic standalone greybox surface.
+    fragColor = vec4(0.34, 0.36, 0.40, 1.0);
 }
