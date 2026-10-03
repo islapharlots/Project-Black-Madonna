@@ -1,3 +1,7 @@
+entityDef func_static {
+	"spawnclass" "idStaticEntity"
+}
+
 // ST. BRIELLE standalone bootstrap entity declarations.
 // These definitions intentionally contain only what the current greybox
 // systems laboratory needs.
@@ -30,6 +34,8 @@ entityDef player_doommarine {
 	"stbrielle_minimal_player" "1"
 	"hud" "guis/hud.gui"
 	"health" "100"
+	"stbrielle_interact_range" "112"
+	"stbrielle_interact_debug" "1"
 }
 
 entityDef player_doommarine_mp {
@@ -38,6 +44,8 @@ entityDef player_doommarine_mp {
 	"stbrielle_minimal_player" "1"
 	"hud" "guis/hud.gui"
 	"health" "100"
+	"stbrielle_interact_range" "112"
+	"stbrielle_interact_debug" "1"
 }
 
 entityDef player_doommarine_ctf {
@@ -46,4 +54,6 @@ entityDef player_doommarine_ctf {
 	"stbrielle_minimal_player" "1"
 	"hud" "guis/hud.gui"
 	"health" "100"
+	"stbrielle_interact_range" "112"
+	"stbrielle_interact_debug" "1"
 }
