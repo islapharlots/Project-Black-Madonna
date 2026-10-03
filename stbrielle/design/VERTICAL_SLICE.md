@@ -114,6 +114,41 @@ At the street exit, the game records:
 
 The level then transitions to the first major mission.
 
+## Current playable implementation
+
+The first playable Annex greybox now exists as:
+
+`maps/sb00_annex.map`
+
+Launch from the repository root with:
+
+`run_stbrielle_annex.bat`
+
+Current controls:
+
+- WASD / mouse — movement and look
+- **E** — St. Brielle interaction (`_frob`)
+
+Current authored interaction loop:
+
+1. Enter through the employee entrance.
+2. Interact with the pale work-order plate in the Continuity Office.
+   - sets `sb_annex_workorder_read = 1`
+   - adds 1 to `sb_awareness`
+   - activates the first Awareness response
+3. Enter the southern utility bay.
+4. Interact with **ARCHIVE AUXILIARY / 214**.
+   - sets `sb_room_214_exists = 1`
+   - runs a persistent Record check
+   - physically removes the blank wall where the Room 214 doorway should be
+   - powers the Room 214 light
+5. Interact with the street continuity terminal.
+   - sets `sb_annex_complete = 1`
+
+The map also instantiates the Cycle director so the default Water Cycle is represented in a real mission space.
+
+This is still a systems greybox: final architecture, doors, text presentation, sound, combat, AI, save stations, and finished St. Brielle art are subsequent passes.
+
 ## Development order
 
 ### Pass A — Record laboratory
