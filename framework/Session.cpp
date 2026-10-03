@@ -2693,6 +2693,17 @@ bool idSessionLocal::ProcessEvent( const sysEvent_t *event ) {
 	if ( allowESC && event->evType == SE_KEY && event->evValue2 == 1 && (event->evValue == K_ESCAPE || event->evValue == K_JOY9 || joyEmulateESC) && !idKeyInput::IsDown( K_SHIFT ) )
 	{
 		console->Close();
+
+		// ST. BRIELLE standalone greybox behavior:
+		// the temporary bootstrap build does not yet ship a real pause/main menu.
+		// Escape should therefore exit cleanly instead of activating Skin Deep's
+		// inherited menu stack, which expects GUI assets/state we intentionally
+		// do not create for stbrielle_minimal_player.
+		if ( player && player->spawnArgs.GetBool( "stbrielle_minimal_player", "0" ) ) {
+			cmdSystem->BufferCommandText( CMD_EXEC_APPEND, "quit\n" );
+			return true;
+		}
+
 		if ( game ) {
 			idUserInterface	*gui = NULL;
 			escReply_t		op;
