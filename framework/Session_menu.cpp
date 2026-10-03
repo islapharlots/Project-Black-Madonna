@@ -61,6 +61,15 @@ idSessionLocal::StartMainMenu
 ==============
 */
 void idSessionLocal::StartMenu( bool playIntro ) {
+	idPlayer *localPlayer = gameLocal.GetLocalPlayer();
+	if ( localPlayer && localPlayer->spawnArgs.GetBool( "stbrielle_minimal_player", "0" ) ) {
+		// ST. BRIELLE standalone greybox has no production pause menu yet.
+		// Avoid activating the inherited Skin Deep main-menu GUI while a
+		// minimal St. Brielle player is in a live map.
+		cmdSystem->BufferCommandText( CMD_EXEC_APPEND, "quit\n" );
+		return;
+	}
+
 	if ( guiActive == guiMainMenu ) {
 		return;
 	}
@@ -156,6 +165,13 @@ void idSessionLocal::SetGUI( idUserInterface *gui, HandleGuiCommand_t handle ) {
 	sysEvent_t  ev;
 	memset( &ev, 0, sizeof( ev ) );
 	ev.evType = SE_NONE;
+
+	// St. Brielle's bootstrap GUIs are intentionally skeletal. Do not drive
+	// the inherited Skin Deep main-menu event stack during standalone greybox
+	// development; a production St. Brielle menu will replace this path.
+	if ( guiActive == guiMainMenu && idStr::Icmp( cvarSystem->GetCVarString( "fs_game" ), "stbrielle" ) == 0 ) {
+		return;
+	}
 
 	guiActive->HandleEvent( &ev, com_frameTime );
 	guiActive->Activate( true, com_frameTime );
