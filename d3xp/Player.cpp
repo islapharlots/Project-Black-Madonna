@@ -21220,6 +21220,12 @@ void idPlayer::Think( void ) {
 	// Keeping this path deliberately small lets St. Brielle own those systems
 	// instead of depending on placeholder Skin Deep objects.
 	if ( spawnArgs.GetBool( "stbrielle_minimal_player", "0" ) ) {
+		static bool stbrielleLoggedLiveFrame = false;
+		if ( !stbrielleLoggedLiveFrame ) {
+			stbrielleLoggedLiveFrame = true;
+			common->Printf( "[ST. BRIELLE PLAYER] live frame loop active at origin %s\\n", GetPhysics()->GetOrigin().ToString() );
+		}
+
 		oldButtons = usercmd.buttons;
 
 		usercmd = gameLocal.usercmds[ entityNumber ];
