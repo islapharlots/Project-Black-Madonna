@@ -140,10 +140,17 @@ void idSessionLocal::SetGUI( idUserInterface *gui, HandleGuiCommand_t handle ) {
 	}
 
 	if ( guiActive == guiMainMenu ) {
-		SetSaveGameGuiVars();
-		SetMainMenuGuiVars();
+		// ST. BRIELLE standalone bootstrap GUI intentionally omits Skin Deep's
+		// save-game list controls. Only populate those variables when we're not
+		// running the standalone St. Brielle content tree.
+		if ( idStr::Icmp( cvarSystem->GetCVarString( "fs_game" ), "stbrielle" ) != 0 ) {
+			SetSaveGameGuiVars();
+			SetMainMenuGuiVars();
+		}
 	} else if ( guiActive == guiRestartMenu ) {
-		SetSaveGameGuiVars();
+		if ( idStr::Icmp( cvarSystem->GetCVarString( "fs_game" ), "stbrielle" ) != 0 ) {
+			SetSaveGameGuiVars();
+		}
 	}
 
 	sysEvent_t  ev;
@@ -235,6 +242,16 @@ idSessionLocal::SetSaveGameGuiVars
 */
 //BC Set the information to appear in the 'loadgame' listDef, for the mainmenu load GUI.
 void idSessionLocal::SetSaveGameGuiVars( void ) {
+	if ( guiActive == NULL ) {
+		return;
+	}
+
+	// The standalone St. Brielle bootstrap menu has no loadgame list state.
+	// Save/load UI will be implemented later as a St. Brielle-owned system.
+	if ( idStr::Icmp( cvarSystem->GetCVarString( "fs_game" ), "stbrielle" ) == 0 ) {
+		return;
+	}
+
 	int i;
 	idStr name;
 	idStrList fileList;
