@@ -351,6 +351,7 @@ Sys_InitInput
 =================
 */
 void Sys_InitInput() {
+	common->Printf( "ST. BRIELLE BUILD MARKER: CONSOLE INPUT FIX 4 ACTIVE\n" );
 	kbd_polls.SetGranularity(64);
 	mouse_polls.SetGranularity(64);
 
