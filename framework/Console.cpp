@@ -1295,7 +1295,7 @@ void idConsoleLocal::DrawSolidConsole( float frac ) {
 
 	renderSystem->SetColor( idVec4(0,.4f, .4f, 1)); //dark cyan for version text.
 													
-	idStr engineversion = idStr::Format( "%s.%i %s %s %s", ENGINE_VERSION, BUILD_NUMBER, CMAKE_INTDIR, __DATE__, __TIME__ );	
+	idStr engineversion = idStr::Format( "%s.%i %s %s %s  [CONSOLE INPUT FIX 3]", ENGINE_VERSION, BUILD_NUMBER, CMAKE_INTDIR, __DATE__, __TIME__ );	
 	i = engineversion.Length();
 	for ( x = 0; x < i; x++ )
 	{
