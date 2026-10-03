@@ -265,7 +265,7 @@ brushDef3
 "stbrielle_use_once" "1"
 "stbrielle_interact_debug" "1"
 "solid" "1"
-"target" "annex_workorder_record"
+"target" "annex_workorder_unread_check"
 {
 brushDef3
 {
@@ -277,6 +277,16 @@ brushDef3
 ( 0 0 -1 46 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_paper" 0 0 0
 }
 }
+}
+{
+"classname" "target_stbrielle_recordcheck"
+"name" "annex_workorder_unread_check"
+"record_key" "sb_annex_workorder_read"
+"record_compare" "false"
+"record_value" "1"
+"record_once" "0"
+"record_debug" "1"
+"target" "annex_workorder_record"
 }
 {
 "classname" "target_stbrielle_record"
@@ -333,7 +343,7 @@ brushDef3
 "stbrielle_use_once" "1"
 "stbrielle_interact_debug" "1"
 "solid" "1"
-"target" "annex_room214_record"
+"target" "annex_room214_missing_check"
 {
 brushDef3
 {
@@ -345,6 +355,16 @@ brushDef3
 ( 0 0 -1 52 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_brass" 0 0 0
 }
 }
+}
+{
+"classname" "target_stbrielle_recordcheck"
+"name" "annex_room214_missing_check"
+"record_key" "sb_room_214_exists"
+"record_compare" "false"
+"record_value" "1"
+"record_once" "0"
+"record_debug" "1"
+"target" "annex_room214_record"
 }
 {
 "classname" "target_stbrielle_record"
