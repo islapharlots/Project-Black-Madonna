@@ -240,3 +240,54 @@ guis/assets/scrollbar_thumb
 		rgba		0
 	}
 }
+
+
+textures/stbrielle/dev_office
+{
+	qer_editorimage	_white
+	noShadows
+	{
+		map			_white
+		rgb			0.18
+	}
+}
+
+textures/stbrielle/dev_paper
+{
+	qer_editorimage	_white
+	noShadows
+	{
+		map			_white
+		rgb			0.62
+	}
+}
+
+textures/stbrielle/dev_brass
+{
+	qer_editorimage	_white
+	noShadows
+	{
+		map			_white
+		rgb			0.42
+	}
+}
+
+textures/stbrielle/dev_burgundy
+{
+	qer_editorimage	_white
+	noShadows
+	{
+		map			_white
+		rgb			0.24
+	}
+}
+
+textures/stbrielle/dev_exit
+{
+	qer_editorimage	_white
+	noShadows
+	{
+		map			_white
+		rgb			0.30
+	}
+}
