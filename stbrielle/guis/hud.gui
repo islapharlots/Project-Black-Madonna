@@ -2,4 +2,16 @@ windowDef Desktop {
 	rect 0, 0, 640, 480
 	visible 1
 	noCursor 1
+
+	windowDef stbrielle_reticle_h {
+		rect 316, 239, 8, 2
+		visible 1
+		backcolor 0.72, 0.72, 0.72, 0.75
+	}
+
+	windowDef stbrielle_reticle_v {
+		rect 319, 236, 2, 8
+		visible 1
+		backcolor 0.72, 0.72, 0.72, 0.75
+	}
 }
