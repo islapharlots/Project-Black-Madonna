@@ -21251,6 +21251,46 @@ void idPlayer::Think( void ) {
 		}
 
 		CalculateFirstPersonView();
+
+		// ST. BRIELLE interaction layer. The standalone player intentionally
+		// does not run Skin Deep's frob scanner, so use a small first-person
+		// trace when the dedicated FROB button is pressed.
+		if ( ( usercmd.buttons & BUTTON_FROB ) && !( oldButtons & BUTTON_FROB ) ) {
+			const float interactRange = spawnArgs.GetFloat( "stbrielle_interact_range", "112" );
+			const idVec3 interactStart = firstPersonViewOrigin;
+			const idVec3 interactEnd = interactStart + firstPersonViewAxis[0] * interactRange;
+
+			trace_t interactTrace;
+			gameLocal.clip.TracePoint( interactTrace, interactStart, interactEnd, MASK_SOLID | CONTENTS_BODY, this );
+
+			idEntity *interactEnt = NULL;
+			if ( interactTrace.fraction < 1.0f && interactTrace.c.entityNum >= 0 && interactTrace.c.entityNum < MAX_GENTITIES ) {
+				interactEnt = gameLocal.entities[ interactTrace.c.entityNum ];
+			}
+
+			if ( interactEnt && interactEnt != gameLocal.world &&
+				( interactEnt->isFrobbable || interactEnt->spawnArgs.GetBool( "stbrielle_interact", "0" ) ) ) {
+
+				const int frobIndex = interactEnt->spawnArgs.GetInt( "frobindex", "0" );
+				const bool handledByEntity = interactEnt->DoFrob( frobIndex, this );
+
+				if ( !handledByEntity && interactEnt->spawnArgs.GetBool( "stbrielle_activate_targets", "1" ) ) {
+					interactEnt->ActivateTargets( this );
+				}
+
+				if ( interactEnt->spawnArgs.GetBool( "stbrielle_use_once", "0" ) ) {
+					interactEnt->isFrobbable = false;
+					interactEnt->spawnArgs.SetBool( "stbrielle_interact", false );
+				}
+
+				if ( interactEnt->spawnArgs.GetBool( "stbrielle_interact_debug", "0" ) ) {
+					common->Printf( "[ST. BRIELLE USE] %s\n", interactEnt->GetName() );
+				}
+			} else if ( spawnArgs.GetBool( "stbrielle_interact_debug", "0" ) ) {
+				common->Printf( "[ST. BRIELLE USE] no interactable in range\n" );
+			}
+		}
+
 		CalculateRenderView();
 
 		Present();
