@@ -2,7 +2,8 @@
 out vec4 fragColor;
 
 void main() {
-    // Disable inherited interaction contribution while validating the
-    // standalone St. Brielle geometry/camera path.
-    fragColor = vec4(0.0, 0.0, 0.0, 0.0);
+    // ST. BRIELLE greybox lighting pass.
+    // The previous bootstrap returned zero here, which made otherwise-valid
+    // world/light interactions render completely black.
+    fragColor = vec4(0.24, 0.27, 0.33, 1.0);
 }
