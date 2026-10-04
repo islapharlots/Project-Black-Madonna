@@ -130,7 +130,12 @@ static void EnsureConsoleInputLine() {
 		}
 	}
 
-	EnsureConsoleInputLine();
+	if ( s_wcd.hwndInputLine ) {
+		EnableWindow( s_wcd.hwndInputLine, TRUE );
+		ShowWindow( s_wcd.hwndInputLine, SW_SHOW );
+		SetFocus( s_wcd.hwndInputLine );
+		SendMessage( s_wcd.hwndInputLine, EM_SETSEL, -1, -1 );
+	}
 }
 
 static LRESULT CALLBACK ConWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
