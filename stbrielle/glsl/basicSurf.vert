@@ -1,19 +1,25 @@
 #version 330 core
+
 layout(location = 0) in vec4 aPosition;
-layout(location = 2) in vec3 aNormal;
+layout(location = 1) in vec2 aTexCoord;
+layout(location = 5) in vec4 aColor;
 
 uniform mat4 uProjectionMatrix;
 uniform mat4 uModelViewMatrix;
+uniform mat4 uTextureMatrix;
+uniform vec4 uProgramEnv[32];
 
-out vec3 vNormal;
-out float vDepth;
+out vec2 vTexCoord;
+out vec4 vVertexColor;
 
 void main() {
-    vec4 viewPos = uModelViewMatrix * aPosition;
-    gl_Position = uProjectionMatrix * viewPos;
+    gl_Position = uProjectionMatrix * uModelViewMatrix * aPosition;
 
-    // World brushes are unscaled in the Record Lab, so this is sufficient for
-    // a stable diagnostic normal. We intentionally keep this shader simple.
-    vNormal = normalize(aNormal);
-    vDepth = max(0.0, -viewPos.z);
+    vec4 tc = uTextureMatrix * vec4(aTexCoord, 0.0, 1.0);
+    vTexCoord = tc.xy;
+
+    // Mirrors the fixed-function vertexColor behavior:
+    // IGNORE => white, MODULATE => vertex color,
+    // INVERSE_MODULATE => 1 - vertex color.
+    vVertexColor = aColor * uProgramEnv[16] + uProgramEnv[17];
 }
