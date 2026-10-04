@@ -288,3 +288,55 @@ void idTarget_StBrielleRecordCheck::Event_Activate( idEntity *activator ) {
 		PostEventMS( &EV_Remove, 0 );
 	}
 }
+
+
+/*
+===============================================================================
+
+idTarget_StBrielleNotice
+
+Small diegetic civic/document card drawn through the St. Brielle HUD.
+
+===============================================================================
+*/
+
+const idEventDef EV_StBrielleNoticeClear( "<stBrielleNoticeClear>" );
+
+CLASS_DECLARATION( idTarget, idTarget_StBrielleNotice )
+	EVENT( EV_Activate, idTarget_StBrielleNotice::Event_Activate )
+	EVENT( EV_StBrielleNoticeClear, idTarget_StBrielleNotice::Event_Clear )
+END_CLASS
+
+void idTarget_StBrielleNotice::Spawn( void ) {
+}
+
+void idTarget_StBrielleNotice::Event_Activate( idEntity *activator ) {
+	idPlayer *player = gameLocal.GetLocalPlayer();
+	if ( !player || !player->hud ) {
+		return;
+	}
+
+	player->hud->SetStateString( "sb_notice_kicker", spawnArgs.GetString( "notice_kicker", "" ) );
+	player->hud->SetStateString( "sb_notice_title", spawnArgs.GetString( "notice_title", "" ) );
+	player->hud->SetStateString( "sb_notice_line1", spawnArgs.GetString( "notice_line1", "" ) );
+	player->hud->SetStateString( "sb_notice_line2", spawnArgs.GetString( "notice_line2", "" ) );
+	player->hud->SetStateString( "sb_notice_line3", spawnArgs.GetString( "notice_line3", "" ) );
+	player->hud->SetStateString( "sb_notice_line4", spawnArgs.GetString( "notice_line4", "" ) );
+	player->hud->SetStateString( "sb_notice_footer", spawnArgs.GetString( "notice_footer", "" ) );
+	player->hud->SetStateBool( "sb_notice_visible", true );
+	player->hud->StateChanged( gameLocal.time );
+
+	CancelEvents( &EV_StBrielleNoticeClear );
+	const float duration = idMath::ClampFloat( 1.0f, 20.0f, spawnArgs.GetFloat( "notice_duration", "5.0" ) );
+	PostEventMS( &EV_StBrielleNoticeClear, SEC2MS( duration ) );
+
+	ActivateTargets( activator );
+}
+
+void idTarget_StBrielleNotice::Event_Clear( void ) {
+	idPlayer *player = gameLocal.GetLocalPlayer();
+	if ( player && player->hud ) {
+		player->hud->SetStateBool( "sb_notice_visible", false );
+		player->hud->StateChanged( gameLocal.time );
+	}
+}
