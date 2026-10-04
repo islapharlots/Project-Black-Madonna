@@ -21223,7 +21223,7 @@ void idPlayer::Think( void ) {
 		static bool stbrielleLoggedLiveFrame = false;
 		if ( !stbrielleLoggedLiveFrame ) {
 			stbrielleLoggedLiveFrame = true;
-			common->Printf( "[ST. BRIELLE PLAYER] live frame loop active at origin %s\\n", GetPhysics()->GetOrigin().ToString() );
+			common->Printf( "[ST. BRIELLE PLAYER] live frame loop active at origin %s\n", GetPhysics()->GetOrigin().ToString() );
 		}
 
 		oldButtons = usercmd.buttons;
