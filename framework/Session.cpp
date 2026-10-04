@@ -1949,6 +1949,12 @@ void idSessionLocal::ExecuteMapChange( bool noFadeWipe ) {
 	uiManager->BeginLevelLoad();
 	uiManager->Reload( true );
 
+	// Any GUI object that was active before Reload() may have been rebuilt.
+	// Never carry an active/test GUI pointer across the reload into the loading
+	// spin; the dedicated guiLoading path handles map-load drawing.
+	SetGUI( NULL, NULL );
+	guiTest = NULL;
+
 	// set the loading gui that we will wipe to
 	LoadLoadingGui( mapString );
 
