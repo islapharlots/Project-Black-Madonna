@@ -14,4 +14,41 @@ windowDef Desktop {
 		visible 1
 		backcolor 0.72, 0.72, 0.72, 0.75
 	}
+
+	// Quiet contextual interaction prompt. Kept deliberately restrained so it
+	// reads as civic interface rather than a gamey objective marker.
+	windowDef stbrielle_interact_prompt {
+		rect 205, 394, 230, 32
+		visible "gui::sb_interact_visible"
+		backcolor 0.015, 0.015, 0.020, 0.88
+		border 1
+		bordercolor 0.28, 0.20, 0.15, 0.90
+
+		windowDef key {
+			rect 8, 6, 24, 20
+			text "E"
+			textscale 0.28
+			textalign 1
+			forecolor 0.82, 0.72, 0.52, 1
+		}
+
+		windowDef divider {
+			rect 39, 6, 1, 20
+			backcolor 0.34, 0.07, 0.09, 1
+		}
+
+		windowDef action {
+			rect 48, 5, 68, 10
+			text "gui::sb_interact_action"
+			textscale 0.18
+			forecolor 0.58, 0.58, 0.60, 1
+		}
+
+		windowDef name {
+			rect 48, 15, 174, 12
+			text "gui::sb_interact_name"
+			textscale 0.22
+			forecolor 0.90, 0.90, 0.88, 1
+		}
+	}
 }
