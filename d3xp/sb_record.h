@@ -97,6 +97,7 @@ private:
 //   notice_line1..4  body rows
 //   notice_footer    small footer / provenance
 //   notice_duration  seconds before the card clears (default 5.0)
+//   $PLAYER          in any notice string is replaced with the local ui_name
 class idTarget_StBrielleNotice : public idTarget {
 public:
 	CLASS_PROTOTYPE( idTarget_StBrielleNotice );
