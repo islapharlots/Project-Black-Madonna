@@ -58,3 +58,18 @@ entityDef stbrielle_cycle_director {
 	"editor_bool fire_current_on_spawn" "Fire the current Cycle once after map spawn. Default 1."
 	"editor_bool cycle_debug"		"Print Cycle transitions to the console."
 }
+
+
+entityDef target_stbrielle_notice {
+	"spawnclass"					"idTarget_StBrielleNotice"
+	"editor_displayFolder"			"St. Brielle/Targets"
+	"editor_usage"					"Shows a timed St. Brielle civic/document card on the player HUD."
+	"editor_var notice_kicker"		"Small institutional heading."
+	"editor_var notice_title"		"Primary notice title."
+	"editor_var notice_line1"		"Body row 1."
+	"editor_var notice_line2"		"Body row 2."
+	"editor_var notice_line3"		"Body row 3."
+	"editor_var notice_line4"		"Body row 4."
+	"editor_var notice_footer"		"Small footer/provenance."
+	"editor_float notice_duration"	"Seconds before dismissal. Default 5."
+}
