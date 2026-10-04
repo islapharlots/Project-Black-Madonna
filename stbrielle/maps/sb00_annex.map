@@ -392,6 +392,7 @@ brushDef3
 "record_debug" "1"
 "target" "annex_room214_wall"
 "target1" "annex_room214_light"
+"target2" "annex_room214_reveal_frame"
 }
 {
 "classname" "func_static"
@@ -797,6 +798,907 @@ brushDef3
 ( 0 -1 0 -42 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_lightpanel" 0 0 0
 ( 0 0 1 -284 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_lightpanel" 0 0 0
 ( 0 0 -1 278 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_lightpanel" 0 0 0
+}
+}
+}
+
+// -----------------------------------------------------------------------------
+// MUNICIPAL ANNEX — ARCHITECTURE PASS 01
+// Authored civic rhythm layered onto the stable gameplay shell.
+// -----------------------------------------------------------------------------
+
+{
+"classname" "func_static"
+"name" "annex_architecture_pass_01"
+"model" "annex_architecture_pass_01"
+"solid" "0"
+{
+brushDef3
+{
+( 1 0 0 676 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_stone" 0 0 0
+( -1 0 0 -708 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_stone" 0 0 0
+( 0 1 0 96 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_stone" 0 0 0
+( 0 -1 0 -132 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_stone" 0 0 0
+( 0 0 1 -236 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_stone" 0 0 0
+( 0 0 -1 0 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_stone" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 676 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_stone" 0 0 0
+( -1 0 0 -708 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_stone" 0 0 0
+( 0 1 0 -132 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_stone" 0 0 0
+( 0 -1 0 96 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_stone" 0 0 0
+( 0 0 1 -236 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_stone" 0 0 0
+( 0 0 -1 0 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_stone" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 676 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( -1 0 0 -708 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 1 0 -132 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 -1 0 -132 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 1 -244 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 -1 224 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 708 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( -1 0 0 -712 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 1 0 96 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 -1 0 -132 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 1 -224 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 -1 36 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 708 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( -1 0 0 -712 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 1 0 -132 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 -1 0 96 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 1 -224 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 -1 36 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+}
+}
+}
+
+{
+"classname" "func_static"
+"name" "annex_gate_arch_a"
+"model" "annex_gate_arch_a"
+"solid" "0"
+{
+brushDef3
+{
+( 1 0 0 568 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( -1 0 0 -576 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 1 0 96 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 -1 0 -108 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 1 -238 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 -1 0 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 568 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( -1 0 0 -576 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 1 0 -108 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 -1 0 96 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 1 -238 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 -1 0 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 568 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( -1 0 0 -576 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 1 0 -108 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 -1 0 -108 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 1 -246 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 -1 230 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 576 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( -1 0 0 -579 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 1 0 98 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 -1 0 -104 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 1 -226 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 -1 42 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 576 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( -1 0 0 -579 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 1 0 -104 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 -1 0 98 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 1 -226 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 -1 42 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+}
+}
+}
+
+{
+"classname" "func_static"
+"name" "annex_gate_arch_b"
+"model" "annex_gate_arch_b"
+"solid" "0"
+{
+brushDef3
+{
+( 1 0 0 128 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( -1 0 0 -136 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 1 0 96 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 -1 0 -108 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 1 -238 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 -1 0 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 128 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( -1 0 0 -136 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 1 0 -108 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 -1 0 96 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 1 -238 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 -1 0 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 128 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( -1 0 0 -136 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 1 0 -108 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 -1 0 -108 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 1 -246 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 -1 230 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 136 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( -1 0 0 -139 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 1 0 98 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 -1 0 -104 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 1 -226 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 -1 42 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 136 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( -1 0 0 -139 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 1 0 -104 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 -1 0 98 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 1 -226 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 -1 42 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+}
+}
+}
+
+{
+"classname" "func_static"
+"name" "annex_utility_arch"
+"model" "annex_utility_arch"
+"solid" "0"
+{
+brushDef3
+{
+( 1 0 0 -276 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( -1 0 0 264 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 1 0 96 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 -1 0 -104 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 1 -220 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 -1 0 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 -372 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( -1 0 0 360 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 1 0 96 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 -1 0 -104 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 1 -220 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 -1 0 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 -372 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( -1 0 0 264 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 1 0 96 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 -1 0 -104 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 1 -226 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 -1 210 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 -272 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( -1 0 0 268 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 1 0 104 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 -1 0 -107 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 1 -206 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 -1 42 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 -368 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( -1 0 0 364 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 1 0 104 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 -1 0 -107 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 1 -206 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 -1 42 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+}
+}
+}
+
+{
+"classname" "func_static"
+"name" "annex_reception_finish"
+"model" "annex_reception_finish"
+"solid" "0"
+{
+brushDef3
+{
+( 1 0 0 468 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_burgundy" 0 0 0
+( -1 0 0 -474 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_burgundy" 0 0 0
+( 0 1 0 -82 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_burgundy" 0 0 0
+( 0 -1 0 -82 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_burgundy" 0 0 0
+( 0 0 1 -38 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_burgundy" 0 0 0
+( 0 0 -1 10 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_burgundy" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 474 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( -1 0 0 -476 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 1 0 -82 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 -1 0 -82 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 1 -38 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 -1 34 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 468 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( -1 0 0 -472 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 1 0 82 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 -1 0 -86 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 1 -40 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 -1 12 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 468 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( -1 0 0 -472 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 1 0 -86 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 -1 0 82 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 1 -40 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 -1 12 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+}
+}
+}
+
+{
+"classname" "func_static"
+"name" "annex_room213_door"
+"model" "annex_room213_door"
+"solid" "0"
+{
+brushDef3
+{
+( 1 0 0 -552 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_wood" 0 0 0
+( -1 0 0 548 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_wood" 0 0 0
+( 0 1 0 -196 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_wood" 0 0 0
+( 0 -1 0 132 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_wood" 0 0 0
+( 0 0 1 -224 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_wood" 0 0 0
+( 0 0 -1 24 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_wood" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 -548 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( -1 0 0 545 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 1 0 -132 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 -1 0 128 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 1 -232 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 -1 18 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 -548 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( -1 0 0 545 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 1 0 -200 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 -1 0 196 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 1 -232 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 -1 18 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 -548 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( -1 0 0 545 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 1 0 -200 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 -1 0 128 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 1 -232 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 -1 224 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 -545 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( -1 0 0 543 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 1 0 -200 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 -1 0 128 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 1 -228 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 -1 224 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 -544 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( -1 0 0 541 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 1 0 -187 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 -1 0 141 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 1 -190 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 -1 150 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 -541 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( -1 0 0 539 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 1 0 -154 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 -1 0 146 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 1 -182 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 -1 180.2 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 -541 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( -1 0 0 539 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 1 0 -154 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 -1 0 152.2 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 1 -180.2 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 -1 170 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 -541 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( -1 0 0 539 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 1 0 -154 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 -1 0 146 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 1 -170.9 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 -1 169.1 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 -541 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( -1 0 0 539 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 1 0 -147.8 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 -1 0 146 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 1 -170 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 -1 159.8 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 -541 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( -1 0 0 539 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 1 0 -154 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 -1 0 146 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 1 -159.8 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 -1 158 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 -541 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( -1 0 0 539 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 1 0 -166 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 -1 0 164.2 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 1 -180.2 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 -1 170 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 -541 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( -1 0 0 539 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 1 0 -166 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 -1 0 164.2 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 1 -170 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 -1 159.8 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 -541 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( -1 0 0 539 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 1 0 -178 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 -1 0 170 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 1 -182 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 -1 180.2 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 -541 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( -1 0 0 539 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 1 0 -178 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 -1 0 176.2 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 1 -180.2 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 -1 170 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 -541 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( -1 0 0 539 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 1 0 -178 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 -1 0 176.2 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 1 -170 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 -1 159.8 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 -541 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( -1 0 0 539 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 1 0 -178 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 -1 0 170 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 1 -159.8 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 -1 158 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 -541 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( -1 0 0 539 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 1 0 -178 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 -1 0 170 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 1 -170.9 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 -1 169.1 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+}
+}
+}
+
+{
+"classname" "func_static"
+"name" "annex_room215_door"
+"model" "annex_room215_door"
+"solid" "0"
+{
+brushDef3
+{
+( 1 0 0 -552 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_wood" 0 0 0
+( -1 0 0 548 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_wood" 0 0 0
+( 0 1 0 -388 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_wood" 0 0 0
+( 0 -1 0 324 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_wood" 0 0 0
+( 0 0 1 -224 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_wood" 0 0 0
+( 0 0 -1 24 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_wood" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 -548 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( -1 0 0 545 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 1 0 -324 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 -1 0 320 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 1 -232 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 -1 18 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 -548 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( -1 0 0 545 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 1 0 -392 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 -1 0 388 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 1 -232 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 -1 18 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 -548 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( -1 0 0 545 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 1 0 -392 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 -1 0 320 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 1 -232 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 -1 224 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 -545 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( -1 0 0 543 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 1 0 -392 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 -1 0 320 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 1 -228 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 -1 224 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 -544 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( -1 0 0 541 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 1 0 -379 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 -1 0 333 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 1 -190 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 -1 150 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 -541 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( -1 0 0 539 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 1 0 -346 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 -1 0 338 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 1 -182 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 -1 180.2 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 -541 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( -1 0 0 539 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 1 0 -346 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 -1 0 344.2 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 1 -180.2 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 -1 170 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 -541 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( -1 0 0 539 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 1 0 -346 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 -1 0 338 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 1 -170.9 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 -1 169.1 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 -541 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( -1 0 0 539 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 1 0 -339.8 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 -1 0 338 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 1 -170 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 -1 159.8 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 -541 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( -1 0 0 539 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 1 0 -346 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 -1 0 338 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 1 -159.8 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 -1 158 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 -541 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( -1 0 0 539 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 1 0 -358 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 -1 0 356.2 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 1 -180.2 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 -1 170 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 -541 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( -1 0 0 539 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 1 0 -358 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 -1 0 356.2 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 1 -170 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 -1 159.8 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 -541 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( -1 0 0 539 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 1 0 -370 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 -1 0 362 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 1 -182 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 -1 180.2 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 -541 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( -1 0 0 539 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 1 0 -363.8 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 -1 0 362 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 1 -180.2 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 -1 170 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 -541 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( -1 0 0 539 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 1 0 -370 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 -1 0 362 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 1 -170.9 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 -1 169.1 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 -541 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( -1 0 0 539 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 1 0 -370 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 -1 0 368.2 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 1 -170 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 -1 159.8 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 -541 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( -1 0 0 539 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 1 0 -370 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 -1 0 362 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 1 -159.8 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 -1 158 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+}
+}
+}
+
+{
+"classname" "func_static"
+"name" "annex_room214_reveal_frame"
+"model" "annex_room214_reveal_frame"
+"solid" "0"
+"hide" "1"
+{
+brushDef3
+{
+( 1 0 0 -552 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( -1 0 0 545 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 1 0 -212 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 -1 0 204 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 1 -236 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 -1 12 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 -552 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( -1 0 0 545 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 1 0 -316 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 -1 0 308 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 1 -236 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 -1 12 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 -552 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( -1 0 0 545 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 1 0 -316 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 -1 0 204 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 1 -236 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 -1 224 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 -545 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( -1 0 0 542 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 1 0 -212 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 -1 0 206 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 1 -220 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 -1 42 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 -545 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( -1 0 0 542 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 1 0 -314 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 -1 0 308 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 1 -220 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 -1 42 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 -545 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( -1 0 0 542 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 1 0 -314 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 -1 0 206 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 1 -224 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 -1 220 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 -568 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_burgundy" 0 0 0
+( -1 0 0 548 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_burgundy" 0 0 0
+( 0 1 0 -308 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_burgundy" 0 0 0
+( 0 -1 0 212 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_burgundy" 0 0 0
+( 0 0 1 -7 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_burgundy" 0 0 0
+( 0 0 -1 0 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_burgundy" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 -892 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_void" 0 0 0
+( -1 0 0 888 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_void" 0 0 0
+( 0 1 0 -384 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_void" 0 0 0
+( 0 -1 0 136 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_void" 0 0 0
+( 0 0 1 -260 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_void" 0 0 0
+( 0 0 -1 16 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_void" 0 0 0
+}
+}
+}
+
+{
+"classname" "func_static"
+"name" "annex_base_course"
+"model" "annex_base_course"
+"solid" "0"
+{
+brushDef3
+{
+( 1 0 0 -880 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( -1 0 0 -900 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 1 0 474 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 -1 0 -480 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 1 -28 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 -1 0 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 -880 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( -1 0 0 -900 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 1 0 -480 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 -1 0 474 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 1 -28 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 -1 0 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+}
+}
+}
+
+{
+"classname" "func_static"
+"name" "annex_ceiling_ribs"
+"model" "annex_ceiling_ribs"
+"solid" "0"
+{
+brushDef3
+{
+( 1 0 0 704 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( -1 0 0 -720 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 1 0 -138 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 -1 0 -138 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 1 -286 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 -1 270 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 568 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( -1 0 0 -584 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 1 0 -138 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 -1 0 -138 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 1 -286 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 -1 270 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 128 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( -1 0 0 -144 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 1 0 -138 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 -1 0 -138 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 1 -286 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 -1 270 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 -280 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( -1 0 0 264 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 1 0 -138 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 -1 0 -138 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 1 -286 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 -1 270 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 -560 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( -1 0 0 544 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 1 0 -138 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 -1 0 -138 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 1 -286 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 -1 270 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
 }
 }
 }
