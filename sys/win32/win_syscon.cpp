@@ -85,7 +85,6 @@ typedef struct {
 	int			windowWidth, windowHeight;
 
 	LONG_PTR	SysInputLineWndProc;
-	LONG_PTR	SysBufferWndProc;
 
 	idEditField	historyEditLines[COMMAND_HISTORY];
 
@@ -99,58 +98,15 @@ typedef struct {
 
 static WinConData s_wcd;
 
-LONG WINAPI InputLineWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam );
-
-static void EnsureConsoleInputLine() {
-	if ( !s_wcd.hWnd ) {
-		return;
-	}
-
-	if ( !s_wcd.hwndInputLine || !IsWindow( s_wcd.hwndInputLine ) ) {
-		s_wcd.hwndInputLine = CreateWindow(
-			"edit",
-			NULL,
-			WS_CHILD | WS_VISIBLE | WS_BORDER | ES_LEFT | ES_AUTOHSCROLL,
-			72, 398, 462, 24,
-			s_wcd.hWnd,
-			( HMENU ) INPUT_ID,
-			win32.hInstance,
-			NULL
-		);
-
-		if ( s_wcd.hwndInputLine ) {
-			s_wcd.SysInputLineWndProc = ( LONG_PTR )SetWindowLongPtr(
-				s_wcd.hwndInputLine,
-				GWLP_WNDPROC,
-				( LONG_PTR )InputLineWndProc
-			);
-			if ( s_wcd.hfBufferFont ) {
-				SendMessage( s_wcd.hwndInputLine, WM_SETFONT, ( WPARAM )s_wcd.hfBufferFont, TRUE );
-			}
-		}
-	}
-
-	if ( s_wcd.hwndInputLine ) {
-		EnableWindow( s_wcd.hwndInputLine, TRUE );
-		ShowWindow( s_wcd.hwndInputLine, SW_SHOW );
-		SetFocus( s_wcd.hwndInputLine );
-		SendMessage( s_wcd.hwndInputLine, EM_SETSEL, -1, -1 );
-	}
-}
-
 static LRESULT CALLBACK ConWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 	static bool s_timePolarity;
 
 	switch (uMsg) {
 		case WM_ACTIVATE:
-			if ( LOWORD( wParam ) != WA_INACTIVE && s_wcd.hwndInputLine ) {
+			if ( LOWORD( wParam ) != WA_INACTIVE ) {
 				SetFocus( s_wcd.hwndInputLine );
 			}
 		break;
-		case WM_SETFOCUS:
-		case WM_LBUTTONDOWN:
-			EnsureConsoleInputLine();
-			return 0;
 		case WM_CLOSE:
 #ifdef ID_DEDICATED
 			if ( cvarSystem->IsInitialized() ) {
@@ -244,32 +200,6 @@ static LRESULT CALLBACK ConWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM 
 	return DefWindowProc( hWnd, uMsg, wParam, lParam );
 }
 
-LONG WINAPI ConsoleBufferWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam ) {
-	// The large console buffer is read-only. Historically it could still take
-	// keyboard focus, making the console look like a dead text box. Redirect
-	// clicks and keyboard input to the actual command-entry line.
-	if ( s_wcd.hwndInputLine ) {
-		switch ( uMsg ) {
-			case WM_LBUTTONDOWN:
-			case WM_SETFOCUS:
-				SetFocus( s_wcd.hwndInputLine );
-				SendMessage( s_wcd.hwndInputLine, EM_SETSEL, -1, -1 );
-				return 0;
-
-			case WM_KEYDOWN:
-			case WM_KEYUP:
-			case WM_SYSKEYDOWN:
-			case WM_SYSKEYUP:
-			case WM_CHAR:
-			case WM_PASTE:
-				SetFocus( s_wcd.hwndInputLine );
-				return SendMessage( s_wcd.hwndInputLine, uMsg, wParam, lParam );
-		}
-	}
-
-	return CallWindowProc( (WNDPROC)s_wcd.SysBufferWndProc, hWnd, uMsg, wParam, lParam );
-}
-
 LONG WINAPI InputLineWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 	int key, cursor;
 	switch ( uMsg ) {
@@ -309,8 +239,7 @@ LONG WINAPI InputLineWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam
 		break;
 
 	case WM_CHAR:
-		// WM_CHAR carries the translated character in wParam. lParam contains
-		// repeat/scancode state and must not be passed through Win_MapKey here.
+		// WM_CHAR already contains the translated character in wParam.
 		key = (int)wParam;
 
 		GetWindowText( s_wcd.hwndInputLine, s_wcd.consoleField.GetBuffer(), MAX_EDIT_LINE );
@@ -417,7 +346,7 @@ void Sys_CreateConsole( void ) {
 		return;
 	}
 
-	SetWindowText( s_wcd.hWnd, "ST. BRIELLE Developer Console [INPUT FIX 5]" );
+	SetWindowText( s_wcd.hWnd, "ST. BRIELLE Developer Console [SAFE INPUT]" );
 
 	//
 	// create fonts
@@ -432,11 +361,11 @@ void Sys_CreateConsole( void ) {
 	//
 	// create the input line
 	//
-	CreateWindow( "static", "COMMAND:", WS_CHILD | WS_VISIBLE,
-							6, 400, 62, 20,
-							s_wcd.hWnd,
-							NULL,
-							win32.hInstance, NULL );
+	HWND hwndCommandLabel = CreateWindow( "static", "COMMAND:", WS_CHILD | WS_VISIBLE,
+												6, 400, 62, 20,
+												s_wcd.hWnd,
+												NULL,
+												win32.hInstance, NULL );
 
 	s_wcd.hwndInputLine = CreateWindow( "edit", NULL, WS_CHILD | WS_VISIBLE | WS_BORDER |
 												ES_LEFT | ES_AUTOHSCROLL,
@@ -481,12 +410,9 @@ void Sys_CreateConsole( void ) {
 												win32.hInstance, NULL );
 	SendMessage( s_wcd.hwndBuffer, WM_SETFONT, ( WPARAM ) s_wcd.hfBufferFont, 0 );
 
-	// Redirect accidental focus/typing in the read-only output pane to the
-	// actual command line so the entire console behaves like an input surface.
-	s_wcd.SysBufferWndProc = ( LONG_PTR ) SetWindowLongPtr( s_wcd.hwndBuffer, GWLP_WNDPROC, ( LONG_PTR ) ConsoleBufferWndProc );
-
 	s_wcd.SysInputLineWndProc = ( LONG_PTR ) SetWindowLongPtr( s_wcd.hwndInputLine, GWLP_WNDPROC, ( LONG_PTR ) InputLineWndProc );
 	SendMessage( s_wcd.hwndInputLine, WM_SETFONT, ( WPARAM ) s_wcd.hfBufferFont, 0 );
+	SendMessage( hwndCommandLabel, WM_SETFONT, ( WPARAM ) s_wcd.hfBufferFont, 0 );
 
 // don't show it now that we have a splash screen up
 	if ( win32.win_viewlog.GetBool() ) {
@@ -535,8 +461,6 @@ void Sys_ShowConsole( int visLevel, bool quitOnClose ) {
 		case 1:
 			ShowWindow( s_wcd.hWnd, SW_SHOWNORMAL );
 			SendMessage( s_wcd.hwndBuffer, EM_LINESCROLL, 0, 0xffff );
-			SetForegroundWindow( s_wcd.hWnd );
-			EnsureConsoleInputLine();
 		break;
 		case 2:
 			ShowWindow( s_wcd.hWnd, SW_MINIMIZE );
@@ -643,19 +567,9 @@ void Win_SetErrorText( const char *buf ) {
 													( HMENU ) ERRORBOX_ID,	// child window ID
 													win32.hInstance, NULL );
 		SendMessage( s_wcd.hwndErrorBox, WM_SETFONT, ( WPARAM ) s_wcd.hfBufferFont, 0 );
-	}
-
-	if ( s_wcd.hwndErrorBox ) {
 		SetWindowText( s_wcd.hwndErrorBox, s_wcd.errorString );
-	}
 
-	// Keep the command-entry line alive even when an error/status banner is
-	// displayed. The old Doom 3 behavior destroyed this control, leaving a
-	// visible developer console that could never accept text.
-	if ( s_wcd.hwndInputLine ) {
-		EnableWindow( s_wcd.hwndInputLine, TRUE );
-		ShowWindow( s_wcd.hwndInputLine, SW_SHOW );
-		SetFocus( s_wcd.hwndInputLine );
-		SendMessage( s_wcd.hwndInputLine, EM_SETSEL, -1, -1 );
+		DestroyWindow( s_wcd.hwndInputLine );
+		s_wcd.hwndInputLine = NULL;
 	}
 }
