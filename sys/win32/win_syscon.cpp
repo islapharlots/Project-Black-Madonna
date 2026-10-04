@@ -381,6 +381,8 @@ void Sys_CreateConsole( void ) {
 		return;
 	}
 
+	SetWindowText( s_wcd.hWnd, "ST. BRIELLE Developer Console [INPUT FIX 5]" );
+
 	//
 	// create fonts
 	//
