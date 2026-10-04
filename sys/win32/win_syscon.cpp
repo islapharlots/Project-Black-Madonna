@@ -604,9 +604,19 @@ void Win_SetErrorText( const char *buf ) {
 													( HMENU ) ERRORBOX_ID,	// child window ID
 													win32.hInstance, NULL );
 		SendMessage( s_wcd.hwndErrorBox, WM_SETFONT, ( WPARAM ) s_wcd.hfBufferFont, 0 );
-		SetWindowText( s_wcd.hwndErrorBox, s_wcd.errorString );
+	}
 
-		DestroyWindow( s_wcd.hwndInputLine );
-		s_wcd.hwndInputLine = NULL;
+	if ( s_wcd.hwndErrorBox ) {
+		SetWindowText( s_wcd.hwndErrorBox, s_wcd.errorString );
+	}
+
+	// Keep the command-entry line alive even when an error/status banner is
+	// displayed. The old Doom 3 behavior destroyed this control, leaving a
+	// visible developer console that could never accept text.
+	if ( s_wcd.hwndInputLine ) {
+		EnableWindow( s_wcd.hwndInputLine, TRUE );
+		ShowWindow( s_wcd.hwndInputLine, SW_SHOW );
+		SetFocus( s_wcd.hwndInputLine );
+		SendMessage( s_wcd.hwndInputLine, EM_SETSEL, -1, -1 );
 	}
 }
