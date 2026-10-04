@@ -518,3 +518,266 @@ brushDef3
 "noshadows" "1"
 "start_off" "1"
 }
+
+// -----------------------------------------------------------------------------
+// VISUAL READABILITY PASS
+// These simple civic elements make the first playable Annex read immediately
+// as a designed municipal interior while we remain entirely on standalone,
+// renderer-generated materials.
+// -----------------------------------------------------------------------------
+
+{
+"classname" "func_static"
+"name" "annex_civic_runner"
+"solid" "0"
+{
+brushDef3
+{
+( 1 0 0 -880 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_burgundy" 0 0 0
+( -1 0 0 -900 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_burgundy" 0 0 0
+( 0 1 0 -28 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_burgundy" 0 0 0
+( 0 -1 0 -28 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_burgundy" 0 0 0
+( 0 0 1 -1 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_burgundy" 0 0 0
+( 0 0 -1 0 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_burgundy" 0 0 0
+}
+}
+}
+
+{
+"classname" "func_static"
+"name" "annex_civic_runner_brass_n"
+"solid" "0"
+{
+brushDef3
+{
+( 1 0 0 -880 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_brass" 0 0 0
+( -1 0 0 -900 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_brass" 0 0 0
+( 0 1 0 -34 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_brass" 0 0 0
+( 0 -1 0 28 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_brass" 0 0 0
+( 0 0 1 -1 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_brass" 0 0 0
+( 0 0 -1 0 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_brass" 0 0 0
+}
+}
+}
+
+{
+"classname" "func_static"
+"name" "annex_civic_runner_brass_s"
+"solid" "0"
+{
+brushDef3
+{
+( 1 0 0 -880 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_brass" 0 0 0
+( -1 0 0 -900 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_brass" 0 0 0
+( 0 1 0 28 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_brass" 0 0 0
+( 0 -1 0 -34 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_brass" 0 0 0
+( 0 0 1 -1 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_brass" 0 0 0
+( 0 0 -1 0 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_brass" 0 0 0
+}
+}
+}
+
+{
+"classname" "func_static"
+"name" "annex_reception_front"
+"solid" "0"
+{
+brushDef3
+{
+( 1 0 0 460 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_burgundy" 0 0 0
+( -1 0 0 -468 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_burgundy" 0 0 0
+( 0 1 0 -90 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_burgundy" 0 0 0
+( 0 -1 0 -90 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_burgundy" 0 0 0
+( 0 0 1 -42 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_burgundy" 0 0 0
+( 0 0 -1 8 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_burgundy" 0 0 0
+}
+}
+}
+
+{
+"classname" "func_static"
+"name" "annex_reception_countertop"
+"solid" "1"
+{
+brushDef3
+{
+( 1 0 0 254 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_brass" 0 0 0
+( -1 0 0 -466 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_brass" 0 0 0
+( 0 1 0 -94 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_brass" 0 0 0
+( 0 -1 0 -94 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_brass" 0 0 0
+( 0 0 1 -50 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_brass" 0 0 0
+( 0 0 -1 44 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_brass" 0 0 0
+}
+}
+}
+
+{
+"classname" "func_static"
+"name" "annex_directory_plaque_w"
+"solid" "0"
+{
+brushDef3
+{
+( 1 0 0 128 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_burgundy" 0 0 0
+( -1 0 0 -132 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_burgundy" 0 0 0
+( 0 1 0 -186 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_burgundy" 0 0 0
+( 0 -1 0 112 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_burgundy" 0 0 0
+( 0 0 1 -170 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_burgundy" 0 0 0
+( 0 0 -1 82 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_burgundy" 0 0 0
+}
+}
+}
+
+{
+"classname" "func_static"
+"name" "annex_directory_trim_w"
+"solid" "0"
+{
+brushDef3
+{
+( 1 0 0 132 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_brass" 0 0 0
+( -1 0 0 -134 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_brass" 0 0 0
+( 0 1 0 -186 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_brass" 0 0 0
+( 0 -1 0 112 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_brass" 0 0 0
+( 0 0 1 -170 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_brass" 0 0 0
+( 0 0 -1 82 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_brass" 0 0 0
+}
+}
+}
+
+{
+"classname" "func_static"
+"name" "annex_214_plaque"
+"solid" "0"
+{
+brushDef3
+{
+( 1 0 0 -552 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_burgundy" 0 0 0
+( -1 0 0 548 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_burgundy" 0 0 0
+( 0 1 0 -196 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_burgundy" 0 0 0
+( 0 -1 0 132 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_burgundy" 0 0 0
+( 0 0 1 -168 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_burgundy" 0 0 0
+( 0 0 -1 86 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_burgundy" 0 0 0
+}
+}
+}
+
+{
+"classname" "func_static"
+"name" "annex_214_trim"
+"solid" "0"
+{
+brushDef3
+{
+( 1 0 0 -548 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_brass" 0 0 0
+( -1 0 0 546 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_brass" 0 0 0
+( 0 1 0 -196 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_brass" 0 0 0
+( 0 -1 0 132 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_brass" 0 0 0
+( 0 0 1 -168 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_brass" 0 0 0
+( 0 0 -1 86 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_brass" 0 0 0
+}
+}
+}
+
+{
+"classname" "func_static"
+"name" "annex_ceiling_light_1"
+"solid" "0"
+{
+brushDef3
+{
+( 1 0 0 650 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_lightpanel" 0 0 0
+( -1 0 0 -850 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_lightpanel" 0 0 0
+( 0 1 0 -42 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_lightpanel" 0 0 0
+( 0 -1 0 -42 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_lightpanel" 0 0 0
+( 0 0 1 -284 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_lightpanel" 0 0 0
+( 0 0 -1 278 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_lightpanel" 0 0 0
+}
+}
+}
+
+{
+"classname" "func_static"
+"name" "annex_ceiling_light_2"
+"solid" "0"
+{
+brushDef3
+{
+( 1 0 0 320 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_lightpanel" 0 0 0
+( -1 0 0 -520 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_lightpanel" 0 0 0
+( 0 1 0 -42 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_lightpanel" 0 0 0
+( 0 -1 0 -42 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_lightpanel" 0 0 0
+( 0 0 1 -284 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_lightpanel" 0 0 0
+( 0 0 -1 278 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_lightpanel" 0 0 0
+}
+}
+}
+
+{
+"classname" "func_static"
+"name" "annex_ceiling_light_3"
+"solid" "0"
+{
+brushDef3
+{
+( 1 0 0 -10 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_lightpanel" 0 0 0
+( -1 0 0 -190 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_lightpanel" 0 0 0
+( 0 1 0 -42 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_lightpanel" 0 0 0
+( 0 -1 0 -42 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_lightpanel" 0 0 0
+( 0 0 1 -284 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_lightpanel" 0 0 0
+( 0 0 -1 278 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_lightpanel" 0 0 0
+}
+}
+}
+
+{
+"classname" "func_static"
+"name" "annex_ceiling_light_4"
+"solid" "0"
+{
+brushDef3
+{
+( 1 0 0 -340 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_lightpanel" 0 0 0
+( -1 0 0 140 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_lightpanel" 0 0 0
+( 0 1 0 -42 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_lightpanel" 0 0 0
+( 0 -1 0 -42 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_lightpanel" 0 0 0
+( 0 0 1 -284 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_lightpanel" 0 0 0
+( 0 0 -1 278 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_lightpanel" 0 0 0
+}
+}
+}
+
+{
+"classname" "func_static"
+"name" "annex_ceiling_light_5"
+"solid" "0"
+{
+brushDef3
+{
+( 1 0 0 -670 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_lightpanel" 0 0 0
+( -1 0 0 470 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_lightpanel" 0 0 0
+( 0 1 0 -42 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_lightpanel" 0 0 0
+( 0 -1 0 -42 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_lightpanel" 0 0 0
+( 0 0 1 -284 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_lightpanel" 0 0 0
+( 0 0 -1 278 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_lightpanel" 0 0 0
+}
+}
+}
+
+{
+"classname" "func_static"
+"name" "annex_ceiling_light_6"
+"solid" "0"
+{
+brushDef3
+{
+( 1 0 0 -900 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_lightpanel" 0 0 0
+( -1 0 0 760 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_lightpanel" 0 0 0
+( 0 1 0 -42 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_lightpanel" 0 0 0
+( 0 -1 0 -42 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_lightpanel" 0 0 0
+( 0 0 1 -284 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_lightpanel" 0 0 0
+( 0 0 -1 278 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/dev_lightpanel" 0 0 0
+}
+}
+}
+
