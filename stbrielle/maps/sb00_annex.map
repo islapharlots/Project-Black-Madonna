@@ -242,6 +242,7 @@ brushDef3
 {
 "classname" "trigger_once"
 "name" "annex_initial_state_check"
+"model" "annex_initial_state_check"
 "target" "annex_room214_check"
 {
 brushDef3
@@ -258,6 +259,7 @@ brushDef3
 {
 "classname" "func_static"
 "name" "annex_workorder"
+"model" "annex_workorder"
 "frobbable" "1"
 "displayname" "WORK ORDER"
 "stbrielle_action" "READ"
@@ -320,6 +322,7 @@ brushDef3
 {
 "classname" "func_static"
 "name" "annex_room214_wall"
+"model" "annex_room214_wall"
 "solid" "1"
 "hide" "0"
 {
@@ -337,6 +340,7 @@ brushDef3
 {
 "classname" "func_static"
 "name" "annex_room214_breaker"
+"model" "annex_room214_breaker"
 "frobbable" "1"
 "displayname" "ARCHIVE AUXILIARY / 214"
 "stbrielle_action" "RESTORE"
@@ -392,6 +396,7 @@ brushDef3
 {
 "classname" "func_static"
 "name" "annex_exit_terminal"
+"model" "annex_exit_terminal"
 "frobbable" "1"
 "displayname" "CONTINUITY EXIT"
 "stbrielle_action" "USE"
@@ -529,6 +534,7 @@ brushDef3
 {
 "classname" "func_static"
 "name" "annex_civic_runner"
+"model" "annex_civic_runner"
 "solid" "0"
 {
 brushDef3
@@ -546,6 +552,7 @@ brushDef3
 {
 "classname" "func_static"
 "name" "annex_civic_runner_brass_n"
+"model" "annex_civic_runner_brass_n"
 "solid" "0"
 {
 brushDef3
@@ -563,6 +570,7 @@ brushDef3
 {
 "classname" "func_static"
 "name" "annex_civic_runner_brass_s"
+"model" "annex_civic_runner_brass_s"
 "solid" "0"
 {
 brushDef3
@@ -580,6 +588,7 @@ brushDef3
 {
 "classname" "func_static"
 "name" "annex_reception_front"
+"model" "annex_reception_front"
 "solid" "0"
 {
 brushDef3
@@ -597,6 +606,7 @@ brushDef3
 {
 "classname" "func_static"
 "name" "annex_reception_countertop"
+"model" "annex_reception_countertop"
 "solid" "1"
 {
 brushDef3
@@ -614,6 +624,7 @@ brushDef3
 {
 "classname" "func_static"
 "name" "annex_directory_plaque_w"
+"model" "annex_directory_plaque_w"
 "solid" "0"
 {
 brushDef3
@@ -631,6 +642,7 @@ brushDef3
 {
 "classname" "func_static"
 "name" "annex_directory_trim_w"
+"model" "annex_directory_trim_w"
 "solid" "0"
 {
 brushDef3
@@ -648,6 +660,7 @@ brushDef3
 {
 "classname" "func_static"
 "name" "annex_214_plaque"
+"model" "annex_214_plaque"
 "solid" "0"
 {
 brushDef3
@@ -665,6 +678,7 @@ brushDef3
 {
 "classname" "func_static"
 "name" "annex_214_trim"
+"model" "annex_214_trim"
 "solid" "0"
 {
 brushDef3
@@ -682,6 +696,7 @@ brushDef3
 {
 "classname" "func_static"
 "name" "annex_ceiling_light_1"
+"model" "annex_ceiling_light_1"
 "solid" "0"
 {
 brushDef3
@@ -699,6 +714,7 @@ brushDef3
 {
 "classname" "func_static"
 "name" "annex_ceiling_light_2"
+"model" "annex_ceiling_light_2"
 "solid" "0"
 {
 brushDef3
@@ -716,6 +732,7 @@ brushDef3
 {
 "classname" "func_static"
 "name" "annex_ceiling_light_3"
+"model" "annex_ceiling_light_3"
 "solid" "0"
 {
 brushDef3
@@ -733,6 +750,7 @@ brushDef3
 {
 "classname" "func_static"
 "name" "annex_ceiling_light_4"
+"model" "annex_ceiling_light_4"
 "solid" "0"
 {
 brushDef3
@@ -750,6 +768,7 @@ brushDef3
 {
 "classname" "func_static"
 "name" "annex_ceiling_light_5"
+"model" "annex_ceiling_light_5"
 "solid" "0"
 {
 brushDef3
@@ -767,6 +786,7 @@ brushDef3
 {
 "classname" "func_static"
 "name" "annex_ceiling_light_6"
+"model" "annex_ceiling_light_6"
 "solid" "0"
 {
 brushDef3
