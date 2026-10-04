@@ -21253,24 +21253,51 @@ void idPlayer::Think( void ) {
 		CalculateFirstPersonView();
 
 		// ST. BRIELLE interaction layer. The standalone player intentionally
-		// does not run Skin Deep's frob scanner, so use a small first-person
-		// trace when the dedicated FROB button is pressed.
-		if ( ( usercmd.buttons & BUTTON_FROB ) && !( oldButtons & BUTTON_FROB ) ) {
-			const float interactRange = spawnArgs.GetFloat( "stbrielle_interact_range", "112" );
-			const idVec3 interactStart = firstPersonViewOrigin;
-			const idVec3 interactEnd = interactStart + firstPersonViewAxis[0] * interactRange;
+		// does not run Skin Deep's full frob scanner, so keep one small,
+		// deterministic first-person trace for both the prompt and USE action.
+		const float interactRange = spawnArgs.GetFloat( "stbrielle_interact_range", "112" );
+		const idVec3 interactStart = firstPersonViewOrigin;
+		const idVec3 interactEnd = interactStart + firstPersonViewAxis[0] * interactRange;
 
-			trace_t interactTrace;
-			gameLocal.clip.TracePoint( interactTrace, interactStart, interactEnd, MASK_SOLID | CONTENTS_BODY, this );
+		trace_t interactTrace;
+		gameLocal.clip.TracePoint( interactTrace, interactStart, interactEnd, MASK_SOLID | CONTENTS_BODY, this );
 
-			idEntity *interactEnt = NULL;
-			if ( interactTrace.fraction < 1.0f && interactTrace.c.entityNum >= 0 && interactTrace.c.entityNum < MAX_GENTITIES ) {
-				interactEnt = gameLocal.entities[ interactTrace.c.entityNum ];
+		idEntity *interactEnt = NULL;
+		if ( interactTrace.fraction < 1.0f && interactTrace.c.entityNum >= 0 && interactTrace.c.entityNum < MAX_GENTITIES ) {
+			interactEnt = gameLocal.entities[ interactTrace.c.entityNum ];
+		}
+
+		const bool canInteract =
+			interactEnt &&
+			interactEnt != gameLocal.world &&
+			!interactEnt->IsHidden() &&
+			( interactEnt->isFrobbable || interactEnt->spawnArgs.GetBool( "stbrielle_interact", "0" ) );
+
+		if ( hud ) {
+			hud->SetStateBool( "sb_interact_visible", canInteract );
+
+			if ( canInteract ) {
+				idStr interactName = interactEnt->spawnArgs.GetString( "displayname", "" );
+				if ( interactName.IsEmpty() ) {
+					interactName = interactEnt->GetName();
+				}
+
+				idStr interactAction = interactEnt->spawnArgs.GetString( "stbrielle_action", "INTERACT" );
+				interactAction.ToUpper();
+				interactName.ToUpper();
+
+				hud->SetStateString( "sb_interact_action", interactAction.c_str() );
+				hud->SetStateString( "sb_interact_name", interactName.c_str() );
+			} else {
+				hud->SetStateString( "sb_interact_action", "" );
+				hud->SetStateString( "sb_interact_name", "" );
 			}
 
-			if ( interactEnt && interactEnt != gameLocal.world &&
-				( interactEnt->isFrobbable || interactEnt->spawnArgs.GetBool( "stbrielle_interact", "0" ) ) ) {
+			hud->StateChanged( gameLocal.time );
+		}
 
+		if ( ( usercmd.buttons & BUTTON_FROB ) && !( oldButtons & BUTTON_FROB ) ) {
+			if ( canInteract ) {
 				const int frobIndex = interactEnt->spawnArgs.GetInt( "frobindex", "0" );
 				const bool handledByEntity = interactEnt->DoFrob( frobIndex, this );
 
