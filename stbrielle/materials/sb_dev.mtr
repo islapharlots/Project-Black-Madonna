@@ -99,9 +99,8 @@ textures/stbrielle/dev_wall
 {
 	qer_editorimage	_white
 	{
-		blend		diffusemap
 		map			_white
-		color		0.34, 0.35, 0.38, 1
+		color		0.44, 0.46, 0.5, 1
 	}
 }
 
@@ -109,9 +108,8 @@ textures/stbrielle/dev_floor
 {
 	qer_editorimage	_white
 	{
-		blend		diffusemap
 		map			_white
-		color		0.055, 0.06, 0.07, 1
+		color		0.035, 0.045, 0.06, 1
 	}
 }
 
@@ -246,9 +244,8 @@ textures/stbrielle/dev_office
 {
 	qer_editorimage	_white
 	{
-		blend		diffusemap
 		map			_white
-		color		0.12, 0.095, 0.07, 1
+		color		0.18, 0.105, 0.055, 1
 	}
 }
 
@@ -256,9 +253,8 @@ textures/stbrielle/dev_paper
 {
 	qer_editorimage	_white
 	{
-		blend		diffusemap
 		map			_white
-		color		0.78, 0.72, 0.56, 1
+		color		0.92, 0.82, 0.58, 1
 	}
 }
 
@@ -266,9 +262,8 @@ textures/stbrielle/dev_brass
 {
 	qer_editorimage	_white
 	{
-		blend		diffusemap
 		map			_white
-		color		0.46, 0.28, 0.075, 1
+		color		0.72, 0.42, 0.08, 1
 	}
 }
 
@@ -276,9 +271,8 @@ textures/stbrielle/dev_burgundy
 {
 	qer_editorimage	_white
 	{
-		blend		diffusemap
 		map			_white
-		color		0.24, 0.025, 0.045, 1
+		color		0.46, 0.025, 0.065, 1
 	}
 }
 
@@ -286,9 +280,8 @@ textures/stbrielle/dev_exit
 {
 	qer_editorimage	_white
 	{
-		blend		diffusemap
 		map			_white
-		color		0.055, 0.25, 0.11, 1
+		color		0.035, 0.48, 0.15, 1
 	}
 }
 
@@ -299,6 +292,6 @@ textures/stbrielle/dev_lightpanel
 	noShadows
 	{
 		map			_white
-		color		0.62, 0.70, 0.82, 1
+		color		0.7, 0.82, 1, 1
 	}
 }
