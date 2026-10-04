@@ -85,6 +85,7 @@ typedef struct {
 	int			windowWidth, windowHeight;
 
 	LONG_PTR	SysInputLineWndProc;
+	LONG_PTR	SysBufferWndProc;
 
 	idEditField	historyEditLines[COMMAND_HISTORY];
 
@@ -103,10 +104,17 @@ static LRESULT CALLBACK ConWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM 
 
 	switch (uMsg) {
 		case WM_ACTIVATE:
-			if ( LOWORD( wParam ) != WA_INACTIVE ) {
+			if ( LOWORD( wParam ) != WA_INACTIVE && s_wcd.hwndInputLine ) {
 				SetFocus( s_wcd.hwndInputLine );
 			}
 		break;
+		case WM_SETFOCUS:
+		case WM_LBUTTONDOWN:
+			if ( s_wcd.hwndInputLine ) {
+				SetFocus( s_wcd.hwndInputLine );
+				SendMessage( s_wcd.hwndInputLine, EM_SETSEL, -1, -1 );
+			}
+			return 0;
 		case WM_CLOSE:
 #ifdef ID_DEDICATED
 			if ( cvarSystem->IsInitialized() ) {
@@ -200,6 +208,32 @@ static LRESULT CALLBACK ConWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM 
 	return DefWindowProc( hWnd, uMsg, wParam, lParam );
 }
 
+LONG WINAPI ConsoleBufferWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam ) {
+	// The large console buffer is read-only. Historically it could still take
+	// keyboard focus, making the console look like a dead text box. Redirect
+	// clicks and keyboard input to the actual command-entry line.
+	if ( s_wcd.hwndInputLine ) {
+		switch ( uMsg ) {
+			case WM_LBUTTONDOWN:
+			case WM_SETFOCUS:
+				SetFocus( s_wcd.hwndInputLine );
+				SendMessage( s_wcd.hwndInputLine, EM_SETSEL, -1, -1 );
+				return 0;
+
+			case WM_KEYDOWN:
+			case WM_KEYUP:
+			case WM_SYSKEYDOWN:
+			case WM_SYSKEYUP:
+			case WM_CHAR:
+			case WM_PASTE:
+				SetFocus( s_wcd.hwndInputLine );
+				return SendMessage( s_wcd.hwndInputLine, uMsg, wParam, lParam );
+		}
+	}
+
+	return CallWindowProc( (WNDPROC)s_wcd.SysBufferWndProc, hWnd, uMsg, wParam, lParam );
+}
+
 LONG WINAPI InputLineWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 	int key, cursor;
 	switch ( uMsg ) {
@@ -239,14 +273,16 @@ LONG WINAPI InputLineWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam
 		break;
 
 	case WM_CHAR:
-		key = Win_MapKey( lParam );
+		// WM_CHAR carries the translated character in wParam. lParam contains
+		// repeat/scancode state and must not be passed through Win_MapKey here.
+		key = (int)wParam;
 
 		GetWindowText( s_wcd.hwndInputLine, s_wcd.consoleField.GetBuffer(), MAX_EDIT_LINE );
 		SendMessage( s_wcd.hwndInputLine, EM_GETSEL, (WPARAM) NULL, (LPARAM) &cursor );
 		s_wcd.consoleField.SetCursor( cursor );
 
 		// enter the line
-		if ( key == K_ENTER || key == K_KP_ENTER ) {
+		if ( key == '\r' ) {
 			strncat( s_wcd.consoleText, s_wcd.consoleField.GetBuffer(), sizeof( s_wcd.consoleText ) - strlen( s_wcd.consoleText ) - 5 );
 			strcat( s_wcd.consoleText, "\n" );
 			SetWindowText( s_wcd.hwndInputLine, "" );
@@ -264,7 +300,7 @@ LONG WINAPI InputLineWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam
 		}
 
 		// command completion
-		if ( key == K_TAB ) {
+		if ( key == '\t' ) {
 			s_wcd.consoleField.AutoComplete();
 
 			SetWindowText( s_wcd.hwndInputLine, s_wcd.consoleField.GetBuffer() );
@@ -401,6 +437,10 @@ void Sys_CreateConsole( void ) {
 												win32.hInstance, NULL );
 	SendMessage( s_wcd.hwndBuffer, WM_SETFONT, ( WPARAM ) s_wcd.hfBufferFont, 0 );
 
+	// Redirect accidental focus/typing in the read-only output pane to the
+	// actual command line so the entire console behaves like an input surface.
+	s_wcd.SysBufferWndProc = ( LONG_PTR ) SetWindowLongPtr( s_wcd.hwndBuffer, GWLP_WNDPROC, ( LONG_PTR ) ConsoleBufferWndProc );
+
 	s_wcd.SysInputLineWndProc = ( LONG_PTR ) SetWindowLongPtr( s_wcd.hwndInputLine, GWLP_WNDPROC, ( LONG_PTR ) InputLineWndProc );
 	SendMessage( s_wcd.hwndInputLine, WM_SETFONT, ( WPARAM ) s_wcd.hfBufferFont, 0 );
 
@@ -451,6 +491,11 @@ void Sys_ShowConsole( int visLevel, bool quitOnClose ) {
 		case 1:
 			ShowWindow( s_wcd.hWnd, SW_SHOWNORMAL );
 			SendMessage( s_wcd.hwndBuffer, EM_LINESCROLL, 0, 0xffff );
+			SetForegroundWindow( s_wcd.hWnd );
+			if ( s_wcd.hwndInputLine ) {
+				SetFocus( s_wcd.hwndInputLine );
+				SendMessage( s_wcd.hwndInputLine, EM_SETSEL, -1, -1 );
+			}
 		break;
 		case 2:
 			ShowWindow( s_wcd.hWnd, SW_MINIMIZE );
