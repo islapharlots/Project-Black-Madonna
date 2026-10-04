@@ -86,3 +86,24 @@ private:
 	void				Event_Activate( idEntity *activator );
 	bool				EvaluateCondition( void ) const;
 };
+
+
+// HUD notice target for St. Brielle civic documents, terminals, and quiet
+// supernatural feedback.
+//
+// Spawn args:
+//   notice_title     large title
+//   notice_kicker    small institutional heading
+//   notice_line1..4  body rows
+//   notice_footer    small footer / provenance
+//   notice_duration  seconds before the card clears (default 5.0)
+class idTarget_StBrielleNotice : public idTarget {
+public:
+	CLASS_PROTOTYPE( idTarget_StBrielleNotice );
+
+	virtual void		Spawn( void );
+
+private:
+	void				Event_Activate( idEntity *activator );
+	void				Event_Clear( void );
+};
