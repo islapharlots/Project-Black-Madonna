@@ -315,7 +315,10 @@ bool UnicodeCharacterZeroSpace(uint32 ch) {
 void idDeviceContext::Init() {
 	xScale = 0.0;
 	SetSize(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
-	whiteImage = declManager->FindMaterial("guis/assets/white.tga");
+	// ST. BRIELLE standalone does not ship the legacy guis/assets/white.tga.
+	// Use the renderer's built-in white image so GUI backcolors/borders are
+	// modulated correctly instead of falling back to the debug/default image.
+	whiteImage = declManager->FindMaterial("_white");
 	whiteImage->SetSort( SS_GUI );
 	mbcs = false;
 	// SM: From BFG
