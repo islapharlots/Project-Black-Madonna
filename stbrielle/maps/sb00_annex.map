@@ -301,6 +301,7 @@ brushDef3
 "record_debug" "1"
 "target" "annex_awareness_add"
 "target1" "annex_workorder_light"
+"target2" "annex_workorder_notice"
 }
 {
 "classname" "target_stbrielle_record"
@@ -381,6 +382,7 @@ brushDef3
 "record_once" "1"
 "record_debug" "1"
 "target" "annex_room214_check"
+"target1" "annex_breaker_notice"
 }
 {
 "classname" "target_stbrielle_recordcheck"
@@ -395,6 +397,8 @@ brushDef3
 "target2" "annex_room214_reveal_frame"
 "target3" "annex_room214_absence_trace"
 "target4" "annex_room214_contents"
+"target5" "annex_214_inner_light_a"
+"target6" "annex_214_inner_light_b"
 }
 {
 "classname" "func_static"
@@ -3131,6 +3135,7 @@ brushDef3
 "classname" "func_static"
 "name" "annex_room214_absence_trace"
 "model" "annex_room214_absence_trace"
+"hide" "0"
 "solid" "0"
 {
 brushDef3
@@ -3272,5 +3277,52 @@ brushDef3
 ( 0 0 -1 96 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_screen_green" 0 0 0
 }
 }
+}
+
+
+// -----------------------------------------------------------------------------
+// MUNICIPAL ANNEX — HORROR PRESENTATION PASS 04
+// -----------------------------------------------------------------------------
+{
+"classname" "target_stbrielle_notice"
+"name" "annex_workorder_notice"
+"notice_kicker" "OFFICE OF PERPETUAL RECORD / MUNICIPAL ANNEX"
+"notice_title" "WORK ORDER 0214"
+"notice_line1" "LOCATION: ROOM 214"
+"notice_line2" "SERVICE: ARCHIVE POWER RESTORATION"
+"notice_line3" "STATUS: OCCUPIED"
+"notice_line4" "AUTHORIZED AFTER-HOURS ACCESS"
+"notice_footer" "CIVITAS INCOMPLETA / INTERNAL ROUTING COPY"
+"notice_duration" "7.0"
+}
+{
+"classname" "target_stbrielle_notice"
+"name" "annex_breaker_notice"
+"notice_kicker" "MUNICIPAL POWER / ARCHIVE AUXILIARY"
+"notice_title" "CIRCUIT RESTORED"
+"notice_line1" "ROUTE: AUXILIARY 214"
+"notice_line2" "POWER STATE: ACCEPTED"
+"notice_line3" "ROOM STATUS: OCCUPIED"
+"notice_line4" "DIRECTORY STATUS: NO MATCH"
+"notice_footer" "AUTOMATED RECORD / 23:44"
+"notice_duration" "6.0"
+}
+{
+"classname" "light"
+"name" "annex_214_inner_light_a"
+"origin" "760 260 222"
+"_color" "0.64 0.55 0.42"
+"light" "270"
+"noshadows" "1"
+"start_off" "1"
+}
+{
+"classname" "light"
+"name" "annex_214_inner_light_b"
+"origin" "852 260 126"
+"_color" "0.36 0.025 0.055"
+"light" "190"
+"noshadows" "1"
+"start_off" "1"
 }
 
