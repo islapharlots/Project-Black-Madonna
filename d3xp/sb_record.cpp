@@ -1,6 +1,7 @@
 #include "sys/platform.h"
 
 #include "Game_local.h"
+#include "Player.h"
 #include "sb_record.h"
 
 static const char *SB_KEY_CAMPAIGN_VERSION = "sb_campaign_version";
