@@ -376,3 +376,60 @@ textures/stbrielle/annex_void
 		color		0.018, 0.010, 0.018, 1
 	}
 }
+
+
+textures/stbrielle/annex_tile
+{
+	qer_editorimage	_white
+	{
+		map			_white
+		color		0.17, 0.19, 0.20, 1
+	}
+}
+
+textures/stbrielle/annex_greenstone
+{
+	qer_editorimage	_white
+	{
+		map			_white
+		color		0.055, 0.13, 0.12, 1
+	}
+}
+
+textures/stbrielle/annex_ink
+{
+	qer_editorimage	_white
+	{
+		map			_white
+		color		0.012, 0.014, 0.018, 1
+	}
+}
+
+textures/stbrielle/annex_notice
+{
+	qer_editorimage	_white
+	{
+		map			_white
+		color		0.63, 0.57, 0.45, 1
+	}
+}
+
+textures/stbrielle/annex_light_warm
+{
+	qer_editorimage	_white
+	noShadows
+	{
+		map			_white
+		color		0.92, 0.76, 0.52, 1
+	}
+}
+
+textures/stbrielle/annex_light_cold
+{
+	qer_editorimage	_white
+	noShadows
+	{
+		map			_white
+		color		0.56, 0.73, 0.92, 1
+	}
+}
