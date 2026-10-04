@@ -99,6 +99,40 @@ typedef struct {
 
 static WinConData s_wcd;
 
+LONG WINAPI InputLineWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam );
+
+static void EnsureConsoleInputLine() {
+	if ( !s_wcd.hWnd ) {
+		return;
+	}
+
+	if ( !s_wcd.hwndInputLine || !IsWindow( s_wcd.hwndInputLine ) ) {
+		s_wcd.hwndInputLine = CreateWindow(
+			"edit",
+			NULL,
+			WS_CHILD | WS_VISIBLE | WS_BORDER | ES_LEFT | ES_AUTOHSCROLL,
+			72, 398, 462, 24,
+			s_wcd.hWnd,
+			( HMENU ) INPUT_ID,
+			win32.hInstance,
+			NULL
+		);
+
+		if ( s_wcd.hwndInputLine ) {
+			s_wcd.SysInputLineWndProc = ( LONG_PTR )SetWindowLongPtr(
+				s_wcd.hwndInputLine,
+				GWLP_WNDPROC,
+				( LONG_PTR )InputLineWndProc
+			);
+			if ( s_wcd.hfBufferFont ) {
+				SendMessage( s_wcd.hwndInputLine, WM_SETFONT, ( WPARAM )s_wcd.hfBufferFont, TRUE );
+			}
+		}
+	}
+
+	EnsureConsoleInputLine();
+}
+
 static LRESULT CALLBACK ConWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 	static bool s_timePolarity;
 
@@ -110,10 +144,7 @@ static LRESULT CALLBACK ConWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM 
 		break;
 		case WM_SETFOCUS:
 		case WM_LBUTTONDOWN:
-			if ( s_wcd.hwndInputLine ) {
-				SetFocus( s_wcd.hwndInputLine );
-				SendMessage( s_wcd.hwndInputLine, EM_SETSEL, -1, -1 );
-			}
+			EnsureConsoleInputLine();
 			return 0;
 		case WM_CLOSE:
 #ifdef ID_DEDICATED
@@ -396,9 +427,15 @@ void Sys_CreateConsole( void ) {
 	//
 	// create the input line
 	//
+	CreateWindow( "static", "COMMAND:", WS_CHILD | WS_VISIBLE,
+							6, 400, 62, 20,
+							s_wcd.hWnd,
+							NULL,
+							win32.hInstance, NULL );
+
 	s_wcd.hwndInputLine = CreateWindow( "edit", NULL, WS_CHILD | WS_VISIBLE | WS_BORDER |
 												ES_LEFT | ES_AUTOHSCROLL,
-												6, 400, 528, 20,
+												72, 398, 462, 24,
 												s_wcd.hWnd,
 												( HMENU ) INPUT_ID,	// child window ID
 												win32.hInstance, NULL );
@@ -494,10 +531,7 @@ void Sys_ShowConsole( int visLevel, bool quitOnClose ) {
 			ShowWindow( s_wcd.hWnd, SW_SHOWNORMAL );
 			SendMessage( s_wcd.hwndBuffer, EM_LINESCROLL, 0, 0xffff );
 			SetForegroundWindow( s_wcd.hWnd );
-			if ( s_wcd.hwndInputLine ) {
-				SetFocus( s_wcd.hwndInputLine );
-				SendMessage( s_wcd.hwndInputLine, EM_SETSEL, -1, -1 );
-			}
+			EnsureConsoleInputLine();
 		break;
 		case 2:
 			ShowWindow( s_wcd.hWnd, SW_MINIMIZE );
