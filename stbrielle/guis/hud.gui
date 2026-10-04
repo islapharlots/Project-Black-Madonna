@@ -51,4 +51,84 @@ windowDef Desktop {
 			forecolor 0.90, 0.90, 0.88, 1
 		}
 	}
+
+	// Diegetic civic/document readout. This is intentionally closer to an
+	// archival card than a conventional game notification.
+	windowDef stbrielle_notice_card {
+		rect 116, 86, 408, 198
+		visible "gui::sb_notice_visible"
+		backcolor 0.012, 0.012, 0.016, 0.96
+		border 1
+		bordercolor 0.34, 0.24, 0.15, 0.95
+
+		windowDef spine {
+			rect 0, 0, 6, 198
+			backcolor 0.30, 0.025, 0.045, 1
+		}
+
+		windowDef sealTop {
+			rect 24, 20, 360, 1
+			backcolor 0.52, 0.34, 0.12, 1
+		}
+
+		windowDef kicker {
+			rect 28, 30, 350, 14
+			text "gui::sb_notice_kicker"
+			textscale 0.18
+			forecolor 0.62, 0.56, 0.46, 1
+		}
+
+		windowDef title {
+			rect 28, 49, 350, 25
+			text "gui::sb_notice_title"
+			textscale 0.31
+			forecolor 0.92, 0.88, 0.80, 1
+		}
+
+		windowDef rule {
+			rect 28, 81, 350, 1
+			backcolor 0.22, 0.06, 0.07, 1
+		}
+
+		windowDef line1 {
+			rect 28, 94, 350, 15
+			text "gui::sb_notice_line1"
+			textscale 0.20
+			forecolor 0.76, 0.76, 0.74, 1
+		}
+
+		windowDef line2 {
+			rect 28, 114, 350, 15
+			text "gui::sb_notice_line2"
+			textscale 0.20
+			forecolor 0.76, 0.76, 0.74, 1
+		}
+
+		windowDef line3 {
+			rect 28, 134, 350, 15
+			text "gui::sb_notice_line3"
+			textscale 0.20
+			forecolor 0.76, 0.76, 0.74, 1
+		}
+
+		windowDef line4 {
+			rect 28, 154, 350, 15
+			text "gui::sb_notice_line4"
+			textscale 0.20
+			forecolor 0.76, 0.76, 0.74, 1
+		}
+
+		windowDef footer {
+			rect 28, 178, 350, 10
+			text "gui::sb_notice_footer"
+			textscale 0.14
+			forecolor 0.44, 0.40, 0.34, 1
+		}
+
+		windowDef sealBottom {
+			rect 24, 190, 360, 1
+			backcolor 0.52, 0.34, 0.12, 0.75
+		}
+	}
+
 }
