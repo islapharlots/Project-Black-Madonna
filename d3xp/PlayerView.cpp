@@ -109,19 +109,35 @@ idPlayerView::idPlayerView()
 	memset( &view, 0, sizeof( view ) );
 	player = NULL;
 	dvMaterial = declManager->FindMaterial( "_scratch" );
-	tunnelMaterial = declManager->FindMaterial( "textures/decals/tunnel" );
-	armorMaterial = declManager->FindMaterial( "guis/assets/burst_lines" );
-	berserkMaterial = declManager->FindMaterial( "textures/decals/berserk" );
-	irGogglesMaterial = declManager->FindMaterial( "textures/decals/irblend" );
-	bloodSprayMaterial = declManager->FindMaterial( "textures/decals/bloodspray" );
-	bfgMaterial = declManager->FindMaterial( "textures/decals/bfgvision" );
-	lagoMaterial = declManager->FindMaterial( LAGO_MATERIAL, false );
-	
 
-	//BC
-	bloodedgeMaterial = declManager->FindMaterial("textures/fx/bloodedge");
-	bokehMaterial = declManager->FindMaterial("textures/fx/bokeh");
-	durabilityflashMaterial = declManager->FindMaterial("guis/assets/burst_lines_blur");
+	// ST. BRIELLE standalone builds render the world directly and intentionally
+	// skip the inherited Skin Deep/Doom fullscreen overlay stack. When
+	// g_skipViewEffects is enabled, do not preload dozens of absent commercial
+	// materials that will never be drawn.
+	if ( g_skipViewEffects.GetBool() ) {
+		const idMaterial *fallbackViewMaterial = declManager->FindMaterial( "_white" );
+		tunnelMaterial = fallbackViewMaterial;
+		armorMaterial = fallbackViewMaterial;
+		berserkMaterial = fallbackViewMaterial;
+		irGogglesMaterial = fallbackViewMaterial;
+		bloodSprayMaterial = fallbackViewMaterial;
+		bfgMaterial = fallbackViewMaterial;
+		bloodedgeMaterial = fallbackViewMaterial;
+		bokehMaterial = fallbackViewMaterial;
+		durabilityflashMaterial = fallbackViewMaterial;
+	} else {
+		tunnelMaterial = declManager->FindMaterial( "textures/decals/tunnel" );
+		armorMaterial = declManager->FindMaterial( "guis/assets/burst_lines" );
+		berserkMaterial = declManager->FindMaterial( "textures/decals/berserk" );
+		irGogglesMaterial = declManager->FindMaterial( "textures/decals/irblend" );
+		bloodSprayMaterial = declManager->FindMaterial( "textures/decals/bloodspray" );
+		bfgMaterial = declManager->FindMaterial( "textures/decals/bfgvision" );
+		bloodedgeMaterial = declManager->FindMaterial( "textures/fx/bloodedge" );
+		bokehMaterial = declManager->FindMaterial( "textures/fx/bokeh" );
+		durabilityflashMaterial = declManager->FindMaterial( "guis/assets/burst_lines_blur" );
+	}
+
+	lagoMaterial = declManager->FindMaterial( LAGO_MATERIAL, false );
 	
 	bloodbagOverlayActive = false;
 	bloodbagState = BAGSTATE_OFF;
@@ -2853,6 +2869,15 @@ FullscreenFXManager::Initialize
 void FullscreenFXManager::Initialize( idPlayerView *pv ) {
 	// set the playerview
 	playerView = pv;
+
+	// ST. BRIELLE's minimal player bypasses this entire post-process stack.
+	// Keep the manager valid, but leave its FX list empty and use an internal
+	// renderer material so no unavailable commercial effect assets are loaded.
+	if ( g_skipViewEffects.GetBool() ) {
+		blendBackMaterial = declManager->FindMaterial( "_white" );
+		return;
+	}
+
 	blendBackMaterial = declManager->FindMaterial( "textures/smf/blendBack" );
 
 	// allocate the fx
