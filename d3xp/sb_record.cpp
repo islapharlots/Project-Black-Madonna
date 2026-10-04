@@ -303,6 +303,24 @@ Small diegetic civic/document card drawn through the St. Brielle HUD.
 
 const idEventDef EV_StBrielleNoticeClear( "<stBrielleNoticeClear>" );
 
+static idStr SB_ExpandNoticeTokens( const char *source, idPlayer *player ) {
+	idStr out = source ? source : "";
+
+	idStr playerName = "VISITOR";
+	if ( player ) {
+		const idDict *info = gameLocal.GetUserInfo( player->entityNumber );
+		if ( info ) {
+			const char *configuredName = info->GetString( "ui_name", "" );
+			if ( configuredName && configuredName[0] ) {
+				playerName = configuredName;
+			}
+		}
+	}
+
+	out.Replace( "$PLAYER", playerName.c_str() );
+	return out;
+}
+
 CLASS_DECLARATION( idTarget, idTarget_StBrielleNotice )
 	EVENT( EV_Activate, idTarget_StBrielleNotice::Event_Activate )
 	EVENT( EV_StBrielleNoticeClear, idTarget_StBrielleNotice::Event_Clear )
@@ -317,13 +335,13 @@ void idTarget_StBrielleNotice::Event_Activate( idEntity *activator ) {
 		return;
 	}
 
-	player->hud->SetStateString( "sb_notice_kicker", spawnArgs.GetString( "notice_kicker", "" ) );
-	player->hud->SetStateString( "sb_notice_title", spawnArgs.GetString( "notice_title", "" ) );
-	player->hud->SetStateString( "sb_notice_line1", spawnArgs.GetString( "notice_line1", "" ) );
-	player->hud->SetStateString( "sb_notice_line2", spawnArgs.GetString( "notice_line2", "" ) );
-	player->hud->SetStateString( "sb_notice_line3", spawnArgs.GetString( "notice_line3", "" ) );
-	player->hud->SetStateString( "sb_notice_line4", spawnArgs.GetString( "notice_line4", "" ) );
-	player->hud->SetStateString( "sb_notice_footer", spawnArgs.GetString( "notice_footer", "" ) );
+	player->hud->SetStateString( "sb_notice_kicker", SB_ExpandNoticeTokens( spawnArgs.GetString( "notice_kicker", "" ), player ).c_str() );
+	player->hud->SetStateString( "sb_notice_title", SB_ExpandNoticeTokens( spawnArgs.GetString( "notice_title", "" ), player ).c_str() );
+	player->hud->SetStateString( "sb_notice_line1", SB_ExpandNoticeTokens( spawnArgs.GetString( "notice_line1", "" ), player ).c_str() );
+	player->hud->SetStateString( "sb_notice_line2", SB_ExpandNoticeTokens( spawnArgs.GetString( "notice_line2", "" ), player ).c_str() );
+	player->hud->SetStateString( "sb_notice_line3", SB_ExpandNoticeTokens( spawnArgs.GetString( "notice_line3", "" ), player ).c_str() );
+	player->hud->SetStateString( "sb_notice_line4", SB_ExpandNoticeTokens( spawnArgs.GetString( "notice_line4", "" ), player ).c_str() );
+	player->hud->SetStateString( "sb_notice_footer", SB_ExpandNoticeTokens( spawnArgs.GetString( "notice_footer", "" ), player ).c_str() );
 	player->hud->SetStateBool( "sb_notice_visible", true );
 	player->hud->StateChanged( gameLocal.time );
 
