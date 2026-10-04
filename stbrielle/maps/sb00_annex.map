@@ -399,6 +399,7 @@ brushDef3
 "target4" "annex_room214_contents"
 "target5" "annex_214_inner_light_a"
 "target6" "annex_214_inner_light_b"
+"target7" "annex_214_ledger"
 }
 {
 "classname" "func_static"
@@ -409,10 +410,11 @@ brushDef3
 "stbrielle_action" "USE"
 "stbrielle_interact" "1"
 "stbrielle_activate_targets" "1"
-"stbrielle_use_once" "1"
+"stbrielle_use_once" "0"
 "stbrielle_interact_debug" "1"
 "solid" "1"
-"target" "annex_complete_record"
+"target" "annex_exit_ready_check"
+"target1" "annex_exit_not_ready_check"
 {
 brushDef3
 {
@@ -434,6 +436,7 @@ brushDef3
 "record_once" "1"
 "record_debug" "1"
 "target" "annex_exit_light"
+"target1" "annex_exit_complete_notice"
 }
 {
 "classname" "stbrielle_cycle_director"
@@ -3326,3 +3329,122 @@ brushDef3
 "start_off" "1"
 }
 
+
+
+// -----------------------------------------------------------------------------
+// MUNICIPAL ANNEX — HORROR PRESENTATION PASS 05
+// Room 214 does not merely exist. It has already filed the player.
+// -----------------------------------------------------------------------------
+
+{
+"classname" "func_static"
+"name" "annex_214_ledger"
+"model" "annex_214_ledger"
+"frobbable" "1"
+"displayname" "ROOM 214 OCCUPANCY LEDGER"
+"stbrielle_action" "READ"
+"stbrielle_interact" "1"
+"stbrielle_activate_targets" "1"
+"stbrielle_use_once" "1"
+"stbrielle_interact_debug" "1"
+"solid" "1"
+"hide" "1"
+"target" "annex_214_ledger_unread_check"
+{
+brushDef3
+{
+( 1 0 0 -738 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_paper_old" 0 0 0
+( -1 0 0 690 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_paper_old" 0 0 0
+( 0 1 0 -280 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_paper_old" 0 0 0
+( 0 -1 0 250 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_paper_old" 0 0 0
+( 0 0 1 -51 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_paper_old" 0 0 0
+( 0 0 -1 48 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_paper_old" 0 0 0
+}
+}
+}
+{
+"classname" "target_stbrielle_recordcheck"
+"name" "annex_214_ledger_unread_check"
+"record_key" "sb_annex_214_ledger_read"
+"record_compare" "false"
+"record_value" "1"
+"record_once" "0"
+"record_debug" "1"
+"target" "annex_214_ledger_record"
+}
+{
+"classname" "target_stbrielle_record"
+"name" "annex_214_ledger_record"
+"record_key" "sb_annex_214_ledger_read"
+"record_mode" "set"
+"record_value" "1"
+"record_once" "1"
+"record_debug" "1"
+"target" "annex_214_ledger_notice"
+"target1" "annex_214_awareness_add"
+}
+{
+"classname" "target_stbrielle_record"
+"name" "annex_214_awareness_add"
+"record_key" "sb_awareness"
+"record_mode" "add"
+"record_value" "1"
+"record_once" "1"
+"record_debug" "1"
+}
+{
+"classname" "target_stbrielle_notice"
+"name" "annex_214_ledger_notice"
+"notice_kicker" "OFFICE OF PERPETUAL RECORD / OCCUPANCY LEDGER"
+"notice_title" "ROOM 214 / OCCUPANT FILE"
+"notice_line1" "OCCUPANT: $PLAYER"
+"notice_line2" "ARRIVAL: 23:44"
+"notice_line3" "DEPARTURE: 23:44"
+"notice_line4" "STATUS: PRESENT"
+"notice_footer" "RECORD CREATED 11 MINUTES FROM NOW"
+"notice_duration" "8.0"
+}
+{
+"classname" "target_stbrielle_recordcheck"
+"name" "annex_exit_ready_check"
+"record_key" "sb_annex_214_ledger_read"
+"record_compare" "true"
+"record_value" "1"
+"record_once" "0"
+"record_debug" "1"
+"target" "annex_complete_record"
+}
+{
+"classname" "target_stbrielle_recordcheck"
+"name" "annex_exit_not_ready_check"
+"record_key" "sb_annex_214_ledger_read"
+"record_compare" "false"
+"record_value" "1"
+"record_once" "0"
+"record_debug" "1"
+"target" "annex_exit_denied_notice"
+}
+{
+"classname" "target_stbrielle_notice"
+"name" "annex_exit_denied_notice"
+"notice_kicker" "MUNICIPAL CONTINUITY / EXIT CONTROL"
+"notice_title" "CONTINUITY HOLD"
+"notice_line1" "ACTIVE FILE REQUIRED"
+"notice_line2" "ROOM 214 HAS NOT ACKNOWLEDGED SERVICE"
+"notice_line3" "RETURN TO OCCUPANCY LEDGER"
+"notice_line4" "DO NOT LEAVE THE FLOOR UNRECORDED"
+"notice_footer" "CONTINUITY RULE 4.44"
+"notice_duration" "6.0"
+}
+{
+"classname" "target_stbrielle_notice"
+"name" "annex_exit_complete_notice"
+"notice_kicker" "MUNICIPAL CONTINUITY / EXIT CONTROL"
+"notice_title" "CONTINUITY ACCEPTED"
+"notice_line1" "NAME: $PLAYER"
+"notice_line2" "ARRIVAL: 23:44"
+"notice_line3" "DEPARTURE: 23:44"
+"notice_line4" "ELAPSED MUNICIPAL TIME: 00:00"
+"notice_footer" "YOU MAY NOW LEAVE THE RECORD"
+"notice_duration" "8.0"
+}
