@@ -2110,6 +2110,14 @@ void idSessionLocal::GuiFrameEvents() {
 	sysEvent_t  ev;
 	idUserInterface	*gui;
 
+	// Loading GUIs are drawn by the dedicated map-change path. Do not dispatch
+	// menu/test GUI events while the UI manager is being reloaded; pointers from
+	// the previous GUI generation may no longer be valid here.
+	if ( insideExecuteMapChange ) {
+		usercmdGen->InhibitUsercmd( INHIBIT_SESSION, true );
+		return;
+	}
+
 	// stop generating move and button commands when a local console or menu is active
 	// running here so SP, async networking and no game all go through it
 	if ( console->Active() || guiActive ) {
