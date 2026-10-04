@@ -721,6 +721,13 @@ void idPlayerView::SingleView( idUserInterface *hud, const renderView_t *view ) 
 	// are intentionally not part of this standalone project.
 	if ( player->spawnArgs.GetBool( "stbrielle_minimal_player", "0" ) ) {
 		gameRenderWorld->RenderScene( &hackedView );
+
+		// The standalone path intentionally skips inherited Skin Deep overlays,
+		// but St. Brielle still needs its own HUD for reticle and interaction
+		// prompts.
+		if ( hud ) {
+			hud->Redraw( gameLocal.fast.time );
+		}
 		return;
 	}
 
