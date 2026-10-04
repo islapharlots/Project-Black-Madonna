@@ -6,4 +6,9 @@
 	"#str_04346"	"Initializing input..."
 	"#str_04347"	"Initializing sound..."
 	"#str_07133"	"EMPTY"
+	"#str_04343"	"Renderer ready."
+	"#str_04348"	"Initializing graphics..."
+	"#str_04349"	"Initializing civic interface..."
+	"#str_04350"	"Loading St. Brielle systems..."
+	"#str_04351"	"Opening the city..."
 }
