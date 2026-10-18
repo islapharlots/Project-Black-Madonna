@@ -59,6 +59,8 @@ private:
 	void				UpdateAnnexSequence( void );
 	void				ApplyAnnexCorrection( void );
 	void				UpdateAnnexFiledPerson( idPlayer *player );
+	void				ConfigureAnnexDeparture( idPlayer *player );
+	void				ConfigureCityGlimpse( void );
 	void				ConfigureAnnexPhoto( bool corrected );
 	void				ConfigureAnnexPhone( void );
 	void				ConfigureAnnexExit( bool reviewed );
