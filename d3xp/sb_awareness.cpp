@@ -62,10 +62,10 @@ void idStBrielleAwarenessDirector::Think( void ) {
 
 	nextCheckTime = gameLocal.time + checkIntervalMS;
 
-	// The Annex vertical slice uses this already-present director for its quiet
-	// post-214 correction. Keeping it here avoids another always-thinking map
-	// entity and lets Awareness remain invisible to the player.
+	// Map-specific presentation remains invisible to the player. The same
+	// director handles the Annex sequence and the tiny post-Annex city handoff.
 	UpdateAnnexSequence();
+	ConfigureCityGlimpse();
 
 	const int tier = static_cast<int>( idStBrielleRecord::GetAwarenessTier() );
 	if ( tier == lastTier ) {
@@ -143,17 +143,11 @@ void idStBrielleAwarenessDirector::ConfigureInteractable( idEntity *ent,
 	ent->spawnArgs.Set( "target", targetName ? targetName : "" );
 	ent->displayName = newDisplayName ? newDisplayName : "";
 
-	// Runtime retargeting is used by the Annex telephone and continuity exit.
-	// Clear mapper-authored secondary targets so a corrected interaction cannot
-	// accidentally fire both its old and new administrative state.
 	for ( int i = 1; i < 16; ++i ) {
 		ent->spawnArgs.Delete( va( "target%d", i ) );
 	}
 	ent->targets.Clear();
 
-	// These decorative statics already have compiled clip models; several were
-	// intentionally non-solid for dressing. A thin notice board can safely be
-	// made traceable without affecting navigation in a meaningful way.
 	if ( !idStr::Icmp( ent->GetName(), "annex_notice_board" ) ) {
 		ent->GetPhysics()->SetContents( CONTENTS_SOLID );
 	}
@@ -200,9 +194,6 @@ void idStBrielleAwarenessDirector::ConfigureAnnexPhoto( bool corrected ) {
 }
 
 void idStBrielleAwarenessDirector::ConfigureAnnexPhone( void ) {
-	// The reception countertop is the solid interaction surface directly under
-	// the modeled desk telephone in annex_dressing_pass_03. Using it keeps this
-	// prototype traceable without adding another BSP brush entity.
 	idEntity *phoneSurface = gameLocal.FindEntity( "annex_reception_countertop" );
 	idEntity *notice = gameLocal.FindEntity( "annex_breaker_notice" );
 	if ( !phoneSurface || !notice ) {
@@ -212,9 +203,6 @@ void idStBrielleAwarenessDirector::ConfigureAnnexPhone( void ) {
 	const bool phoneAnswered = idStBrielleRecord::GetBool( "sb_annex_phone_answered", false );
 	phoneSurface->spawnArgs.Set( "snd_annex_phone_ring", "snd_stbrielle_annex_phone_ring" );
 
-	// A persisted answer must win over presentation state restored from either
-	// a savegame or a fresh map load. Never let an already-answered phone ring
-	// again simply because the Annex correction is being reconstructed.
 	if ( phoneAnswered ) {
 		phoneSurface->StopSound( SND_CHANNEL_BODY, false );
 		phoneSurface->spawnArgs.Set( "stbrielle_interact", "0" );
@@ -244,9 +232,6 @@ void idStBrielleAwarenessDirector::ConfigureAnnexExit( bool reviewed ) {
 		return;
 	}
 
-	// The map's existing RETURN target ultimately writes sb_annex_complete.
-	// Treat that record as the authoritative terminal state so a save/load or
-	// fresh map entry cannot reopen a correction the player already filed.
 	if ( idStBrielleRecord::GetBool( "sb_annex_complete", false ) ) {
 		ConfigureInteractable( exitTerminal, "CONTINUITY EXIT / FILED", "FILED", "", true );
 		exitTerminal->spawnArgs.Set( "stbrielle_interact", "0" );
@@ -266,8 +251,6 @@ void idStBrielleAwarenessDirector::ConfigureAnnexExit( bool reviewed ) {
 	}
 
 	if ( reviewed ) {
-		// RETURN is deliberately one-use. Player.cpp disables the interaction as
-		// soon as it succeeds, while the existing map target records completion.
 		ConfigureInteractable( exitTerminal, "CONTINUITY EXIT", "RETURN", "annex_exit_ready_check", true );
 		ConfigureNotice(
 			notice,
@@ -296,39 +279,124 @@ void idStBrielleAwarenessDirector::ConfigureAnnexExit( bool reviewed ) {
 	}
 }
 
+void idStBrielleAwarenessDirector::ConfigureAnnexDeparture( idPlayer *player ) {
+	idEntity *exitTerminal = gameLocal.FindEntity( "annex_exit_terminal" );
+	idEntity *notice = gameLocal.FindEntity( "annex_exit_complete_notice" );
+	if ( !exitTerminal || !notice || !player ) {
+		return;
+	}
+
+	if ( idStBrielleRecord::GetBool( "sb_annex_departed", false ) ) {
+		gameLocal.sessionCommand = "map sb01_cityglimpse";
+		return;
+	}
+
+	const char *action = exitTerminal->spawnArgs.GetString( "stbrielle_action", "" );
+	const bool interactive = exitTerminal->spawnArgs.GetBool( "stbrielle_interact", "0" );
+
+	if ( idStr::Icmp( action, "LEAVE" ) != 0 ) {
+		ConfigureInteractable(
+			exitTerminal,
+			"MUNICIPAL ANNEX / EXTERIOR RELEASED",
+			"LEAVE",
+			"annex_exit_complete_notice",
+			true
+		);
+		ConfigureNotice(
+			notice,
+			"MUNICIPAL CONTINUITY / EXIT CONTROL",
+			"EXTERIOR RELEASED",
+			"ANNEX FILE: CLOSED",
+			"PERSONNEL DUPLICATE: WITHDRAWN",
+			"DEPARTURE STATUS: ACCEPTED",
+			"PUBLIC WAY ACCESS: RESTORED",
+			"CIVITAS INCOMPLETA / 23:44",
+			"7.0"
+		);
+		return;
+	}
+
+	// The interaction system disables a successful one-use frob. That becomes
+	// the authoritative signal that the player actually chose to leave.
+	if ( !interactive ) {
+		idStBrielleRecord::SetBool( "sb_annex_departed", true );
+		idStBrielleRecord::SetBool( "sb_cityglimpse_unlocked", true );
+		gameLocal.sessionCommand = "map sb01_cityglimpse";
+
+		if ( debug ) {
+			gameLocal.Printf( "[ST. BRIELLE ANNEX] exterior released; loading city glimpse\n" );
+		}
+	}
+}
+
+void idStBrielleAwarenessDirector::ConfigureCityGlimpse( void ) {
+	idEntity *notice = gameLocal.FindEntity( "cityglimpse_arrival_notice" );
+	if ( !notice ) {
+		return;
+	}
+
+	if ( notice->spawnArgs.GetBool( "stbrielle_runtime_configured", "0" ) ) {
+		return;
+	}
+
+	const bool contact = idStBrielleRecord::GetBool( "sb_annex_filed_person_contact", false );
+	const int contactCount = idStBrielleRecord::GetInt( "sb_annex_filed_person_contact_count", 0 );
+	const int stability = idStBrielleRecord::GetInt( "sb_record_stability", 100 );
+
+	idStr personnelLine;
+	if ( contact ) {
+		personnelLine = va( "PERSONNEL CONTACT EXCEPTION: RETAINED / %d", contactCount );
+	} else {
+		personnelLine = "PERSONNEL DUPLICATE: WITHDRAWN";
+	}
+	idStr stabilityLine = va( "RECORD STABILITY: %d%%", stability );
+
+	ConfigureNotice(
+		notice,
+		"CITY OF ST. BRIELLE / PUBLIC WAY",
+		"MUNICIPAL ANNEX / DEPARTURE RECEIVED",
+		"ANNEX FILE: CLOSED",
+		personnelLine.c_str(),
+		stabilityLine.c_str(),
+		"CONTINUITY STATUS: ACTIVE",
+		"CIVITAS INCOMPLETA / WATER CYCLE / 23:44",
+		"9.0"
+	);
+	notice->spawnArgs.Set( "stbrielle_runtime_configured", "1" );
+
+	idEntity *recordLight = gameLocal.FindEntity( "cityglimpse_record_light" );
+	if ( recordLight ) {
+		if ( contact ) {
+			recordLight->SetColor( 0.48f, 0.045f, 0.065f );
+		} else if ( stability < 85 ) {
+			recordLight->SetColor( 0.36f, 0.20f, 0.08f );
+		} else {
+			recordLight->SetColor( 0.14f, 0.46f, 0.38f );
+		}
+	}
+}
+
 void idStBrielleAwarenessDirector::ApplyAnnexCorrection( void ) {
 	if ( annexCorrectionApplied ) {
 		return;
 	}
 
-	// Shift one repeated arch by just over a foot. Nothing announces this; the
-	// corridor simply stops matching the rhythm the player walked through.
 	idEntity *arch = gameLocal.FindEntity( "annex_gate_arch_b" );
 	if ( arch ) {
 		arch->SetOrigin( idVec3( 36.0f, 0.0f, 0.0f ) );
 	}
 
-	// Remove one pool from the ceiling cadence so the changed interval is also
-	// registered subconsciously in light rather than through an explicit cue.
 	idEntity *ceilingPool = gameLocal.FindEntity( "annex_ceiling_pool_3" );
 	if ( ceilingPool && ceilingPool->RespondsTo( EV_Activate ) ) {
 		ceilingPool->ProcessEvent( &EV_Activate, this );
 	}
 
-	// The old 214 paint scar becomes a dark extra shape on the personnel board:
-	// an intentionally crude first visual stand-in for the sixth person that was
-	// not present in the photograph before the room was serviced.
 	idEntity *photoCorrection = gameLocal.FindEntity( "annex_room214_absence_trace" );
 	if ( photoCorrection ) {
 		photoCorrection->SetOrigin( idVec3( -672.0f, -75.0f, -24.0f ) );
 		photoCorrection->Show();
 	}
 
-	// Room 214 looked like an ordinary Annex room on first entry. Once the player
-	// crosses back through the impossible doorway, the Record quietly replaces
-	// its surfaces with a corrected version: grout lines drift, erased marks sit
-	// under the plaster, wood grain changes direction, and steel scratches stop
-	// agreeing with the light. The geometry and collision remain untouched.
 	const idDeclSkin *room214CorrectedSkin = declManager->FindSkin( "stbrielle/room214_corrected", false );
 	if ( room214CorrectedSkin ) {
 		const char *room214Visuals[] = {
@@ -347,10 +415,6 @@ void idStBrielleAwarenessDirector::ApplyAnnexCorrection( void ) {
 		gameLocal.Warning( "[ST. BRIELLE ANNEX] Room 214 corrected skin was not found." );
 	}
 
-	// The corrected threshold is physically traversable, but it no longer quite
-	// agrees with the hole in the wall. Shift only the non-solid reveal frame so
-	// player collision remains stable. A few units are enough to make the top and
-	// jamb registration feel subtly impossible when the player turns back.
 	idEntity *room214Frame = gameLocal.FindEntity( "annex_room214_reveal_frame" );
 	if ( room214Frame ) {
 		const idVec3 frameOrigin = room214Frame->GetPhysics()->GetOrigin();
@@ -358,10 +422,6 @@ void idStBrielleAwarenessDirector::ApplyAnnexCorrection( void ) {
 		room214Frame->UpdateVisuals();
 	}
 
-	// Lighting stops agreeing on where the center of the opening is. The main
-	// reveal light drifts corridor-left while the two internal sources split in
-	// opposite directions, making the threshold read narrower from one angle and
-	// taller from another without touching the BSP opening itself.
 	idEntity *room214RevealLight = gameLocal.FindEntity( "annex_room214_light" );
 	if ( room214RevealLight ) {
 		room214RevealLight->SetOrigin( idVec3( 732.0f, 251.0f, 174.0f ) );
@@ -372,9 +432,6 @@ void idStBrielleAwarenessDirector::ApplyAnnexCorrection( void ) {
 	if ( room214LightA ) {
 		room214LightA->SetOrigin( idVec3( 748.0f, 247.0f, 226.0f ) );
 		room214LightA->SetColor( 0.38f, 0.45f, 0.52f );
-
-		// Anchor the threshold sound to a real in-room light entity so the engine's
-		// normal distance attenuation places the pressure condition at the doorway.
 		room214LightA->spawnArgs.Set( "snd_room214_threshold", "snd_stbrielle_room214_threshold" );
 		if ( !room214LightA->IsPlayingSound( SND_CHANNEL_BODY ) ) {
 			room214LightA->StartSound( "snd_room214_threshold", SND_CHANNEL_BODY, 0, false, NULL );
@@ -391,10 +448,6 @@ void idStBrielleAwarenessDirector::ApplyAnnexCorrection( void ) {
 	ConfigureAnnexPhone();
 
 	const bool phoneAnswered = idStBrielleRecord::GetBool( "sb_annex_phone_answered", false );
-
-	// Once the correction is visible, the old mapper-authored exit must no longer
-	// be a bypass around the ringing phone. Hold it inert until the receiver is
-	// answered; ConfigureAnnexExit() will rebuild REVIEW and RETURN afterward.
 	if ( !phoneAnswered ) {
 		idEntity *exitTerminal = gameLocal.FindEntity( "annex_exit_terminal" );
 		if ( exitTerminal ) {
@@ -446,10 +499,6 @@ void idStBrielleAwarenessDirector::UpdateAnnexFiledPerson( idPlayer *player ) {
 		return;
 	}
 
-	// The source brush was authored as a flat sixth silhouette over the personnel
-	// photograph. Its brush coordinates are baked around this center, so runtime
-	// movement works by positioning the entity origin relative to that visual
-	// center rather than pretending its physics origin is the figure itself.
 	const idVec3 visualOffset( 539.0f, 260.0f, 174.0f );
 
 	if ( !annexFiledPersonActive ) {
@@ -457,8 +506,6 @@ void idStBrielleAwarenessDirector::UpdateAnnexFiledPerson( idPlayer *player ) {
 		annexFiledPersonNextMoveTime = gameLocal.time + 1100;
 		annexFiledPersonObservedSince = 0;
 
-		// It does not spawn out of thin air. The sixth shape simply stops being on
-		// the photograph and is next seen in the central corridor.
 		const idVec3 startCenter( 300.0f, 0.0f, 82.0f );
 		filedPerson->SetOrigin( startCenter - visualOffset );
 		filedPerson->Show();
@@ -492,9 +539,6 @@ void idStBrielleAwarenessDirector::UpdateAnnexFiledPerson( idPlayer *player ) {
 	idVec3 toPlayer = playerOrigin + idVec3( 0.0f, 0.0f, 54.0f ) - filedCenter;
 	const float contactDistance = toPlayer.Length();
 
-	// Contact is a bureaucratic consequence rather than a conventional monster
-	// attack. The player remains alive, but St. Brielle remembers that the
-	// duplicate image reached them.
 	if ( contactDistance < 74.0f ) {
 		idStBrielleRecord::SetBool( "sb_annex_filed_person_contact", true );
 		idStBrielleRecord::AddInt( "sb_annex_filed_person_contact_count", 1 );
@@ -522,8 +566,6 @@ void idStBrielleAwarenessDirector::UpdateAnnexFiledPerson( idPlayer *player ) {
 			notice->ProcessEvent( &EV_Activate, player );
 		}
 
-		// Give the player another chance to learn the rule. The figure withdraws
-		// several meters, but the persistent consequence is not undone.
 		float resetX = playerOrigin.x < 0.0f ? playerOrigin.x + 360.0f : playerOrigin.x - 360.0f;
 		resetX = idMath::ClampFloat( -620.0f, 620.0f, resetX );
 		filedCenter.Set( resetX, 0.0f, 82.0f );
@@ -540,9 +582,6 @@ void idStBrielleAwarenessDirector::UpdateAnnexFiledPerson( idPlayer *player ) {
 		idVec3 toFiledPerson = filedCenter - view->vieworg;
 		const float distance = toFiledPerson.Normalize();
 		const float facing = view->viewaxis[0] * toFiledPerson;
-
-		// A generous cone makes the rule legible in first person: it must actually
-		// be in front of the player, not merely somewhere on-screen at the edge.
 		observed = distance < 1000.0f && facing > 0.84f;
 	}
 
@@ -588,9 +627,6 @@ void idStBrielleAwarenessDirector::UpdateAnnexFiledPerson( idPlayer *player ) {
 		return;
 	}
 
-	// The figure advances in discontinuous corrections rather than walking. It
-	// remains in the main hall even if the player ducks into a side office, which
-	// keeps this prototype from clipping straight through Annex walls.
 	idVec3 target = playerOrigin + idVec3( 0.0f, 0.0f, 54.0f );
 	target.y = idMath::ClampFloat( -72.0f, 72.0f, target.y );
 	target.z = 82.0f;
@@ -613,8 +649,6 @@ void idStBrielleAwarenessDirector::UpdateAnnexFiledPerson( idPlayer *player ) {
 }
 
 void idStBrielleAwarenessDirector::UpdateAnnexSequence( void ) {
-	// Presence of this entity is our cheap map identity check; no Annex-specific
-	// behavior runs on other St. Brielle maps.
 	if ( !gameLocal.FindEntity( "annex_room214_check" ) ) {
 		return;
 	}
@@ -623,8 +657,6 @@ void idStBrielleAwarenessDirector::UpdateAnnexSequence( void ) {
 	const bool ledgerRead = idStBrielleRecord::GetBool( "sb_annex_214_ledger_read", false );
 	const bool corrected = idStBrielleRecord::GetBool( "sb_annex_after_214", false );
 
-	// Once the work order has been read, its already-fired notice target is free
-	// to become the inspection text for the personnel photograph.
 	if ( workOrderRead && !corrected && !annexPhotoConfigured ) {
 		ConfigureAnnexPhoto( false );
 	}
@@ -637,13 +669,10 @@ void idStBrielleAwarenessDirector::UpdateAnnexSequence( void ) {
 	if ( !corrected && ledgerRead && player ) {
 		const idVec3 &p = player->GetPhysics()->GetOrigin();
 
-		// Arm only after the player has physically occupied Room 214. That keeps a
-		// persistent ledger flag from causing the correction at the map entrance.
 		if ( p.x > 600.0f && p.y > 180.0f && p.y < 340.0f ) {
 			annexLedgerWasInside = true;
 		}
 
-		// Crossing back through the impossible doorway performs the correction.
 		if ( annexLedgerWasInside && p.x < 548.0f ) {
 			idStBrielleRecord::SetBool( "sb_annex_after_214", true );
 			ApplyAnnexCorrection();
@@ -657,9 +686,6 @@ void idStBrielleAwarenessDirector::UpdateAnnexSequence( void ) {
 	idEntity *phoneSurface = gameLocal.FindEntity( "annex_reception_countertop" );
 	const bool phoneAnswered = idStBrielleRecord::GetBool( "sb_annex_phone_answered", false );
 
-	// stbrielle_use_once disables stbrielle_interact after a successful frob.
-	// That gives the director a clean, generic way to notice the receiver being
-	// answered without hard-coding a second interaction path into Player.cpp.
 	if ( !phoneAnswered && phoneSurface && !phoneSurface->spawnArgs.GetBool( "stbrielle_interact", "0" ) ) {
 		idStBrielleRecord::SetBool( "sb_annex_phone_answered", true );
 		phoneSurface->StopSound( SND_CHANNEL_BODY, false );
@@ -669,8 +695,6 @@ void idStBrielleAwarenessDirector::UpdateAnnexSequence( void ) {
 			phoneLight->SetColor( 0.07f, 0.025f, 0.018f );
 		}
 
-		// The call does not end the beat. It invalidates the ordinary exit because
-		// the city already has a 23:44 departure on file for a person still here.
 		ConfigureAnnexExit( false );
 
 		if ( debug ) {
@@ -709,24 +733,23 @@ void idStBrielleAwarenessDirector::UpdateAnnexSequence( void ) {
 		const char *exitAction = exitTerminal->spawnArgs.GetString( "stbrielle_action", "" );
 
 		if ( exitComplete ) {
+			UpdateAnnexFiledPerson( player );
+
+			if ( idStBrielleRecord::GetBool( "sb_annex_filed_person_resolved", false ) ) {
+				ConfigureAnnexDeparture( player );
+				return;
+			}
+
 			if ( idStr::Icmp( exitAction, "FILED" ) != 0 || exitInteractive ) {
 				ConfigureAnnexExit( true );
 				if ( debug ) {
 					gameLocal.Printf( "[ST. BRIELLE ANNEX] continuity return filed; exit correction complete\n" );
 				}
 			}
-
-			// The FILED state opens the first hostile beat. Photograph 6-B's sixth
-			// subject is no longer a passive correction once the player's duplicate
-			// departure has been accepted into the city record.
-			UpdateAnnexFiledPerson( player );
 			return;
 		}
 
 		if ( !exitReviewed ) {
-			// Fresh map loads rebuild the phone state from the persistent record. Put
-			// the terminal back into REVIEW without erasing the one-use disable that
-			// tells us the player actually reviewed the contradiction.
 			if ( idStr::Icmp( exitAction, "REVIEW" ) != 0 ) {
 				ConfigureAnnexExit( false );
 			}
