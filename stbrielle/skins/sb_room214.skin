@@ -13,4 +13,5 @@ skin stbrielle/room214_corrected
 	textures/stbrielle/annex_wood		textures/stbrielle/room214_wood_corrected
 
 	textures/stbrielle/annex_blackmetal	textures/stbrielle/room214_metal_corrected
+	textures/stbrielle/annex_paper_old	textures/stbrielle/room214_paper_corrected
 }
