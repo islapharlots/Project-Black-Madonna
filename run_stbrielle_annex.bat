@@ -62,6 +62,8 @@ if errorlevel 1 (
 
 if exist "%SBROOT%\stbrielle\maps\sb00_annex.proc" del /q "%SBROOT%\stbrielle\maps\sb00_annex.proc"
 if exist "%SBROOT%\stbrielle\maps\sb00_annex.cm" del /q "%SBROOT%\stbrielle\maps\sb00_annex.cm"
+if exist "%SBROOT%\stbrielle\maps\sb01_cityglimpse.proc" del /q "%SBROOT%\stbrielle\maps\sb01_cityglimpse.proc"
+if exist "%SBROOT%\stbrielle\maps\sb01_cityglimpse.cm" del /q "%SBROOT%\stbrielle\maps\sb01_cityglimpse.cm"
 
 echo.
 echo Compiling Municipal Annex...
@@ -92,9 +94,35 @@ if not exist "%SBROOT%\stbrielle\maps\sb00_annex.cm" (
 )
 
 echo.
+echo Compiling St. Brielle city glimpse...
+stbrielle.exe +set fs_basepath "%SBROOT%" +set fs_devpath "%SBROOT%" +set fs_game stbrielle +set developer 1 +set con_noPrint 1 +set com_showFPS 0 +set fs_copyfiles 0 +set si_pure 0 +bind e _frob +dmap2 sb01_cityglimpse +quit
+
+if exist "%SBSAVE%\qconsole.log" copy /y "%SBSAVE%\qconsole.log" "%SBROOT%\cityglimpse_compile.log" >nul
+
+if not exist "%SBROOT%\stbrielle\maps\sb01_cityglimpse.proc" (
+    echo.
+    echo ERROR: sb01_cityglimpse.proc was not created.
+    echo See cityglimpse_compile.log for the dmap output.
+    echo.
+    pause
+    exit /b 1
+)
+
+if not exist "%SBROOT%\stbrielle\maps\sb01_cityglimpse.cm" (
+    echo.
+    echo ERROR: sb01_cityglimpse.cm was not created.
+    echo See cityglimpse_compile.log for the dmap output.
+    echo.
+    pause
+    exit /b 1
+)
+
+echo.
 echo Compile verified:
 echo   stbrielle\maps\sb00_annex.proc
 echo   stbrielle\maps\sb00_annex.cm
+echo   stbrielle\maps\sb01_cityglimpse.proc
+echo   stbrielle\maps\sb01_cityglimpse.cm
 echo   stbrielle\textures\stbrielle\annex\*.tga
 echo   stbrielle\skins\sb_room214.skin
 echo   stbrielle\sound\annex\room214_threshold.wav
