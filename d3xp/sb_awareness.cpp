@@ -135,6 +135,14 @@ void idStBrielleAwarenessDirector::ConfigureInteractable( idEntity *ent,
 	ent->spawnArgs.Set( "target", targetName ? targetName : "" );
 	ent->displayName = newDisplayName ? newDisplayName : "";
 
+	// Runtime retargeting is used by the Annex telephone and continuity exit.
+	// Clear mapper-authored secondary targets so a corrected interaction cannot
+	// accidentally fire both its old and new administrative state.
+	for ( int i = 1; i < 16; ++i ) {
+		ent->spawnArgs.Delete( va( "target%d", i ) );
+	}
+	ent->targets.Clear();
+
 	// These decorative statics already have compiled clip models; several were
 	// intentionally non-solid for dressing. A thin notice board can safely be
 	// made traceable without affecting navigation in a meaningful way.
@@ -193,6 +201,18 @@ void idStBrielleAwarenessDirector::ConfigureAnnexPhone( void ) {
 		return;
 	}
 
+	const bool phoneAnswered = idStBrielleRecord::GetBool( "sb_annex_phone_answered", false );
+	phoneSurface->spawnArgs.Set( "snd_annex_phone_ring", "snd_stbrielle_annex_phone_ring" );
+
+	// A persisted answer must win over presentation state restored from either
+	// a savegame or a fresh map load. Never let an already-answered phone ring
+	// again simply because the Annex correction is being reconstructed.
+	if ( phoneAnswered ) {
+		phoneSurface->StopSound( SND_CHANNEL_BODY, false );
+		phoneSurface->spawnArgs.Set( "stbrielle_interact", "0" );
+		return;
+	}
+
 	ConfigureInteractable( phoneSurface, "RECEPTION TELEPHONE", "ANSWER", "annex_breaker_notice", true );
 	ConfigureNotice(
 		notice,
@@ -205,6 +225,44 @@ void idStBrielleAwarenessDirector::ConfigureAnnexPhone( void ) {
 		"LINE PHYSICALLY DISCONNECTED / 1971",
 		"8.0"
 	);
+
+	phoneSurface->StartSound( "snd_annex_phone_ring", SND_CHANNEL_BODY, 0, false, NULL );
+}
+
+void idStBrielleAwarenessDirector::ConfigureAnnexExit( bool reviewed ) {
+	idEntity *exitTerminal = gameLocal.FindEntity( "annex_exit_terminal" );
+	idEntity *notice = gameLocal.FindEntity( "annex_exit_complete_notice" );
+	if ( !exitTerminal || !notice ) {
+		return;
+	}
+
+	if ( reviewed ) {
+		ConfigureInteractable( exitTerminal, "CONTINUITY EXIT", "RETURN", "annex_exit_ready_check", false );
+		ConfigureNotice(
+			notice,
+			"MUNICIPAL CONTINUITY / EXIT CONTROL",
+			"DEPARTURE CORRECTION ACCEPTED",
+			"NAME: $PLAYER",
+			"PRIOR DEPARTURE: 23:44",
+			"CURRENT STATUS: PRESENT",
+			"ACTION: RETURN TO FILE",
+			"ONE RETURN AUTHORIZED",
+			"8.0"
+		);
+	} else {
+		ConfigureInteractable( exitTerminal, "CONTINUITY EXIT / CLOSED", "REVIEW", "annex_exit_complete_notice", true );
+		ConfigureNotice(
+			notice,
+			"MUNICIPAL CONTINUITY / EXIT CONTROL",
+			"DEPARTURE ALREADY FILED",
+			"NAME: $PLAYER",
+			"DEPARTURE: 23:44",
+			"CURRENT STATUS: PRESENT",
+			"SECOND DEPARTURE: NOT PERMITTED",
+			"YOU MAY NOT LEAVE TWICE",
+			"8.0"
+		);
+	}
 }
 
 void idStBrielleAwarenessDirector::ApplyAnnexCorrection( void ) {
@@ -238,17 +296,18 @@ void idStBrielleAwarenessDirector::ApplyAnnexCorrection( void ) {
 	ConfigureAnnexPhoto( true );
 	ConfigureAnnexPhone();
 
-	// Reuse the now-finished work-order pool as the telephone's visual ring.
-	// The public standalone branch has no shipped telephone audio yet, so this
-	// pulses until the receiver is answered instead of referencing a missing
-	// sound asset.
 	idEntity *phoneLight = gameLocal.FindEntity( "annex_workorder_light" );
+	const bool phoneAnswered = idStBrielleRecord::GetBool( "sb_annex_phone_answered", false );
 	if ( phoneLight ) {
 		phoneLight->SetOrigin( idVec3( -420.0f, 64.0f, 92.0f ) );
-		phoneLight->SetColor( 0.86f, 0.22f, 0.055f );
+		if ( phoneAnswered ) {
+			phoneLight->SetColor( 0.07f, 0.025f, 0.018f );
+		} else {
+			phoneLight->SetColor( 0.86f, 0.22f, 0.055f );
+		}
 	}
 
-	annexPhonePulseBright = true;
+	annexPhonePulseBright = !phoneAnswered;
 	annexPhoneNextPulseTime = gameLocal.time + 450;
 	annexCorrectionApplied = true;
 
@@ -307,12 +366,19 @@ void idStBrielleAwarenessDirector::UpdateAnnexSequence( void ) {
 	// answered without hard-coding a second interaction path into Player.cpp.
 	if ( !phoneAnswered && phoneSurface && !phoneSurface->spawnArgs.GetBool( "stbrielle_interact", "0" ) ) {
 		idStBrielleRecord::SetBool( "sb_annex_phone_answered", true );
+		phoneSurface->StopSound( SND_CHANNEL_BODY, false );
+
 		idEntity *phoneLight = gameLocal.FindEntity( "annex_workorder_light" );
 		if ( phoneLight ) {
 			phoneLight->SetColor( 0.07f, 0.025f, 0.018f );
 		}
+
+		// The call does not end the beat. It invalidates the ordinary exit because
+		// the city already has a 23:44 departure on file for a person still here.
+		ConfigureAnnexExit( false );
+
 		if ( debug ) {
-			gameLocal.Printf( "[ST. BRIELLE ANNEX] reception telephone answered\n" );
+			gameLocal.Printf( "[ST. BRIELLE ANNEX] reception telephone answered; departure record now conflicts\n" );
 		}
 		return;
 	}
@@ -328,6 +394,40 @@ void idStBrielleAwarenessDirector::UpdateAnnexSequence( void ) {
 			} else {
 				phoneLight->SetColor( 0.12f, 0.035f, 0.020f );
 			}
+		}
+	}
+
+	if ( phoneAnswered ) {
+		if ( phoneSurface ) {
+			phoneSurface->StopSound( SND_CHANNEL_BODY, false );
+		}
+
+		idEntity *exitTerminal = gameLocal.FindEntity( "annex_exit_terminal" );
+		if ( !exitTerminal ) {
+			return;
+		}
+
+		const bool exitReviewed = idStBrielleRecord::GetBool( "sb_annex_exit_reviewed", false );
+		const char *exitAction = exitTerminal->spawnArgs.GetString( "stbrielle_action", "" );
+
+		if ( !exitReviewed ) {
+			// Fresh map loads rebuild the phone state from the persistent record. Put
+			// the terminal back into REVIEW without erasing the one-use disable that
+			// tells us the player actually reviewed the contradiction.
+			if ( idStr::Icmp( exitAction, "REVIEW" ) != 0 ) {
+				ConfigureAnnexExit( false );
+			}
+
+			if ( !exitTerminal->spawnArgs.GetBool( "stbrielle_interact", "0" ) ) {
+				idStBrielleRecord::SetBool( "sb_annex_exit_reviewed", true );
+				ConfigureAnnexExit( true );
+
+				if ( debug ) {
+					gameLocal.Printf( "[ST. BRIELLE ANNEX] duplicate departure reviewed; one return authorized\n" );
+				}
+			}
+		} else if ( idStr::Icmp( exitAction, "RETURN" ) != 0 ) {
+			ConfigureAnnexExit( true );
 		}
 	}
 }
