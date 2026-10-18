@@ -46,9 +46,17 @@ private:
 	bool				annexPhonePulseBright;
 	int					annexPhoneNextPulseTime;
 
+	// First hostile encounter: after the continuity return is FILED, the sixth
+	// personnel-image trace detaches from the photograph and advances whenever
+	// it is not directly observed. Contact is non-lethal but persists in Record.
+	bool				annexFiledPersonActive;
+	int					annexFiledPersonNextMoveTime;
+	int					annexFiledPersonObservedSince;
+
 	void				ActivateTierTargets( int tier );
 	void				UpdateAnnexSequence( void );
 	void				ApplyAnnexCorrection( void );
+	void				UpdateAnnexFiledPerson( idPlayer *player );
 	void				ConfigureAnnexPhoto( bool corrected );
 	void				ConfigureAnnexPhone( void );
 	void				ConfigureAnnexExit( bool reviewed );
