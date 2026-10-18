@@ -16,6 +16,17 @@ if not exist "stbrielle.exe" (
 set "SBROOT=%CD%"
 set "SBSAVE=%APPDATA%\StBrielle\stbrielle"
 
+echo.
+echo Preparing Municipal Annex texture set...
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0tools\setup_annex_textures.ps1" -Root "%SBROOT%"
+if errorlevel 1 (
+    echo.
+    echo ERROR: Municipal Annex textures could not be prepared.
+    echo.
+    pause
+    exit /b 1
+)
+
 if exist "%SBROOT%\stbrielle\maps\sb00_annex.proc" del /q "%SBROOT%\stbrielle\maps\sb00_annex.proc"
 if exist "%SBROOT%\stbrielle\maps\sb00_annex.cm" del /q "%SBROOT%\stbrielle\maps\sb00_annex.cm"
 
@@ -51,6 +62,7 @@ echo.
 echo Compile verified:
 echo   stbrielle\maps\sb00_annex.proc
 echo   stbrielle\maps\sb00_annex.cm
+echo   stbrielle\textures\stbrielle\annex\*.tga
 echo.
 echo Launching Municipal Annex...
 echo Interaction: E
