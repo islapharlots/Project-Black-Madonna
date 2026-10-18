@@ -339,6 +339,46 @@ void idStBrielleAwarenessDirector::ApplyAnnexCorrection( void ) {
 		gameLocal.Warning( "[ST. BRIELLE ANNEX] Room 214 corrected skin was not found." );
 	}
 
+	// The corrected threshold is physically traversable, but it no longer quite
+	// agrees with the hole in the wall. Shift only the non-solid reveal frame so
+	// player collision remains stable. A few units are enough to make the top and
+	// jamb registration feel subtly impossible when the player turns back.
+	idEntity *room214Frame = gameLocal.FindEntity( "annex_room214_reveal_frame" );
+	if ( room214Frame ) {
+		const idVec3 frameOrigin = room214Frame->GetPhysics()->GetOrigin();
+		room214Frame->SetOrigin( frameOrigin + idVec3( -2.0f, 3.0f, -3.5f ) );
+		room214Frame->UpdateVisuals();
+	}
+
+	// Lighting stops agreeing on where the center of the opening is. The main
+	// reveal light drifts corridor-left while the two internal sources split in
+	// opposite directions, making the threshold read narrower from one angle and
+	// taller from another without touching the BSP opening itself.
+	idEntity *room214RevealLight = gameLocal.FindEntity( "annex_room214_light" );
+	if ( room214RevealLight ) {
+		room214RevealLight->SetOrigin( idVec3( 732.0f, 251.0f, 174.0f ) );
+		room214RevealLight->SetColor( 0.17f, 0.24f, 0.34f );
+	}
+
+	idEntity *room214LightA = gameLocal.FindEntity( "annex_214_inner_light_a" );
+	if ( room214LightA ) {
+		room214LightA->SetOrigin( idVec3( 748.0f, 247.0f, 226.0f ) );
+		room214LightA->SetColor( 0.38f, 0.45f, 0.52f );
+
+		// Anchor the threshold sound to a real in-room light entity so the engine's
+		// normal distance attenuation places the pressure condition at the doorway.
+		room214LightA->spawnArgs.Set( "snd_room214_threshold", "snd_stbrielle_room214_threshold" );
+		if ( !room214LightA->IsPlayingSound( SND_CHANNEL_BODY ) ) {
+			room214LightA->StartSound( "snd_room214_threshold", SND_CHANNEL_BODY, 0, false, NULL );
+		}
+	}
+
+	idEntity *room214LightB = gameLocal.FindEntity( "annex_214_inner_light_b" );
+	if ( room214LightB ) {
+		room214LightB->SetOrigin( idVec3( 866.0f, 277.0f, 118.0f ) );
+		room214LightB->SetColor( 0.22f, 0.018f, 0.034f );
+	}
+
 	ConfigureAnnexPhoto( true );
 	ConfigureAnnexPhone();
 
