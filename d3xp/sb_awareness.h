@@ -2,6 +2,8 @@
 
 #include "Entity.h"
 
+class idPlayer;
+
 // Per-map interpreter for the global St. Brielle Awareness value.
 //
 // The director never exposes Awareness to the player directly. Instead it
