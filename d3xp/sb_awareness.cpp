@@ -236,8 +236,31 @@ void idStBrielleAwarenessDirector::ConfigureAnnexExit( bool reviewed ) {
 		return;
 	}
 
+	// The map's existing RETURN target ultimately writes sb_annex_complete.
+	// Treat that record as the authoritative terminal state so a save/load or
+	// fresh map entry cannot reopen a correction the player already filed.
+	if ( idStBrielleRecord::GetBool( "sb_annex_complete", false ) ) {
+		ConfigureInteractable( exitTerminal, "CONTINUITY EXIT / FILED", "FILED", "", true );
+		exitTerminal->spawnArgs.Set( "stbrielle_interact", "0" );
+		exitTerminal->targets.Clear();
+		ConfigureNotice(
+			notice,
+			"MUNICIPAL CONTINUITY / EXIT CONTROL",
+			"RETURN FILED",
+			"NAME: $PLAYER",
+			"PRIOR DEPARTURE: 23:44",
+			"RETURN: 23:44",
+			"CONTINUITY HOLD: RELEASED",
+			"YOU MAY PROCEED",
+			"8.0"
+		);
+		return;
+	}
+
 	if ( reviewed ) {
-		ConfigureInteractable( exitTerminal, "CONTINUITY EXIT", "RETURN", "annex_exit_ready_check", false );
+		// RETURN is deliberately one-use. Player.cpp disables the interaction as
+		// soon as it succeeds, while the existing map target records completion.
+		ConfigureInteractable( exitTerminal, "CONTINUITY EXIT", "RETURN", "annex_exit_ready_check", true );
 		ConfigureNotice(
 			notice,
 			"MUNICIPAL CONTINUITY / EXIT CONTROL",
@@ -408,7 +431,19 @@ void idStBrielleAwarenessDirector::UpdateAnnexSequence( void ) {
 		}
 
 		const bool exitReviewed = idStBrielleRecord::GetBool( "sb_annex_exit_reviewed", false );
+		const bool exitComplete = idStBrielleRecord::GetBool( "sb_annex_complete", false );
+		const bool exitInteractive = exitTerminal->spawnArgs.GetBool( "stbrielle_interact", "0" );
 		const char *exitAction = exitTerminal->spawnArgs.GetString( "stbrielle_action", "" );
+
+		if ( exitComplete ) {
+			if ( idStr::Icmp( exitAction, "FILED" ) != 0 || exitInteractive ) {
+				ConfigureAnnexExit( true );
+				if ( debug ) {
+					gameLocal.Printf( "[ST. BRIELLE ANNEX] continuity return filed; exit correction complete\n" );
+				}
+			}
+			return;
+		}
 
 		if ( !exitReviewed ) {
 			// Fresh map loads rebuild the phone state from the persistent record. Put
