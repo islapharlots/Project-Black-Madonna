@@ -319,8 +319,22 @@ void idStBrielleAwarenessDirector::ApplyAnnexCorrection( void ) {
 	ConfigureAnnexPhoto( true );
 	ConfigureAnnexPhone();
 
-	idEntity *phoneLight = gameLocal.FindEntity( "annex_workorder_light" );
 	const bool phoneAnswered = idStBrielleRecord::GetBool( "sb_annex_phone_answered", false );
+
+	// Once the correction is visible, the old mapper-authored exit must no longer
+	// be a bypass around the ringing phone. Hold it inert until the receiver is
+	// answered; ConfigureAnnexExit() will rebuild REVIEW and RETURN afterward.
+	if ( !phoneAnswered ) {
+		idEntity *exitTerminal = gameLocal.FindEntity( "annex_exit_terminal" );
+		if ( exitTerminal ) {
+			ConfigureInteractable( exitTerminal, "CONTINUITY EXIT / HOLD", "HOLD", "", true );
+			exitTerminal->spawnArgs.Set( "stbrielle_interact", "0" );
+			exitTerminal->spawnArgs.Set( "stbrielle_activate_targets", "0" );
+			exitTerminal->targets.Clear();
+		}
+	}
+
+	idEntity *phoneLight = gameLocal.FindEntity( "annex_workorder_light" );
 	if ( phoneLight ) {
 		phoneLight->SetOrigin( idVec3( -420.0f, 64.0f, 92.0f ) );
 		if ( phoneAnswered ) {
