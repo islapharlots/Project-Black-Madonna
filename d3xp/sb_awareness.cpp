@@ -316,6 +316,29 @@ void idStBrielleAwarenessDirector::ApplyAnnexCorrection( void ) {
 		photoCorrection->Show();
 	}
 
+	// Room 214 looked like an ordinary Annex room on first entry. Once the player
+	// crosses back through the impossible doorway, the Record quietly replaces
+	// its surfaces with a corrected version: grout lines drift, erased marks sit
+	// under the plaster, wood grain changes direction, and steel scratches stop
+	// agreeing with the light. The geometry and collision remain untouched.
+	const idDeclSkin *room214CorrectedSkin = declManager->FindSkin( "stbrielle/room214_corrected", false );
+	if ( room214CorrectedSkin ) {
+		const char *room214Visuals[] = {
+			"annex_room214_contents",
+			"annex_room214_reveal_frame",
+			"annex_214_ledger"
+		};
+		for ( int i = 0; i < 3; ++i ) {
+			idEntity *room214Entity = gameLocal.FindEntity( room214Visuals[i] );
+			if ( room214Entity ) {
+				room214Entity->SetSkin( room214CorrectedSkin );
+				room214Entity->UpdateVisuals();
+			}
+		}
+	} else if ( debug ) {
+		gameLocal.Warning( "[ST. BRIELLE ANNEX] Room 214 corrected skin was not found." );
+	}
+
 	ConfigureAnnexPhoto( true );
 	ConfigureAnnexPhone();
 
