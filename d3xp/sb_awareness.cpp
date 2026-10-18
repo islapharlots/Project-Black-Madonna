@@ -19,6 +19,10 @@ idStBrielleAwarenessDirector::idStBrielleAwarenessDirector() {
 	annexPhotoConfigured = false;
 	annexPhonePulseBright = false;
 	annexPhoneNextPulseTime = 0;
+
+	annexFiledPersonActive = false;
+	annexFiledPersonNextMoveTime = 0;
+	annexFiledPersonObservedSince = 0;
 }
 
 void idStBrielleAwarenessDirector::Spawn( void ) {
@@ -42,6 +46,10 @@ void idStBrielleAwarenessDirector::Spawn( void ) {
 	annexPhotoConfigured = false;
 	annexPhonePulseBright = false;
 	annexPhoneNextPulseTime = gameLocal.time;
+
+	annexFiledPersonActive = false;
+	annexFiledPersonNextMoveTime = gameLocal.time;
+	annexFiledPersonObservedSince = 0;
 
 	nextCheckTime = gameLocal.time;
 	BecomeActive( TH_THINK );
@@ -416,6 +424,194 @@ void idStBrielleAwarenessDirector::ApplyAnnexCorrection( void ) {
 	}
 }
 
+void idStBrielleAwarenessDirector::UpdateAnnexFiledPerson( idPlayer *player ) {
+	if ( !player ) {
+		return;
+	}
+
+	idEntity *filedPerson = gameLocal.FindEntity( "annex_room214_absence_trace" );
+	if ( !filedPerson ) {
+		return;
+	}
+
+	const bool resolved = idStBrielleRecord::GetBool( "sb_annex_filed_person_resolved", false );
+	if ( resolved ) {
+		filedPerson->StopSound( SND_CHANNEL_BODY, false );
+		filedPerson->Hide();
+		annexFiledPersonActive = false;
+		return;
+	}
+
+	if ( !idStBrielleRecord::GetBool( "sb_annex_complete", false ) ) {
+		return;
+	}
+
+	// The source brush was authored as a flat sixth silhouette over the personnel
+	// photograph. Its brush coordinates are baked around this center, so runtime
+	// movement works by positioning the entity origin relative to that visual
+	// center rather than pretending its physics origin is the figure itself.
+	const idVec3 visualOffset( 539.0f, 260.0f, 174.0f );
+
+	if ( !annexFiledPersonActive ) {
+		annexFiledPersonActive = true;
+		annexFiledPersonNextMoveTime = gameLocal.time + 1100;
+		annexFiledPersonObservedSince = 0;
+
+		// It does not spawn out of thin air. The sixth shape simply stops being on
+		// the photograph and is next seen in the central corridor.
+		const idVec3 startCenter( 300.0f, 0.0f, 82.0f );
+		filedPerson->SetOrigin( startCenter - visualOffset );
+		filedPerson->Show();
+		filedPerson->UpdateVisuals();
+		filedPerson->spawnArgs.Set( "snd_filed_person", "snd_stbrielle_annex_filed_person" );
+		filedPerson->StartSound( "snd_filed_person", SND_CHANNEL_BODY, 0, false, NULL );
+
+		idEntity *notice = gameLocal.FindEntity( "annex_exit_complete_notice" );
+		if ( notice ) {
+			ConfigureNotice(
+				notice,
+				"OFFICE OF PERPETUAL RECORD / PERSONNEL",
+				"PHOTOGRAPH 6-B / LOCATION EXCEPTION",
+				"IMAGE COUNT: SIX",
+				"IMAGE SIX: NOT IN FRAME",
+				"CURRENT LOCATION: MUNICIPAL ANNEX",
+				"SUBJECT STATUS: APPROACHING",
+				"DO NOT CREATE A SECOND COPY",
+				"7.0"
+			);
+			notice->ProcessEvent( &EV_Activate, player );
+		}
+
+		if ( debug ) {
+			gameLocal.Printf( "[ST. BRIELLE ANNEX] personnel image six detached; first hostile active\n" );
+		}
+	}
+
+	const idVec3 playerOrigin = player->GetPhysics()->GetOrigin();
+	idVec3 filedCenter = filedPerson->GetPhysics()->GetOrigin() + visualOffset;
+	idVec3 toPlayer = playerOrigin + idVec3( 0.0f, 0.0f, 54.0f ) - filedCenter;
+	const float contactDistance = toPlayer.Length();
+
+	// Contact is a bureaucratic consequence rather than a conventional monster
+	// attack. The player remains alive, but St. Brielle remembers that the
+	// duplicate image reached them.
+	if ( contactDistance < 74.0f ) {
+		idStBrielleRecord::SetBool( "sb_annex_filed_person_contact", true );
+		idStBrielleRecord::AddInt( "sb_annex_filed_person_contact_count", 1 );
+		idStBrielleRecord::AddAwareness( 4 );
+
+		int stability = idStBrielleRecord::GetInt( "sb_record_stability", 100 ) - 15;
+		if ( stability < 0 ) {
+			stability = 0;
+		}
+		idStBrielleRecord::SetInt( "sb_record_stability", stability );
+
+		idEntity *notice = gameLocal.FindEntity( "annex_exit_complete_notice" );
+		if ( notice ) {
+			ConfigureNotice(
+				notice,
+				"OFFICE OF PERPETUAL RECORD / PERSONNEL",
+				"CONTACT RECORDED",
+				"SUBJECT: $PLAYER",
+				"DUPLICATE PRESENCE: VERIFIED",
+				"RECORD STABILITY: REDUCED",
+				"CORRECTION REMAINS ACTIVE",
+				"THIS CONTACT WILL BE RETAINED",
+				"7.0"
+			);
+			notice->ProcessEvent( &EV_Activate, player );
+		}
+
+		// Give the player another chance to learn the rule. The figure withdraws
+		// several meters, but the persistent consequence is not undone.
+		float resetX = playerOrigin.x < 0.0f ? playerOrigin.x + 360.0f : playerOrigin.x - 360.0f;
+		resetX = idMath::ClampFloat( -620.0f, 620.0f, resetX );
+		filedCenter.Set( resetX, 0.0f, 82.0f );
+		filedPerson->SetOrigin( filedCenter - visualOffset );
+		filedPerson->UpdateVisuals();
+		annexFiledPersonObservedSince = 0;
+		annexFiledPersonNextMoveTime = gameLocal.time + 2200;
+		return;
+	}
+
+	renderView_t *view = player->GetRenderView();
+	bool observed = false;
+	if ( view ) {
+		idVec3 toFiledPerson = filedCenter - view->vieworg;
+		const float distance = toFiledPerson.Normalize();
+		const float facing = view->viewaxis[0] * toFiledPerson;
+
+		// A generous cone makes the rule legible in first person: it must actually
+		// be in front of the player, not merely somewhere on-screen at the edge.
+		observed = distance < 1000.0f && facing > 0.84f;
+	}
+
+	if ( observed ) {
+		if ( annexFiledPersonObservedSince <= 0 ) {
+			annexFiledPersonObservedSince = gameLocal.time;
+		}
+
+		if ( gameLocal.time - annexFiledPersonObservedSince >= 2600 ) {
+			idStBrielleRecord::SetBool( "sb_annex_filed_person_resolved", true );
+			idStBrielleRecord::SetBool( "sb_annex_first_hostile_survived", true );
+			idStBrielleRecord::AddAwareness( 1 );
+			filedPerson->StopSound( SND_CHANNEL_BODY, false );
+			filedPerson->Hide();
+			annexFiledPersonActive = false;
+
+			idEntity *notice = gameLocal.FindEntity( "annex_exit_complete_notice" );
+			if ( notice ) {
+				ConfigureNotice(
+					notice,
+					"OFFICE OF PERPETUAL RECORD / PERSONNEL",
+					"DUPLICATE IMAGE WITHDRAWN",
+					"PHOTOGRAPH 6-B: FIVE SUBJECTS",
+					"OBSERVATION: ACCEPTED",
+					"SECOND PRESENCE: NOT RETAINED",
+					"CURRENT STATUS: SINGLE",
+					"YOU MAY CONTINUE",
+					"8.0"
+				);
+				notice->ProcessEvent( &EV_Activate, player );
+			}
+
+			if ( debug ) {
+				gameLocal.Printf( "[ST. BRIELLE ANNEX] personnel image six stabilized and withdrawn\n" );
+			}
+		}
+		return;
+	}
+
+	annexFiledPersonObservedSince = 0;
+
+	if ( gameLocal.time < annexFiledPersonNextMoveTime ) {
+		return;
+	}
+
+	// The figure advances in discontinuous corrections rather than walking. It
+	// remains in the main hall even if the player ducks into a side office, which
+	// keeps this prototype from clipping straight through Annex walls.
+	idVec3 target = playerOrigin + idVec3( 0.0f, 0.0f, 54.0f );
+	target.y = idMath::ClampFloat( -72.0f, 72.0f, target.y );
+	target.z = 82.0f;
+
+	idVec3 advance = target - filedCenter;
+	advance.z = 0.0f;
+	const float remaining = advance.Normalize();
+	if ( remaining > 1.0f ) {
+		const float step = idStBrielleRecord::GetAwareness() >= 10 ? 86.0f : 68.0f;
+		const float moveDistance = remaining < step ? remaining : step;
+		filedCenter += advance * moveDistance;
+		filedCenter.x = idMath::ClampFloat( -760.0f, 760.0f, filedCenter.x );
+		filedCenter.y = idMath::ClampFloat( -72.0f, 72.0f, filedCenter.y );
+		filedCenter.z = 82.0f;
+		filedPerson->SetOrigin( filedCenter - visualOffset );
+		filedPerson->UpdateVisuals();
+	}
+
+	annexFiledPersonNextMoveTime = gameLocal.time + 700;
+}
+
 void idStBrielleAwarenessDirector::UpdateAnnexSequence( void ) {
 	// Presence of this entity is our cheap map identity check; no Annex-specific
 	// behavior runs on other St. Brielle maps.
@@ -519,6 +715,11 @@ void idStBrielleAwarenessDirector::UpdateAnnexSequence( void ) {
 					gameLocal.Printf( "[ST. BRIELLE ANNEX] continuity return filed; exit correction complete\n" );
 				}
 			}
+
+			// The FILED state opens the first hostile beat. Photograph 6-B's sixth
+			// subject is no longer a passive correction once the player's duplicate
+			// departure has been accepted into the city record.
+			UpdateAnnexFiledPerson( player );
 			return;
 		}
 
@@ -555,6 +756,10 @@ void idStBrielleAwarenessDirector::Save( idSaveGame *savefile ) const {
 	savefile->WriteBool( annexPhotoConfigured );
 	savefile->WriteBool( annexPhonePulseBright );
 	savefile->WriteInt( annexPhoneNextPulseTime );
+
+	savefile->WriteBool( annexFiledPersonActive );
+	savefile->WriteInt( annexFiledPersonNextMoveTime );
+	savefile->WriteInt( annexFiledPersonObservedSince );
 }
 
 void idStBrielleAwarenessDirector::Restore( idRestoreGame *savefile ) {
@@ -568,6 +773,10 @@ void idStBrielleAwarenessDirector::Restore( idRestoreGame *savefile ) {
 	savefile->ReadBool( annexPhotoConfigured );
 	savefile->ReadBool( annexPhonePulseBright );
 	savefile->ReadInt( annexPhoneNextPulseTime );
+
+	savefile->ReadBool( annexFiledPersonActive );
+	savefile->ReadInt( annexFiledPersonNextMoveTime );
+	savefile->ReadInt( annexFiledPersonObservedSince );
 
 	BecomeActive( TH_THINK );
 }
