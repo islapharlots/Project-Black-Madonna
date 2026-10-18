@@ -36,3 +36,11 @@ textures/stbrielle/room214_metal_corrected
 	bumpmap			textures/stbrielle/annex/room214_metal_local.tga
 	specularmap		textures/stbrielle/annex/room214_metal_s.tga
 }
+
+textures/stbrielle/room214_paper_corrected
+{
+	qer_editorimage	textures/stbrielle/annex/room214_paper_d.tga
+	diffusemap		textures/stbrielle/annex/room214_paper_d.tga
+	bumpmap			textures/stbrielle/annex/room214_paper_local.tga
+	specularmap		textures/stbrielle/annex/room214_paper_s.tga
+}
