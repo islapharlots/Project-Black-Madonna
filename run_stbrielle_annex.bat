@@ -27,6 +27,17 @@ if errorlevel 1 (
     exit /b 1
 )
 
+echo.
+echo Preparing Room 214 corrected texture set...
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0tools\setup_room214_textures.ps1" -Root "%SBROOT%"
+if errorlevel 1 (
+    echo.
+    echo ERROR: Room 214 corrected textures could not be prepared.
+    echo.
+    pause
+    exit /b 1
+)
+
 if exist "%SBROOT%\stbrielle\maps\sb00_annex.proc" del /q "%SBROOT%\stbrielle\maps\sb00_annex.proc"
 if exist "%SBROOT%\stbrielle\maps\sb00_annex.cm" del /q "%SBROOT%\stbrielle\maps\sb00_annex.cm"
 
@@ -63,6 +74,7 @@ echo Compile verified:
 echo   stbrielle\maps\sb00_annex.proc
 echo   stbrielle\maps\sb00_annex.cm
 echo   stbrielle\textures\stbrielle\annex\*.tga
+echo   stbrielle\skins\sb_room214.skin
 echo.
 echo Launching Municipal Annex...
 echo Interaction: E
