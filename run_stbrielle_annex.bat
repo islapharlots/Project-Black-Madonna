@@ -49,6 +49,17 @@ if errorlevel 1 (
     exit /b 1
 )
 
+echo.
+echo Preparing Room 214 threshold sound...
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0tools\setup_room214_threshold_sound.ps1" -Root "%SBROOT%"
+if errorlevel 1 (
+    echo.
+    echo ERROR: Room 214 threshold sound could not be prepared.
+    echo.
+    pause
+    exit /b 1
+)
+
 if exist "%SBROOT%\stbrielle\maps\sb00_annex.proc" del /q "%SBROOT%\stbrielle\maps\sb00_annex.proc"
 if exist "%SBROOT%\stbrielle\maps\sb00_annex.cm" del /q "%SBROOT%\stbrielle\maps\sb00_annex.cm"
 
@@ -86,6 +97,7 @@ echo   stbrielle\maps\sb00_annex.proc
 echo   stbrielle\maps\sb00_annex.cm
 echo   stbrielle\textures\stbrielle\annex\*.tga
 echo   stbrielle\skins\sb_room214.skin
+echo   stbrielle\sound\annex\room214_threshold.wav
 echo.
 echo Launching Municipal Annex...
 echo Interaction: E
