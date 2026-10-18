@@ -51,6 +51,7 @@ private:
 	void				ApplyAnnexCorrection( void );
 	void				ConfigureAnnexPhoto( bool corrected );
 	void				ConfigureAnnexPhone( void );
+	void				ConfigureAnnexExit( bool reviewed );
 	void				ConfigureInteractable( idEntity *ent, const char *displayName, const char *action, const char *targetName, bool useOnce );
 	void				ConfigureNotice( idEntity *notice, const char *kicker, const char *title,
 						const char *line1, const char *line2, const char *line3, const char *line4,
