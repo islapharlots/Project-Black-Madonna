@@ -1,0 +1,362 @@
+Version 2
+// ST. BRIELLE: THE INTERVAL
+// sb01_cityglimpse — first exterior glimpse after the Municipal Annex slice
+//
+// This is intentionally a small atmospheric handoff rather than a full city map.
+// The player steps out beneath a dark civic street canyon, receives the Annex
+// continuity result, and is left looking deeper into St. Brielle.
+
+{
+"classname" "worldspawn"
+"editor_drLastCameraPos" "-420 0 80"
+{
+brushDef3
+{
+( 1 0 0 512 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_void" 0 0 0
+( -1 0 0 -544 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_void" 0 0 0
+( 0 1 0 -384 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_void" 0 0 0
+( 0 -1 0 -384 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_void" 0 0 0
+( 0 0 1 -416 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_void" 0 0 0
+( 0 0 -1 -32 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_void" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 -928 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_void" 0 0 0
+( -1 0 0 896 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_void" 0 0 0
+( 0 1 0 -384 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_void" 0 0 0
+( 0 -1 0 -384 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_void" 0 0 0
+( 0 0 1 -416 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_void" 0 0 0
+( 0 0 -1 -32 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_void" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 -896 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_void" 0 0 0
+( -1 0 0 -512 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_void" 0 0 0
+( 0 1 0 352 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_void" 0 0 0
+( 0 -1 0 -384 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_void" 0 0 0
+( 0 0 1 -416 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_void" 0 0 0
+( 0 0 -1 -32 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_void" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 -896 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_void" 0 0 0
+( -1 0 0 -512 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_void" 0 0 0
+( 0 1 0 -384 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_void" 0 0 0
+( 0 -1 0 352 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_void" 0 0 0
+( 0 0 1 -416 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_void" 0 0 0
+( 0 0 -1 -32 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_void" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 -896 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_stone" 0 0 0
+( -1 0 0 -512 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_stone" 0 0 0
+( 0 1 0 -352 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_stone" 0 0 0
+( 0 -1 0 -352 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_stone" 0 0 0
+( 0 0 1 0 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_stone" 0 0 0
+( 0 0 -1 -32 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_stone" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 -896 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_void" 0 0 0
+( -1 0 0 -512 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_void" 0 0 0
+( 0 1 0 -352 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_void" 0 0 0
+( 0 -1 0 -352 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_void" 0 0 0
+( 0 0 1 -416 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_void" 0 0 0
+( 0 0 -1 384 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_void" 0 0 0
+}
+}
+}
+
+{
+"classname" "info_player_start"
+"name" "cityglimpse_player_start"
+"origin" "-430 0 32"
+"angle" "0"
+}
+
+// Broad sidewalks: the street itself remains dark wet stone.
+{
+"classname" "func_static"
+"name" "cityglimpse_sidewalks"
+"model" "cityglimpse_sidewalks"
+"solid" "1"
+{
+brushDef3
+{
+( 1 0 0 -850 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_tile" 0 0 0
+( -1 0 0 -470 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_tile" 0 0 0
+( 0 1 0 -176 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_tile" 0 0 0
+( 0 -1 0 96 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_tile" 0 0 0
+( 0 0 1 -8 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_tile" 0 0 0
+( 0 0 -1 0 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_tile" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 -850 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_tile" 0 0 0
+( -1 0 0 -470 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_tile" 0 0 0
+( 0 1 0 96 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_tile" 0 0 0
+( 0 -1 0 -176 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_tile" 0 0 0
+( 0 0 1 -8 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_tile" 0 0 0
+( 0 0 -1 0 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_tile" 0 0 0
+}
+}
+}
+
+// North-side civic blocks.
+{
+"classname" "func_static"
+"name" "cityglimpse_north_blocks"
+"model" "cityglimpse_north_blocks"
+"solid" "0"
+{
+brushDef3
+{
+( 1 0 0 300 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_stone" 0 0 0
+( -1 0 0 -120 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_stone" 0 0 0
+( 0 1 0 -340 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_stone" 0 0 0
+( 0 -1 0 184 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_stone" 0 0 0
+( 0 0 1 -252 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_stone" 0 0 0
+( 0 0 -1 0 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_stone" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 -490 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_greenstone" 0 0 0
+( -1 0 0 -80 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_greenstone" 0 0 0
+( 0 1 0 -340 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_greenstone" 0 0 0
+( 0 -1 0 192 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_greenstone" 0 0 0
+( 0 0 1 -318 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_greenstone" 0 0 0
+( 0 0 -1 0 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_greenstone" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 -830 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( -1 0 0 540 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 1 0 -340 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 -1 0 176 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 1 -230 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 -1 0 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+}
+}
+}
+
+// South-side older brick/civic massing.
+{
+"classname" "func_static"
+"name" "cityglimpse_south_blocks"
+"model" "cityglimpse_south_blocks"
+"solid" "0"
+{
+brushDef3
+{
+( 1 0 0 240 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( -1 0 0 -160 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 1 0 184 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 -1 0 -340 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 1 -270 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 -1 0 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 -400 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_stone" 0 0 0
+( -1 0 0 -80 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_stone" 0 0 0
+( 0 1 0 192 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_stone" 0 0 0
+( 0 -1 0 -340 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_stone" 0 0 0
+( 0 0 1 -224 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_stone" 0 0 0
+( 0 0 -1 0 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_stone" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 -820 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_burgundy" 0 0 0
+( -1 0 0 450 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_burgundy" 0 0 0
+( 0 1 0 176 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_burgundy" 0 0 0
+( 0 -1 0 -340 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_burgundy" 0 0 0
+( 0 0 1 -302 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_burgundy" 0 0 0
+( 0 0 -1 0 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_burgundy" 0 0 0
+}
+}
+}
+
+// Warm rectangles suggest occupied windows without turning the teaser into a full facade pass.
+{
+"classname" "func_static"
+"name" "cityglimpse_windows"
+"model" "cityglimpse_windows"
+"solid" "0"
+{
+brushDef3
+{
+( 1 0 0 180 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_light_warm" 0 0 0
+( -1 0 0 -120 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_light_warm" 0 0 0
+( 0 1 0 -184 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_light_warm" 0 0 0
+( 0 -1 0 180 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_light_warm" 0 0 0
+( 0 0 1 -130 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_light_warm" 0 0 0
+( 0 0 -1 82 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_light_warm" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 -330 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_light_warm" 0 0 0
+( -1 0 0 270 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_light_warm" 0 0 0
+( 0 1 0 -192 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_light_warm" 0 0 0
+( 0 -1 0 188 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_light_warm" 0 0 0
+( 0 0 1 -176 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_light_warm" 0 0 0
+( 0 0 -1 118 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_light_warm" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 -610 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_light_warm" 0 0 0
+( -1 0 0 550 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_light_warm" 0 0 0
+( 0 1 0 188 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_light_warm" 0 0 0
+( 0 -1 0 -192 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_light_warm" 0 0 0
+( 0 0 1 -148 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_light_warm" 0 0 0
+( 0 0 -1 96 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_light_warm" 0 0 0
+}
+}
+}
+
+// Distant civic tower and clock-like beacon: first landmark beyond the Annex.
+{
+"classname" "func_static"
+"name" "cityglimpse_civic_tower"
+"model" "cityglimpse_civic_tower"
+"solid" "0"
+{
+brushDef3
+{
+( 1 0 0 -824 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( -1 0 0 738 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 1 0 -70 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 -1 0 -70 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 1 -332 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 -1 0 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 -802 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( -1 0 0 760 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 1 0 -44 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 -1 0 -44 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 1 -286 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 -1 274 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+}
+}
+}
+
+{
+"classname" "light"
+"name" "cityglimpse_moon_fill"
+"origin" "60 0 300"
+"_color" "0.20 0.28 0.42"
+"light" "720"
+"noshadows" "1"
+}
+{
+"classname" "light"
+"name" "cityglimpse_window_pool_a"
+"origin" "100 70 150"
+"_color" "0.70 0.48 0.24"
+"light" "260"
+"noshadows" "1"
+}
+{
+"classname" "light"
+"name" "cityglimpse_window_pool_b"
+"origin" "430 -70 170"
+"_color" "0.58 0.40 0.22"
+"light" "220"
+"noshadows" "1"
+}
+{
+"classname" "light"
+"name" "cityglimpse_record_light"
+"origin" "-250 0 118"
+"_color" "0.18 0.48 0.42"
+"light" "210"
+"noshadows" "1"
+"start_off" "1"
+}
+{
+"classname" "light"
+"name" "cityglimpse_tower_beacon"
+"origin" "780 0 314"
+"_color" "0.45 0.025 0.055"
+"light" "180"
+"noshadows" "1"
+}
+
+{
+"classname" "stbrielle_awareness_director"
+"name" "cityglimpse_awareness_director"
+"fire_current_on_spawn" "0"
+"awareness_debug" "0"
+"origin" "-420 64 32"
+}
+
+{
+"classname" "trigger_once"
+"name" "cityglimpse_arrival_trigger"
+"target" "cityglimpse_arrival_notice"
+"target1" "cityglimpse_complete_record"
+{
+brushDef3
+{
+( 1 0 0 220 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/common/trigger" 0 0 0
+( -1 0 0 -360 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/common/trigger" 0 0 0
+( 0 1 0 -150 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/common/trigger" 0 0 0
+( 0 -1 0 -150 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/common/trigger" 0 0 0
+( 0 0 1 -170 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/common/trigger" 0 0 0
+( 0 0 -1 0 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/common/trigger" 0 0 0
+}
+}
+}
+
+{
+"classname" "target_stbrielle_notice"
+"name" "cityglimpse_arrival_notice"
+"notice_kicker" "CITY OF ST. BRIELLE / PUBLIC WAY"
+"notice_title" "MUNICIPAL ANNEX / DEPARTURE RECEIVED"
+"notice_line1" "ANNEX FILE: CLOSED"
+"notice_line2" "PERSONNEL STATUS: PENDING RECORD"
+"notice_line3" "RECORD STABILITY: PENDING"
+"notice_line4" "CONTINUITY STATUS: ACTIVE"
+"notice_footer" "CIVITAS INCOMPLETA / WATER CYCLE / 23:44"
+"notice_duration" "9.0"
+"origin" "-260 60 32"
+}
+
+{
+"classname" "target_stbrielle_record"
+"name" "cityglimpse_complete_record"
+"record_key" "sb_vertical_slice_complete"
+"record_mode" "set"
+"record_value" "1"
+"record_once" "1"
+"record_debug" "1"
+"target" "cityglimpse_record_light"
+"origin" "-260 -60 32"
+}
