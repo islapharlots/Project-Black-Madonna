@@ -38,6 +38,17 @@ if errorlevel 1 (
     exit /b 1
 )
 
+echo.
+echo Preparing Room 214 corrected ledger paper...
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0tools\setup_room214_paper.ps1" -Root "%SBROOT%"
+if errorlevel 1 (
+    echo.
+    echo ERROR: Room 214 corrected ledger paper could not be prepared.
+    echo.
+    pause
+    exit /b 1
+)
+
 if exist "%SBROOT%\stbrielle\maps\sb00_annex.proc" del /q "%SBROOT%\stbrielle\maps\sb00_annex.proc"
 if exist "%SBROOT%\stbrielle\maps\sb00_annex.cm" del /q "%SBROOT%\stbrielle\maps\sb00_annex.cm"
 
