@@ -20,3 +20,15 @@ snd_stbrielle_room214_threshold
 	looping
 	sound/annex/room214_threshold.wav
 }
+
+// The first hostile does not get a monster voice. The same low pressure that
+// lives in the corrected Room 214 threshold follows the detached sixth image,
+// quieter and with a slightly wider radius, as if the room has left its frame.
+snd_stbrielle_annex_filed_person
+{
+	minDistance 1
+	maxDistance 9
+	volume -17
+	looping
+	sound/annex/room214_threshold.wav
+}
