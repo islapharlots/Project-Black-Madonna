@@ -1,0 +1,10 @@
+// ST. BRIELLE — Municipal Annex sound declarations
+
+snd_stbrielle_annex_phone_ring
+{
+	minDistance 2
+	maxDistance 18
+	volume -2
+	looping
+	sound/annex/phone_ring.ogg
+}
