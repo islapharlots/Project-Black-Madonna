@@ -59,3 +59,25 @@ The source branch exposes:
 - `sb_recordClear [key]`
 
 Calling `sb_recordClear` with no key removes only `sb_*` state and leaves unrelated legacy persistent data alone.
+
+## Public Way investigation contract
+
+| Key | Values | Meaning |
+| --- | --- | --- |
+| `sb_city_arrived` | 0/1 | Exterior arrival trigger reached; does not imply investigation completion |
+| `sb_city_roster_read` | 0/1 | Municipal occupancy roster inspected |
+| `sb_city_testimony_read` | 0/1 | Witness slip inspected |
+| `sb_city_certification` | absent/0, 1, 2 | Unsigned, accept official city account, retain witness account |
+| `sb_mercuria_intake_route` | `public`, `service` | Hospital approach prepared by certification; no hospital map yet |
+| `sb_city_dispatch_received` | 0/1 | Assignment receipt collected |
+| `sb_city_investigation_complete` | 0/1 | Street investigation finished through dispatch |
+| `sb_vertical_slice_complete` | 0/1 | Current slice endpoint reached |
+
+Certification requires both evidence flags and may be written only while unsigned.
+The map guards each signing path; HUD prompts are presentation, not authorization.
+Evidence and dispatch writes are idempotent `set` operations. Do not add repeatable
+Awareness rewards to those reads. Both branches preserve Annex contact/stability.
+
+The previous exterior set `sb_vertical_slice_complete` on arrival. Existing saves
+with that legacy flag are not erased. New progression uses the specific city keys;
+the legacy flag alone must not authorize certification or hospital entry.

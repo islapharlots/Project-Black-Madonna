@@ -1,176 +1,73 @@
-# Vertical Slice — Municipal Annex
+# Playable slice — Municipal Annex and Public Way
 
-## Map
+## Purpose
 
-`sb00_annex`
+Prove the central loop: investigate → survive → decide what becomes official → carry the consequence onward. The finished prologue targets approximately 20–30 minutes; the current greybox duration has not been measured in this pass.
 
-Target playtime for the finished vertical slice: approximately 20–30 minutes.
+## Current flow
 
-The goal is not to build a polished chapter immediately. The goal is to prove every system needed to build the rest of the campaign.
+1. Read the work order in the Continuity Office.
+2. Power **ARCHIVE AUXILIARY / 214**. The blank wall gives way to Room 214.
+3. Read the occupant ledger and leave the room. The Annex corrects itself.
+4. Answer the reception telephone.
+5. Review the impossible departure, then file the authorized return.
+6. Encounter the filed person. It advances while unobserved. Hold a clear view long enough to withdraw it. Contact is nonlethal but leaves a persistent exception.
+7. Use **LEAVE** at the released exit. The engine transitions to `sb01_cityglimpse` and retains the Record.
+8. Read the street instruction plate, north occupancy roster, and south witness slip.
+9. At the eastern desk, choose the green or red seal. Both require both pieces of evidence.
+10. Collect the central dispatch receipt. This is the current playable endpoint.
 
-## Opening
+## Street certification
 
-The player arrives for an ordinary night continuity shift inside a small St. Brielle municipal annex.
+| Seal | Account filed | Immediate response | Persistent hospital setup |
+| --- | --- | --- | --- |
+| Green — accept city | Official zero-transfer roster; witness omitted | Green desk light; no retained witness figure | Public intake; credentials accepted |
+| Red — retain witness | Six patient transfers; testimony attached | Red desk light; second figure appears | Service intake; exception attached |
 
-A printed work order is waiting at the desk.
+The first certification wins. All documents and receipts can be reread. The hospital assignment is stored, but the hospital map is not implemented yet.
 
-Six facilities require physical verification after a communications interruption.
+## Launch
 
-The work order contains tomorrow's date.
+Rebuild the x64 **stbrielle** project in `solution/monstergame.sln`, then run:
 
-The player's department name on the form does not match the department name on the office door.
+```text
+run_stbrielle_annex.bat
+```
 
-The game does not comment on either discrepancy.
+The launcher prepares generated assets, compiles `sb00_annex` and `sb01_cityglimpse`, verifies their `.proc`/`.cm` files, and launches the Annex. Compilation logs are `annex_compile.log` and `cityglimpse_compile.log`; the runtime log is `annex_runtime.log`.
 
-## Space plan
+## Windows verification checklist
 
-### A. Employee entrance
-Basic movement, interaction and inventory tutorial.
+These checks remain required; the portable target-graph tests do not perform them.
 
-### B. Continuity office
-Work order, city map, first terminal, save point.
+### Build and full path
 
-### C. Records corridor
-Locked records room, alternate vent/service route, first environmental puzzle.
+- Build the changed C++ successfully. Do not test with an older executable.
+- Run the launcher; confirm both maps compile without leaks or invalid brushes.
+- Start a fresh test Record and follow the complete Annex sequence.
+- Confirm work order/ledger text, phone, interaction prompts, and hostile sound are readable/audible.
+- Look toward the hostile through a wall: it must not count as observed. Give it a clear sustained view: it should withdraw. Break line of sight halfway through: observation must restart.
+- Complete one path without contact and another after contact. Confirm the arrival receipt retains the appropriate exception/count/stability.
 
-### D. Utility basement
-Power routing, maintenance systems, physical-object interaction and first hostile encounter.
+### Street interaction and presentation
 
-### E. Room 214
-A room that can be made present or absent through the Record.
+- Inspect all three evidence/instruction plates and the two seals. Confirm every plate is reachable with E and no facade can be walked through.
+- Try both seals before reading anything, then after only one evidence card. Confirm informative denial and no certification.
+- Read both evidence cards in each order. Confirm the assignment prompt advances.
+- Use green: verify public intake, green light, and no witness figure. Try red afterward: verify the original certification remains.
+- In a separate fresh test, use red: verify service intake, red light, and visible witness figure. Try green afterward: verify the original certification remains.
+- Open one card and then another before the first timeout. The newer card must remain for its own duration.
+- Collect and reread dispatch. Confirm completion flags are set, the ending is explicit, and there is no attempt to load a nonexistent hospital map.
 
-### F. Street exit
-Mission-complete transition to the first large St. Brielle location.
+### Save/load and persistence
 
-## Systems the slice must prove
+- Save/reload before the Room 214 correction, during the hostile encounter, after reading only one street clue, after certification, and after dispatch.
+- Verify the correct prompts, light, witness visibility, Record values, and encounter state resume.
+- Reload the street with the existing Record. Confirm the same choice is retained and evidence/receipts remain readable.
+- Check `sb_city_certification`, `sb_mercuria_intake_route`, `sb_city_dispatch_received`, and `sb_vertical_slice_complete` in the developer console.
 
-1. Original St. Brielle map loads.
-2. Player can interact with doors, physics objects and a terminal.
-3. At least one hostile AI can search, lose, reacquire and pursue the player.
-4. Player has at least one firearm or defensive tool.
-5. Save/load works.
-6. `target_stbrielle_record` changes persistent state.
-7. `target_stbrielle_recordcheck` changes map behavior based on persistent state.
-8. A Record value survives a save and a map transition.
-9. The level ends through normal map transition infrastructure.
-10. The next map reads the previous map's decision.
+For a deliberately fresh dev test, use `sb_recordClear` before loading the test map. This clears campaign facts; do not do it when testing continuation of an existing save.
 
-## First persistent decision
+## Remaining original slice requirements
 
-The basement contains a municipal breaker labelled:
-
-**ARCHIVE AUXILIARY / 214**
-
-Turning it on sets:
-
-`sb_room_214_exists = 1`
-
-Leaving it off allows the player to finish the level with that key unset or false.
-
-Later in the level, a Record check determines whether Room 214 exists in the records corridor.
-
-This gives us a clean technical test:
-
-- one player sees a blank wall;
-- another sees a door and room;
-- both versions are valid;
-- the decision persists into later maps.
-
-## First Awareness event
-
-Inspecting the impossible work order sets:
-
-`sb_black_madonna_awareness += 1`
-
-At awareness 1, nothing supernatural attacks the player.
-
-Instead:
-
-- a framed municipal photograph changes;
-- the office directory acquires one extra name;
-- a radio emits a short burst of speech;
-- a previously normal mirror no longer reflects the office clock.
-
-The point is to establish that Awareness changes the world's behavior, not merely enemy difficulty.
-
-## First combat encounter
-
-The basement encounter should support at least three approaches:
-
-- direct firearm combat;
-- environmental distraction / object throw and bypass;
-- using a powered door or machinery state to isolate the threat.
-
-The encounter is successful if the player understands that the environment is part of the combat vocabulary.
-
-## End state
-
-At the street exit, the game records:
-
-- `sb_annex_complete = 1`
-- `sb_annex_room214 = <result>`
-- `sb_annex_workorder_read = <result>`
-- `sb_black_madonna_awareness = <current value>`
-
-The level then transitions to the first major mission.
-
-## Current playable implementation
-
-The first playable Annex greybox now exists as:
-
-`maps/sb00_annex.map`
-
-Launch from the repository root with:
-
-`run_stbrielle_annex.bat`
-
-Current controls:
-
-- WASD / mouse — movement and look
-- **E** — St. Brielle interaction (`_frob`)
-
-Current authored interaction loop:
-
-1. Enter through the employee entrance.
-2. Interact with the pale work-order plate in the Continuity Office.
-   - sets `sb_annex_workorder_read = 1`
-   - adds 1 to `sb_awareness`
-   - activates the first Awareness response
-3. Enter the southern utility bay.
-4. Interact with **ARCHIVE AUXILIARY / 214**.
-   - sets `sb_room_214_exists = 1`
-   - runs a persistent Record check
-   - physically removes the blank wall where the Room 214 doorway should be
-   - powers the Room 214 light
-5. Interact with the street continuity terminal.
-   - sets `sb_annex_complete = 1`
-
-The map also instantiates the Cycle director so the default Water Cycle is represented in a real mission space.
-
-This is still a systems greybox: final architecture, doors, text presentation, sound, combat, AI, save stations, and finished St. Brielle art are subsequent passes.
-
-## Development order
-
-### Pass A — Record laboratory
-Before building the Annex, make a tiny greybox dev map that contains:
-
-- button A: set `sb_test_door=1`;
-- button B: clear it;
-- one Record check;
-- one visible door/light response;
-- save station;
-- end-level target to a second tiny map;
-- second map verifies `sb_test_door` survived.
-
-### Pass B — Annex greybox
-Brush geometry only. No final art.
-
-### Pass C — Interaction
-Doors, terminal, power, vent path, first AI.
-
-### Pass D — Horror state
-Room 214 and first Awareness effects.
-
-### Pass E — Combat and balance
-
-### Pass F — Original St. Brielle art/audio pass
+A proper hostile AI that searches/loses/reacquires the player, at least one defensive tool, multiple encounter solutions, save stations, alternate Annex completion without Room 214, and a production art/audio pass remain future work. The street's new choice is a first test of player agency, not completion of those systems.

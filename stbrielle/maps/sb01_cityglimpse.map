@@ -2,9 +2,8 @@ Version 2
 // ST. BRIELLE: THE INTERVAL
 // sb01_cityglimpse — first exterior glimpse after the Municipal Annex slice
 //
-// This is intentionally a small atmospheric handoff rather than a full city map.
-// The player steps out beneath a dark civic street canyon, receives the Annex
-// continuity result, and is left looking deeper into St. Brielle.
+// First street investigation: compare two records, certify one account, and
+// collect the Mercuria assignment. All decisions live in the persistent Record.
 
 {
 "classname" "worldspawn"
@@ -119,12 +118,12 @@ brushDef3
 "classname" "func_static"
 "name" "cityglimpse_north_blocks"
 "model" "cityglimpse_north_blocks"
-"solid" "0"
+"solid" "1"
 {
 brushDef3
 {
-( 1 0 0 300 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_stone" 0 0 0
-( -1 0 0 -120 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_stone" 0 0 0
+( 1 0 0 120 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_stone" 0 0 0
+( -1 0 0 -300 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_stone" 0 0 0
 ( 0 1 0 -340 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_stone" 0 0 0
 ( 0 -1 0 184 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_stone" 0 0 0
 ( 0 0 1 -252 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_stone" 0 0 0
@@ -160,12 +159,12 @@ brushDef3
 "classname" "func_static"
 "name" "cityglimpse_south_blocks"
 "model" "cityglimpse_south_blocks"
-"solid" "0"
+"solid" "1"
 {
 brushDef3
 {
-( 1 0 0 240 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
-( -1 0 0 -160 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 1 0 0 160 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( -1 0 0 -240 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
 ( 0 1 0 184 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
 ( 0 -1 0 -340 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
 ( 0 0 1 -270 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
@@ -205,8 +204,8 @@ brushDef3
 {
 brushDef3
 {
-( 1 0 0 180 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_light_warm" 0 0 0
-( -1 0 0 -120 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_light_warm" 0 0 0
+( 1 0 0 120 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_light_warm" 0 0 0
+( -1 0 0 -180 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_light_warm" 0 0 0
 ( 0 1 0 -184 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_light_warm" 0 0 0
 ( 0 -1 0 180 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_light_warm" 0 0 0
 ( 0 0 1 -130 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_light_warm" 0 0 0
@@ -242,7 +241,7 @@ brushDef3
 "classname" "func_static"
 "name" "cityglimpse_civic_tower"
 "model" "cityglimpse_civic_tower"
-"solid" "0"
+"solid" "1"
 {
 brushDef3
 {
@@ -352,11 +351,679 @@ brushDef3
 {
 "classname" "target_stbrielle_record"
 "name" "cityglimpse_complete_record"
-"record_key" "sb_vertical_slice_complete"
+"record_key" "sb_city_arrived"
 "record_mode" "set"
 "record_value" "1"
 "record_once" "1"
 "record_debug" "1"
 "target" "cityglimpse_record_light"
 "origin" "-260 -60 32"
+}
+
+
+// STREET CONTINUITY / authored investigation graph.
+// Certification is single-assignment; evidence and receipts remain readable.
+
+{
+"classname" "func_static"
+"name" "city_instructions"
+"model" "city_instructions"
+"solid" "1"
+"displayname" "PUBLIC WAY / FIELD ORDER"
+"stbrielle_interact" "1"
+"stbrielle_action" "READ"
+"stbrielle_use_once" "0"
+"stbrielle_activate_targets" "1"
+"target" "city_instructions_notice"
+{
+brushDef3
+{
+( 1 0 0 320 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( -1 0 0 -372 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 1 0 -120 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 -1 0 112 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 1 -106 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 -1 54 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+}
+}
+}
+
+{
+"classname" "func_static"
+"name" "city_instructions_post"
+"model" "city_instructions_post"
+"solid" "1"
+{
+brushDef3
+{
+( 1 0 0 342 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( -1 0 0 -350 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 1 0 -123 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 -1 0 115 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 1 -54 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 -1 8 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+}
+}
+}
+
+{
+"classname" "target_stbrielle_notice"
+"name" "city_instructions_notice"
+"notice_kicker" "PUBLIC WAY / FIELD VERIFICATION"
+"notice_title" "ONE STREET. TWO ACCOUNTS."
+"notice_line1" "Compare the north roster and south witness slip."
+"notice_line2" "East desk: choose which account becomes official."
+"notice_line3" "GREEN SEAL: accept the city. Witness is omitted."
+"notice_line4" "RED SEAL: retain the witness. Your file is flagged."
+"notice_footer" "A SIGNED RETURN CANNOT BE REPLACED"
+"notice_duration" "12.0"
+}
+
+{
+"classname" "func_static"
+"name" "city_roster"
+"model" "city_roster"
+"solid" "1"
+"displayname" "CITY ROSTER / NORTH"
+"stbrielle_interact" "1"
+"stbrielle_action" "READ"
+"stbrielle_use_once" "0"
+"stbrielle_activate_targets" "1"
+"target" "city_roster_record"
+{
+brushDef3
+{
+( 1 0 0 45 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_paper_old" 0 0 0
+( -1 0 0 -115 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_paper_old" 0 0 0
+( 0 1 0 -170 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_paper_old" 0 0 0
+( 0 -1 0 160 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_paper_old" 0 0 0
+( 0 0 1 -104 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_paper_old" 0 0 0
+( 0 0 -1 56 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_paper_old" 0 0 0
+}
+}
+}
+
+{
+"classname" "func_static"
+"name" "city_roster_stand"
+"model" "city_roster_stand"
+"solid" "1"
+{
+brushDef3
+{
+( 1 0 0 76 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( -1 0 0 -84 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 1 0 -170 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 -1 0 162 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 1 -56 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 -1 8 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+}
+}
+}
+
+{
+"classname" "target_stbrielle_record"
+"name" "city_roster_record"
+"record_key" "sb_city_roster_read"
+"record_mode" "set"
+"record_value" "1"
+"record_once" "0"
+"target" "city_roster_notice"
+}
+
+{
+"classname" "target_stbrielle_notice"
+"name" "city_roster_notice"
+"notice_kicker" "PUBLIC WAY / FIELD VERIFICATION"
+"notice_title" "PUBLIC WAY / OCCUPANCY"
+"notice_line1" "ST. MERCURIA: RECEIVING / PUBLIC ENTRANCE OPEN"
+"notice_line2" "TRANSFERRED PATIENTS: 0"
+"notice_line3" "WITNESSES ON THIS STREET: 0"
+"notice_line4" "CERTIFIED AT 23:44 / NO INTERRUPTION RECORDED"
+"notice_footer" "GREEN SEAL ACCEPTS THIS ACCOUNT"
+"notice_duration" "12.0"
+}
+
+{
+"classname" "func_static"
+"name" "city_testimony"
+"model" "city_testimony"
+"solid" "1"
+"displayname" "WITNESS SLIP / SOUTH"
+"stbrielle_interact" "1"
+"stbrielle_action" "READ"
+"stbrielle_use_once" "0"
+"stbrielle_activate_targets" "1"
+"target" "city_testimony_record"
+{
+brushDef3
+{
+( 1 0 0 -220 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_paper_old" 0 0 0
+( -1 0 0 150 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_paper_old" 0 0 0
+( 0 1 0 160 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_paper_old" 0 0 0
+( 0 -1 0 -170 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_paper_old" 0 0 0
+( 0 0 1 -104 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_paper_old" 0 0 0
+( 0 0 -1 56 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_paper_old" 0 0 0
+}
+}
+}
+
+{
+"classname" "func_static"
+"name" "city_testimony_stand"
+"model" "city_testimony_stand"
+"solid" "1"
+{
+brushDef3
+{
+( 1 0 0 -189 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( -1 0 0 181 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 1 0 162 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 -1 0 -170 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 1 -56 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 -1 8 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+}
+}
+}
+
+{
+"classname" "target_stbrielle_record"
+"name" "city_testimony_record"
+"record_key" "sb_city_testimony_read"
+"record_mode" "set"
+"record_value" "1"
+"record_once" "0"
+"target" "city_testimony_notice"
+}
+
+{
+"classname" "target_stbrielle_notice"
+"name" "city_testimony_notice"
+"notice_kicker" "PUBLIC WAY / FIELD VERIFICATION"
+"notice_title" "UNREGISTERED WITNESS"
+"notice_line1" "They took six patients through the service door."
+"notice_line2" "The public entrance has been sealed for years."
+"notice_line3" "I signed this before you came out of the Annex."
+"notice_line4" "SIGNATURE: $PLAYER"
+"notice_footer" "RED SEAL RETAINS THIS ACCOUNT"
+"notice_duration" "12.0"
+}
+
+{
+"classname" "func_static"
+"name" "city_certification_desk"
+"model" "city_certification_desk"
+"solid" "1"
+{
+brushDef3
+{
+( 1 0 0 -596 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( -1 0 0 552 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 1 0 -126 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 -1 0 -126 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 1 -48 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 -1 0 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+}
+}
+}
+
+{
+"classname" "func_static"
+"name" "city_certify_official"
+"model" "city_certify_official"
+"solid" "1"
+"displayname" "GREEN SEAL / ACCEPT CITY"
+"stbrielle_interact" "1"
+"stbrielle_action" "REQUIREMENTS"
+"stbrielle_use_once" "0"
+"stbrielle_activate_targets" "1"
+"target" "city_review_official"
+"target1" "city_review_witness"
+"target2" "city_official_unfiled"
+{
+brushDef3
+{
+( 1 0 0 -594 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_greenstone" 0 0 0
+( -1 0 0 550 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_greenstone" 0 0 0
+( 0 1 0 -111 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_greenstone" 0 0 0
+( 0 -1 0 55 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_greenstone" 0 0 0
+( 0 0 1 -54 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_greenstone" 0 0 0
+( 0 0 -1 49 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_greenstone" 0 0 0
+}
+}
+}
+
+{
+"classname" "func_static"
+"name" "city_certify_witness"
+"model" "city_certify_witness"
+"solid" "1"
+"displayname" "RED SEAL / RETAIN WITNESS"
+"stbrielle_interact" "1"
+"stbrielle_action" "REQUIREMENTS"
+"stbrielle_use_once" "0"
+"stbrielle_activate_targets" "1"
+"target" "city_review_official"
+"target1" "city_review_witness"
+"target2" "city_witness_unfiled"
+{
+brushDef3
+{
+( 1 0 0 -594 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_burgundy" 0 0 0
+( -1 0 0 550 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_burgundy" 0 0 0
+( 0 1 0 55 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_burgundy" 0 0 0
+( 0 -1 0 -111 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_burgundy" 0 0 0
+( 0 0 1 -54 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_burgundy" 0 0 0
+( 0 0 -1 49 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_burgundy" 0 0 0
+}
+}
+}
+
+{
+"classname" "func_static"
+"name" "city_dispatch"
+"model" "city_dispatch"
+"solid" "1"
+"displayname" "MERCURIA / DISPATCH"
+"stbrielle_interact" "1"
+"stbrielle_action" "COLLECT"
+"stbrielle_use_once" "0"
+"stbrielle_activate_targets" "1"
+"target" "city_dispatch_official_check"
+"target1" "city_dispatch_witness_check"
+"target2" "city_dispatch_denied_check"
+{
+brushDef3
+{
+( 1 0 0 -558 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( -1 0 0 550 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 1 0 -24 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 -1 0 -24 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 1 -92 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+( 0 0 -1 54 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_brass" 0 0 0
+}
+}
+}
+
+{
+"classname" "target_stbrielle_notice"
+"name" "city_missing_roster_notice"
+"notice_kicker" "PUBLIC WAY / FIELD VERIFICATION"
+"notice_title" "NORTH ROSTER REQUIRED"
+"notice_line1" "Read the municipal occupancy roster."
+"notice_line2" "The plate stands on the north sidewalk."
+"notice_line3" "A signature without evidence is not accepted."
+"notice_line4" "Compare both accounts before choosing a seal."
+"notice_footer" "CITY OF ST. BRIELLE / CONTINUITY SERVICE"
+"notice_duration" "12.0"
+}
+
+{
+"classname" "target_stbrielle_notice"
+"name" "city_missing_testimony_notice"
+"notice_kicker" "PUBLIC WAY / FIELD VERIFICATION"
+"notice_title" "SOUTH WITNESS SLIP REQUIRED"
+"notice_line1" "Read the unregistered witness account."
+"notice_line2" "The plate stands on the south sidewalk."
+"notice_line3" "A signature without evidence is not accepted."
+"notice_line4" "Compare both accounts before choosing a seal."
+"notice_footer" "CITY OF ST. BRIELLE / CONTINUITY SERVICE"
+"notice_duration" "12.0"
+}
+
+{
+"classname" "target_stbrielle_recordcheck"
+"name" "city_official_unfiled"
+"record_key" "sb_city_certification"
+"record_compare" "false"
+"record_value" "0"
+"record_once" "0"
+"target" "city_official_roster_missing"
+"target1" "city_official_roster_ready"
+}
+
+{
+"classname" "target_stbrielle_recordcheck"
+"name" "city_official_roster_missing"
+"record_key" "sb_city_roster_read"
+"record_compare" "false"
+"record_value" "0"
+"record_once" "0"
+"target" "city_missing_roster_notice"
+}
+
+{
+"classname" "target_stbrielle_recordcheck"
+"name" "city_official_roster_ready"
+"record_key" "sb_city_roster_read"
+"record_compare" "true"
+"record_value" "1"
+"record_once" "0"
+"target" "city_official_testimony_missing"
+"target1" "city_official_testimony_ready"
+}
+
+{
+"classname" "target_stbrielle_recordcheck"
+"name" "city_official_testimony_missing"
+"record_key" "sb_city_testimony_read"
+"record_compare" "false"
+"record_value" "0"
+"record_once" "0"
+"target" "city_missing_testimony_notice"
+}
+
+{
+"classname" "target_stbrielle_recordcheck"
+"name" "city_official_testimony_ready"
+"record_key" "sb_city_testimony_read"
+"record_compare" "true"
+"record_value" "1"
+"record_once" "0"
+"target" "city_official_certify"
+}
+
+{
+"classname" "target_stbrielle_record"
+"name" "city_official_certify"
+"record_key" "sb_city_certification"
+"record_mode" "set"
+"record_value" "1"
+"record_once" "0"
+"target" "city_official_route"
+}
+
+{
+"classname" "target_stbrielle_record"
+"name" "city_official_route"
+"record_key" "sb_mercuria_intake_route"
+"record_mode" "set"
+"record_value" "public"
+"record_once" "0"
+"target" "city_official_notice"
+}
+
+{
+"classname" "target_stbrielle_recordcheck"
+"name" "city_review_official"
+"record_key" "sb_city_certification"
+"record_compare" "equals"
+"record_value" "1"
+"record_once" "0"
+"target" "city_official_notice"
+}
+
+{
+"classname" "target_stbrielle_recordcheck"
+"name" "city_dispatch_official_check"
+"record_key" "sb_city_certification"
+"record_compare" "equals"
+"record_value" "1"
+"record_once" "0"
+"target" "city_dispatch_official_record"
+}
+
+{
+"classname" "target_stbrielle_record"
+"name" "city_dispatch_official_record"
+"record_key" "sb_city_dispatch_received"
+"record_mode" "set"
+"record_value" "1"
+"record_once" "0"
+"target" "city_investigation_complete"
+"target1" "city_dispatch_official_notice"
+}
+
+{
+"classname" "target_stbrielle_recordcheck"
+"name" "city_witness_unfiled"
+"record_key" "sb_city_certification"
+"record_compare" "false"
+"record_value" "0"
+"record_once" "0"
+"target" "city_witness_roster_missing"
+"target1" "city_witness_roster_ready"
+}
+
+{
+"classname" "target_stbrielle_recordcheck"
+"name" "city_witness_roster_missing"
+"record_key" "sb_city_roster_read"
+"record_compare" "false"
+"record_value" "0"
+"record_once" "0"
+"target" "city_missing_roster_notice"
+}
+
+{
+"classname" "target_stbrielle_recordcheck"
+"name" "city_witness_roster_ready"
+"record_key" "sb_city_roster_read"
+"record_compare" "true"
+"record_value" "1"
+"record_once" "0"
+"target" "city_witness_testimony_missing"
+"target1" "city_witness_testimony_ready"
+}
+
+{
+"classname" "target_stbrielle_recordcheck"
+"name" "city_witness_testimony_missing"
+"record_key" "sb_city_testimony_read"
+"record_compare" "false"
+"record_value" "0"
+"record_once" "0"
+"target" "city_missing_testimony_notice"
+}
+
+{
+"classname" "target_stbrielle_recordcheck"
+"name" "city_witness_testimony_ready"
+"record_key" "sb_city_testimony_read"
+"record_compare" "true"
+"record_value" "1"
+"record_once" "0"
+"target" "city_witness_certify"
+}
+
+{
+"classname" "target_stbrielle_record"
+"name" "city_witness_certify"
+"record_key" "sb_city_certification"
+"record_mode" "set"
+"record_value" "2"
+"record_once" "0"
+"target" "city_witness_route"
+}
+
+{
+"classname" "target_stbrielle_record"
+"name" "city_witness_route"
+"record_key" "sb_mercuria_intake_route"
+"record_mode" "set"
+"record_value" "service"
+"record_once" "0"
+"target" "city_witness_notice"
+}
+
+{
+"classname" "target_stbrielle_recordcheck"
+"name" "city_review_witness"
+"record_key" "sb_city_certification"
+"record_compare" "equals"
+"record_value" "2"
+"record_once" "0"
+"target" "city_witness_notice"
+}
+
+{
+"classname" "target_stbrielle_recordcheck"
+"name" "city_dispatch_witness_check"
+"record_key" "sb_city_certification"
+"record_compare" "equals"
+"record_value" "2"
+"record_once" "0"
+"target" "city_dispatch_witness_record"
+}
+
+{
+"classname" "target_stbrielle_record"
+"name" "city_dispatch_witness_record"
+"record_key" "sb_city_dispatch_received"
+"record_mode" "set"
+"record_value" "1"
+"record_once" "0"
+"target" "city_investigation_complete"
+"target1" "city_dispatch_witness_notice"
+}
+
+{
+"classname" "target_stbrielle_notice"
+"name" "city_official_notice"
+"notice_kicker" "PUBLIC WAY / FIELD VERIFICATION"
+"notice_title" "CITY ACCOUNT CERTIFIED"
+"notice_line1" "WITNESS ACCOUNT: OMITTED FROM OFFICIAL RETURN"
+"notice_line2" "ST. MERCURIA: PUBLIC INTAKE AUTHORIZED"
+"notice_line3" "Your credentials match the city roster."
+"notice_line4" "Collect your assignment from central dispatch."
+"notice_footer" "CERTIFICATION FILED / CANNOT BE REPLACED"
+"notice_duration" "12.0"
+}
+
+{
+"classname" "target_stbrielle_notice"
+"name" "city_witness_notice"
+"notice_kicker" "PUBLIC WAY / FIELD VERIFICATION"
+"notice_title" "WITNESS ACCOUNT RETAINED"
+"notice_line1" "WITNESS ACCOUNT: ATTACHED TO OFFICIAL RETURN"
+"notice_line2" "ST. MERCURIA: SERVICE INTAKE AUTHORIZED"
+"notice_line3" "Your credentials now carry an exception."
+"notice_line4" "Collect your assignment from central dispatch."
+"notice_footer" "CERTIFICATION FILED / CANNOT BE REPLACED"
+"notice_duration" "12.0"
+}
+
+{
+"classname" "target_stbrielle_recordcheck"
+"name" "city_dispatch_denied_check"
+"record_key" "sb_city_certification"
+"record_compare" "false"
+"record_value" "0"
+"record_once" "0"
+"target" "city_dispatch_denied_notice"
+}
+
+{
+"classname" "target_stbrielle_notice"
+"name" "city_dispatch_denied_notice"
+"notice_kicker" "PUBLIC WAY / FIELD VERIFICATION"
+"notice_title" "SIGNATURE REQUIRED"
+"notice_line1" "Read the north roster and south witness slip."
+"notice_line2" "Use one of the two seals on this desk."
+"notice_line3" "GREEN: accept the city / public intake."
+"notice_line4" "RED: retain the witness / service intake."
+"notice_footer" "CITY OF ST. BRIELLE / CONTINUITY SERVICE"
+"notice_duration" "12.0"
+}
+
+{
+"classname" "target_stbrielle_record"
+"name" "city_investigation_complete"
+"record_key" "sb_city_investigation_complete"
+"record_mode" "set"
+"record_value" "1"
+"record_once" "0"
+"target" "city_slice_complete"
+}
+
+{
+"classname" "target_stbrielle_record"
+"name" "city_slice_complete"
+"record_key" "sb_vertical_slice_complete"
+"record_mode" "set"
+"record_value" "1"
+"record_once" "0"
+}
+
+{
+"classname" "target_stbrielle_notice"
+"name" "city_dispatch_official_notice"
+"notice_kicker" "PUBLIC WAY / FIELD VERIFICATION"
+"notice_title" "ASSIGNMENT 01 / ST. MERCURIA"
+"notice_line1" "APPROACH: PUBLIC INTAKE / CREDENTIALS ACCEPTED"
+"notice_line2" "VERIFY: OCCUPANCY AGAINST PHYSICAL PATIENT COUNT"
+"notice_line3" "FIELD RETURN: CITY ACCOUNT CERTIFIED"
+"notice_line4" "Street investigation complete. Assignment retained."
+"notice_footer" "END OF CURRENT PLAYABLE SLICE / HOSPITAL CHAPTER TO FOLLOW"
+"notice_duration" "12.0"
+}
+
+{
+"classname" "target_stbrielle_notice"
+"name" "city_dispatch_witness_notice"
+"notice_kicker" "PUBLIC WAY / FIELD VERIFICATION"
+"notice_title" "ASSIGNMENT 01 / ST. MERCURIA"
+"notice_line1" "APPROACH: SERVICE INTAKE / EXCEPTION ATTACHED"
+"notice_line2" "VERIFY: SIX UNREGISTERED PATIENT TRANSFERS"
+"notice_line3" "FIELD RETURN: WITNESS ACCOUNT RETAINED"
+"notice_line4" "Street investigation complete. Assignment retained."
+"notice_footer" "END OF CURRENT PLAYABLE SLICE / HOSPITAL CHAPTER TO FOLLOW"
+"notice_duration" "12.0"
+}
+
+{
+"classname" "light"
+"name" "city_certification_light"
+"origin" "510 0 150"
+"_color" "0.12 0.18 0.25"
+"light" "220"
+"noshadows" "1"
+}
+
+{
+"classname" "light"
+"name" "city_roster_light"
+"origin" "-80 125 135"
+"_color" "0.54 0.44 0.24"
+"light" "140"
+"noshadows" "1"
+}
+
+{
+"classname" "light"
+"name" "city_testimony_light"
+"origin" "185 -125 135"
+"_color" "0.54 0.34 0.26"
+"light" "140"
+"noshadows" "1"
+}
+
+{
+"classname" "func_static"
+"name" "city_retained_witness"
+"model" "city_retained_witness"
+"solid" "1"
+"hide" "1"
+{
+brushDef3
+{
+( 1 0 0 -365 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( -1 0 0 338 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 1 0 142 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 -1 0 -150 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 1 -91 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 -1 8 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+}
+}
+{
+brushDef3
+{
+( 1 0 0 -362 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( -1 0 0 341 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 1 0 142 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 -1 0 -150 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 1 -116 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+( 0 0 -1 91 ) ( ( 0.03125 0 0 ) ( 0 0.03125 0 ) ) "textures/stbrielle/annex_blackmetal" 0 0 0
+}
+}
 }
