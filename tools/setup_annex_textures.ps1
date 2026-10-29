@@ -10,8 +10,8 @@ if ([string]::IsNullOrWhiteSpace($Root)) {
 
 $Root = [System.IO.Path]::GetFullPath($Root)
 $TextureDir = Join-Path $Root "stbrielle\textures\stbrielle\annex"
-$Marker = Join-Path $TextureDir ".generated-v1"
-$Version = "municipal-annex-textures-v1-2026-10-17"
+$Marker = Join-Path $TextureDir ".generated-v2"
+$Version = "municipal-gothic-surfaces-v2-2026-10-29b"
 
 $Required = @(
     "plaster_d.tga", "plaster_local.tga", "plaster_s.tga",
@@ -20,7 +20,11 @@ $Required = @(
     "blackmetal_d.tga", "blackmetal_local.tga", "blackmetal_s.tga",
     "wood_d.tga", "wood_local.tga", "wood_s.tga",
     "brass_d.tga", "brass_local.tga", "brass_s.tga",
-    "paint_d.tga", "paint_local.tga", "paint_s.tga"
+    "paint_d.tga", "paint_local.tga", "paint_s.tga",
+    "brick_d.tga", "brick_local.tga", "brick_s.tga",
+    "asphalt_d.tga", "asphalt_local.tga", "asphalt_s.tga",
+    "paper_d.tga", "paper_local.tga", "paper_s.tga",
+    "light_radial.tga"
 )
 
 $Ready = $false
@@ -29,7 +33,8 @@ if (Test-Path $Marker) {
     if ($MarkerValue -eq $Version) {
         $Ready = $true
         foreach ($File in $Required) {
-            if (-not (Test-Path (Join-Path $TextureDir $File))) {
+            if (-not (Test-Path (Join-Path $TextureDir $File)) -or
+                (Get-Item (Join-Path $TextureDir $File)).Length -ne (18 + 512 * 512 * 3)) {
                 $Ready = $false
                 break
             }
@@ -50,7 +55,7 @@ using System.IO;
 
 public static class StBrielleAnnexTextures
 {
-    const int N = 256;
+    const int N = 512;
 
     static double Clamp(double v, double lo, double hi)
     {
@@ -92,17 +97,22 @@ public static class StBrielleAnnexTextures
 
     static double Noise(int x, int y, int cells, int seed)
     {
-        double gx = ((double)x / N) * cells;
-        double gy = ((double)y / N) * cells;
+        return Noise2(x, y, cells, cells, seed);
+    }
+
+    static double Noise2(int x, int y, int cellsX, int cellsY, int seed)
+    {
+        double gx = ((double)x / N) * cellsX;
+        double gy = ((double)y / N) * cellsY;
         int x0 = (int)Math.Floor(gx);
         int y0 = (int)Math.Floor(gy);
         double tx = Fade(gx - Math.Floor(gx));
         double ty = Fade(gy - Math.Floor(gy));
 
-        double a = Rand(Wrap(x0, cells), Wrap(y0, cells), seed);
-        double b = Rand(Wrap(x0 + 1, cells), Wrap(y0, cells), seed);
-        double c = Rand(Wrap(x0, cells), Wrap(y0 + 1, cells), seed);
-        double d = Rand(Wrap(x0 + 1, cells), Wrap(y0 + 1, cells), seed);
+        double a = Rand(Wrap(x0, cellsX), Wrap(y0, cellsY), seed);
+        double b = Rand(Wrap(x0 + 1, cellsX), Wrap(y0, cellsY), seed);
+        double c = Rand(Wrap(x0, cellsX), Wrap(y0 + 1, cellsY), seed);
+        double d = Rand(Wrap(x0 + 1, cellsX), Wrap(y0 + 1, cellsY), seed);
 
         double ab = a + (b - a) * tx;
         double cd = c + (d - c) * tx;
@@ -168,8 +178,8 @@ public static class StBrielleAnnexTextures
             {
                 int xm = Wrap(x - 1, N);
                 int xp = Wrap(x + 1, N);
-                double dx = (height[y * N + xp] - height[y * N + xm]) * normalStrength;
-                double dy = (height[yp * N + x] - height[ym * N + x]) * normalStrength;
+                double dx = (height[y * N + xp] - height[y * N + xm]) * normalStrength * (N / 256.0);
+                double dy = (height[yp * N + x] - height[ym * N + x]) * normalStrength * (N / 256.0);
                 double nx = -dx;
                 double ny = -dy;
                 double nz = 1.0;
@@ -191,45 +201,56 @@ public static class StBrielleAnnexTextures
         byte[] d = new byte[N * N * 3]; double[] h = new double[N * N]; double[] s = new double[N * N];
         for (int y = 0; y < N; y++) for (int x = 0; x < N; x++)
         {
-            double n = Fbm(x, y, 101); double fine = Noise(x, y, 32, 177);
-            double patch = Math.Sin((x / (double)N) * Math.PI * 4.0 + Math.Sin((y / (double)N) * Math.PI * 2.0) * 0.7) * 0.035;
-            double v = (n - 0.5) * 0.15 + (fine - 0.5) * 0.035 + patch;
-            double grime = Math.Pow(0.5 + 0.5 * Math.Sin((y / (double)N) * Math.PI * 2.0 - 1.6), 8.0);
-            Put(d, x, y, 0.39 + v - grime * 0.035, 0.40 + v * 0.98 - grime * 0.032, 0.38 + v * 0.92 - grime * 0.028);
-            h[y * N + x] = n * 0.58 + fine * 0.10;
-            s[y * N + x] = 0.10 + (1.0 - fine) * 0.07 - grime * 0.03;
+            double broad = Fbm(x, y, 101), pores = Noise(x, y, 64, 177);
+            double repairs = Clamp((Noise(x, y, 8, 113) - 0.60) * 3.8, 0, 1);
+            double stain = Clamp((Noise(x, y, 4, 127) - 0.52) * 1.8, 0, 0.45);
+            double v = (broad - 0.5) * 0.16 + (pores - 0.5) * 0.035;
+            Put(d, x, y, 0.54 + v - stain * 0.13 + repairs * 0.025,
+                         0.52 + v - stain * 0.14, 0.45 + v * 0.85 - stain * 0.10);
+            h[y * N + x] = broad * 0.16 + pores * 0.025 + repairs * 0.035;
+            s[y * N + x] = 0.045 + repairs * 0.025;
         }
-        WriteMaps(dir, "plaster", d, h, s, 2.6);
+        WriteMaps(dir, "plaster", d, h, s, 2.3);
     }
 
     static void BuildTile(string dir)
     {
         byte[] d = new byte[N * N * 3]; double[] h = new double[N * N]; double[] s = new double[N * N];
+        int size = N / 4;
         for (int y = 0; y < N; y++) for (int x = 0; x < N; x++)
         {
-            double n = Fbm(x, y, 201); double fine = Noise(x, y, 32, 231); double wear = Noise(x, y, 4, 249);
-            int mx = x % 64; int my = y % 64;
-            double seam = (mx <= 1 || mx >= 63 || my <= 1 || my >= 63) ? 1.0 : 0.0;
-            double v = (n - 0.5) * 0.10 + (fine - 0.5) * 0.025 + (wear - 0.5) * 0.025;
-            Put(d, x, y, 0.11 + v - seam * 0.045, 0.125 + v - seam * 0.040, 0.12 + v - seam * 0.035);
-            h[y * N + x] = n * 0.48 + fine * 0.08 - seam * 0.22;
-            s[y * N + x] = 0.17 + wear * 0.18 - seam * 0.13;
+            int mx = x % size, my = y % size;
+            double edge = Math.Min(Math.Min(mx, size - 1 - mx), Math.Min(my, size - 1 - my));
+            double tile = Clamp((edge - 1.0) / 2.0, 0, 1);
+            double variant = Rand(x / size, y / size, 201) - 0.5;
+            double wear = Noise(x, y, 8, 249), mineral = Noise(x, y, 64, 231);
+            double fleck = Clamp((mineral - 0.66) * 4.0, 0, 1);
+            double v = variant * 0.055 + (wear - 0.5) * 0.055 + fleck * 0.075;
+            Put(d, x, y, 0.06 + tile * (0.14 + v), 0.065 + tile * (0.165 + v), 0.058 + tile * (0.145 + v));
+            h[y * N + x] = tile * 0.11 + mineral * 0.007;
+            s[y * N + x] = 0.025 + tile * (0.18 + wear * 0.20);
         }
-        WriteMaps(dir, "tile", d, h, s, 2.8);
+        WriteMaps(dir, "tile", d, h, s, 2.1);
     }
 
     static void BuildStone(string dir)
     {
         byte[] d = new byte[N * N * 3]; double[] h = new double[N * N]; double[] s = new double[N * N];
+        int width = N / 2, height = N / 4;
         for (int y = 0; y < N; y++) for (int x = 0; x < N; x++)
         {
-            double n = Fbm(x, y, 301); double fine = Noise(x, y, 32, 337); double mineral = Noise(x, y, 8, 353);
-            double v = (n - 0.5) * 0.20 + (fine - 0.5) * 0.055;
-            Put(d, x, y, 0.41 + v - (mineral - 0.5) * 0.020, 0.38 + v * 0.95 - (mineral - 0.5) * 0.012, 0.33 + v * 0.85);
-            h[y * N + x] = n * 0.67 + fine * 0.11;
-            s[y * N + x] = 0.08 + (1.0 - n) * 0.055;
+            int row = y / height, sx = Wrap(x + (row % 2) * width / 2, N);
+            int mx = sx % width, my = y % height;
+            double edge = Math.Min(Math.Min(mx, width - 1 - mx), Math.Min(my, height - 1 - my));
+            double face = Clamp((edge - 1) / 3.0, 0, 1);
+            double pores = Noise(x, y, 64, 337), mineral = Fbm(x, y, 301);
+            double block = Rand(sx / width, row, 353) - 0.5;
+            double v = (mineral - 0.5) * 0.12 + (pores - 0.5) * 0.04 + block * 0.065;
+            Put(d, x, y, 0.18 + face * (0.29 + v), 0.17 + face * (0.28 + v), 0.15 + face * (0.24 + v));
+            h[y * N + x] = face * 0.10 + mineral * 0.035 + pores * 0.015;
+            s[y * N + x] = 0.025 + face * 0.035;
         }
-        WriteMaps(dir, "stone", d, h, s, 2.7);
+        WriteMaps(dir, "stone", d, h, s, 2.5);
     }
 
     static void BuildBlackMetal(string dir)
@@ -237,15 +258,18 @@ public static class StBrielleAnnexTextures
         byte[] d = new byte[N * N * 3]; double[] h = new double[N * N]; double[] s = new double[N * N];
         for (int y = 0; y < N; y++) for (int x = 0; x < N; x++)
         {
-            double n = Fbm(x, y, 401); double fine = Noise(x, y, 32, 433); double rustBase = Fbm(x, y, 451);
-            double rust = Clamp((rustBase - 0.67) * 4.2, 0.0, 1.0);
-            double scratch = ((Hash(x, 0, 477) % 97) == 0 && ((y + (int)(Hash(x, 1, 479) % 70)) % 113) < 44) ? 1.0 : 0.0;
-            double v = (n - 0.5) * 0.045 + (fine - 0.5) * 0.014;
-            Put(d, x, y, 0.043 + v + rust * 0.105 + scratch * 0.040, 0.050 + v + rust * 0.030 + scratch * 0.038, 0.051 + v + rust * 0.006 + scratch * 0.034);
-            h[y * N + x] = n * 0.20 + rust * 0.08 - scratch * 0.11;
-            s[y * N + x] = 0.31 + n * 0.20 - rust * 0.20 + scratch * 0.13;
+            double n = Fbm(x, y, 401), fine = Noise(x, y, 64, 433);
+            double rust = Clamp((Fbm(x, y, 451) - 0.60) * 3.7, 0, 1);
+            // Periodic scratches keep the painted iron repeat continuous.
+            double scratch = Math.Pow(0.5 + 0.5 * Math.Sin(x * 2.0 * Math.PI / N * 71.0), 30.0)
+                            * Clamp((Noise(x, y, 16, 477) - 0.55) * 4.0, 0, 1);
+            double v = (n - 0.5) * 0.04 + (fine - 0.5) * 0.012;
+            Put(d, x, y, 0.083 + v + rust * 0.12 + scratch * 0.07,
+                         0.090 + v + rust * 0.035 + scratch * 0.065, 0.088 + v + scratch * 0.058);
+            h[y * N + x] = fine * 0.012 + rust * 0.025 - scratch * 0.012;
+            s[y * N + x] = 0.30 + n * 0.15 - rust * 0.20 + scratch * 0.15;
         }
-        WriteMaps(dir, "blackmetal", d, h, s, 1.9);
+        WriteMaps(dir, "blackmetal", d, h, s, 1.8);
     }
 
     static void BuildWood(string dir)
@@ -253,17 +277,15 @@ public static class StBrielleAnnexTextures
         byte[] d = new byte[N * N * 3]; double[] h = new double[N * N]; double[] s = new double[N * N];
         for (int y = 0; y < N; y++) for (int x = 0; x < N; x++)
         {
-            double warp = (Noise(x, y, 4, 501) - 0.5) * 7.0;
-            double g1 = 0.5 + 0.5 * Math.Sin(((x + warp) / N) * Math.PI * 2.0 * 22.0);
-            double g2 = 0.5 + 0.5 * Math.Sin(((x + warp) / N) * Math.PI * 2.0 * 47.0 + 1.2);
-            double fine = Noise(x, y, 32, 529);
-            double val = g1 * 0.34 + g2 * 0.10 + fine * 0.20 + Noise(x, y, 8, 547) * 0.36;
-            double v = (val - 0.5) * 0.10;
-            Put(d, x, y, 0.105 + v, 0.042 + v * 0.55, 0.024 + v * 0.32);
-            h[y * N + x] = val * 0.34 + fine * 0.07;
-            s[y * N + x] = 0.10 + val * 0.13;
+            int warpedX = Wrap(x + (int)((Noise2(x, y, 4, 2, 501) - 0.5) * 28.0), N);
+            double grain = Noise2(warpedX, y, 64, 4, 513) * 0.72 + Noise2(warpedX, y, 128, 8, 521) * 0.28;
+            double fine = Noise(x, y, 64, 529), wear = Noise2(x, y, 8, 2, 547);
+            double v = (grain - 0.5) * 0.10 + (fine - 0.5) * 0.012 + (wear - 0.5) * 0.07;
+            Put(d, x, y, 0.235 + v, 0.115 + v * 0.65, 0.058 + v * 0.40);
+            h[y * N + x] = grain * 0.015 + fine * 0.005;
+            s[y * N + x] = 0.12 + wear * 0.14;
         }
-        WriteMaps(dir, "wood", d, h, s, 2.3);
+        WriteMaps(dir, "wood", d, h, s, 1.6);
     }
 
     static void BuildBrass(string dir)
@@ -271,16 +293,15 @@ public static class StBrielleAnnexTextures
         byte[] d = new byte[N * N * 3]; double[] h = new double[N * N]; double[] s = new double[N * N];
         for (int y = 0; y < N; y++) for (int x = 0; x < N; x++)
         {
-            double n = Fbm(x, y, 601); double fine = Noise(x, y, 32, 619); double tarn = Clamp((Fbm(x, y, 641) - 0.57) * 3.0, 0.0, 1.0);
-            double v = (n - 0.5) * 0.15 + (fine - 0.5) * 0.025;
-            double r = (0.37 + v) * (1.0 - tarn * 0.28) + 0.035 * tarn;
-            double g = (0.23 + v * 0.75) * (1.0 - tarn * 0.28) + 0.085 * tarn;
-            double b = (0.075 + v * 0.25) * (1.0 - tarn * 0.28) + 0.055 * tarn;
-            Put(d, x, y, r, g, b);
-            h[y * N + x] = n * 0.18 + fine * 0.04 + tarn * 0.05;
-            s[y * N + x] = 0.47 + n * 0.18 - tarn * 0.34;
+            double n = Fbm(x, y, 601), fine = Noise(x, y, 64, 619);
+            double tarnish = Clamp((Fbm(x, y, 641) - 0.53) * 2.9, 0, 0.7);
+            double v = (n - 0.5) * 0.12 + (fine - 0.5) * 0.025;
+            Put(d, x, y, (0.48 + v) * (1 - tarnish * 0.60),
+                         (0.33 + v * 0.75) * (1 - tarnish * 0.28), (0.15 + v * 0.40) + tarnish * 0.03);
+            h[y * N + x] = fine * 0.008 + tarnish * 0.02;
+            s[y * N + x] = 0.55 + n * 0.12 - tarnish * 0.50;
         }
-        WriteMaps(dir, "brass", d, h, s, 1.8);
+        WriteMaps(dir, "brass", d, h, s, 1.4);
     }
 
     static void BuildPaint(string dir)
@@ -288,13 +309,78 @@ public static class StBrielleAnnexTextures
         byte[] d = new byte[N * N * 3]; double[] h = new double[N * N]; double[] s = new double[N * N];
         for (int y = 0; y < N; y++) for (int x = 0; x < N; x++)
         {
-            double n = Fbm(x, y, 701); double fine = Noise(x, y, 32, 727);
-            double v = 0.68 + (n - 0.5) * 0.18 + (fine - 0.5) * 0.04;
+            double n = Fbm(x, y, 701), fine = Noise(x, y, 64, 727);
+            double chip = Clamp((Noise(x, y, 32, 739) - 0.73) * 5, 0, 1);
+            double v = 0.76 + (n - 0.5) * 0.12 + (fine - 0.5) * 0.025 - chip * 0.20;
             Put(d, x, y, v, v, v);
-            h[y * N + x] = n * 0.48 + fine * 0.08;
-            s[y * N + x] = 0.13 + (1.0 - n) * 0.08;
+            h[y * N + x] = fine * 0.009 - chip * 0.02;
+            s[y * N + x] = 0.15 + n * 0.06 - chip * 0.12;
         }
-        WriteMaps(dir, "paint", d, h, s, 2.4);
+        WriteMaps(dir, "paint", d, h, s, 1.9);
+    }
+
+    static void BuildBrick(string dir)
+    {
+        byte[] d = new byte[N * N * 3]; double[] h = new double[N * N]; double[] s = new double[N * N];
+        int width = N / 4, height = N / 8;
+        for (int y = 0; y < N; y++) for (int x = 0; x < N; x++)
+        {
+            int row = y / height, sx = Wrap(x + (row % 2) * width / 2, N);
+            int mx = sx % width, my = y % height;
+            double edge = Math.Min(Math.Min(mx, width - 1 - mx), Math.Min(my, height - 1 - my));
+            double face = Clamp((edge - 1) / 3.0, 0, 1);
+            double n = Fbm(x, y, 801), grit = Noise(x, y, 64, 817);
+            double block = Rand(sx / width, row, 827) - 0.5;
+            double soot = Clamp((Noise(x, y, 8, 839) - 0.58) * 2, 0, 0.45);
+            double v = block * 0.12 + (grit - 0.5) * 0.065 + (n - 0.5) * 0.08 - soot * 0.12;
+            Put(d, x, y, 0.16 + face * (0.22 + v), 0.16 + face * (0.045 + v * 0.65), 0.135 + face * (0.005 + v * 0.45));
+            h[y * N + x] = face * 0.10 + grit * 0.016;
+            s[y * N + x] = 0.02 + face * 0.045;
+        }
+        WriteMaps(dir, "brick", d, h, s, 2.3);
+    }
+
+    static void BuildAsphalt(string dir)
+    {
+        byte[] d = new byte[N * N * 3]; double[] h = new double[N * N]; double[] s = new double[N * N];
+        for (int y = 0; y < N; y++) for (int x = 0; x < N; x++)
+        {
+            double n = Fbm(x, y, 901), aggregate = Noise(x, y, 64, 917);
+            double wet = Clamp((Noise(x, y, 4, 937) - 0.40) * 3.5, 0, 1);
+            double speck = Clamp((aggregate - 0.60) * 3.0, 0, 1);
+            double v = 0.095 + (n - 0.5) * 0.035 + speck * 0.06;
+            Put(d, x, y, v * (1 - wet * 0.26), (v + 0.008) * (1 - wet * 0.24), (v + 0.013) * (1 - wet * 0.20));
+            h[y * N + x] = aggregate * 0.022 * (1 - wet * 0.85) + n * 0.008;
+            s[y * N + x] = 0.07 + wet * 0.52;
+        }
+        WriteMaps(dir, "asphalt", d, h, s, 2.0);
+    }
+
+    static void BuildPaper(string dir)
+    {
+        byte[] d = new byte[N * N * 3]; double[] h = new double[N * N]; double[] s = new double[N * N];
+        for (int y = 0; y < N; y++) for (int x = 0; x < N; x++)
+        {
+            double fiber = Noise(x, y, 64, 1001), stain = Noise(x, y, 8, 1017);
+            double rule = y % (N / 16) < 2 ? 0.035 : 0;
+            double v = (fiber - 0.5) * 0.04 + (stain - 0.5) * 0.07 - rule;
+            Put(d, x, y, 0.76 + v, 0.69 + v, 0.53 + v * 0.80);
+            h[y * N + x] = fiber * 0.005;
+            s[y * N + x] = 0.035;
+        }
+        WriteMaps(dir, "paper", d, h, s, 1.3);
+    }
+
+    static void BuildLightProfile(string dir)
+    {
+        byte[] d = new byte[N * N * 3];
+        for (int y = 0; y < N; y++) for (int x = 0; x < N; x++)
+        {
+            double u = 2.0 * x / (N - 1) - 1, v = 2.0 * y / (N - 1) - 1;
+            double energy = Math.Pow(Clamp(1 - u * u - v * v, 0, 1), 1.25);
+            Put(d, x, y, energy, energy, energy);
+        }
+        WriteTga(Path.Combine(dir, "light_radial.tga"), d);
     }
 
     public static void Generate(string dir)
@@ -307,6 +393,10 @@ public static class StBrielleAnnexTextures
         BuildWood(dir);
         BuildBrass(dir);
         BuildPaint(dir);
+        BuildBrick(dir);
+        BuildAsphalt(dir);
+        BuildPaper(dir);
+        BuildLightProfile(dir);
     }
 }
 '@
@@ -315,7 +405,6 @@ try {
     Write-Host "[BUILD] Generating original Municipal Annex texture set..."
     Add-Type -TypeDefinition $Source -Language CSharp
     [StBrielleAnnexTextures]::Generate($TextureDir)
-    Set-Content -Path $Marker -Value $Version -Encoding ASCII
 
     foreach ($File in $Required) {
         $Path = Join-Path $TextureDir $File
@@ -324,6 +413,7 @@ try {
         }
     }
 
+    Set-Content -Path $Marker -Value $Version -Encoding ASCII
     Write-Host "[OK] Municipal Annex textures generated in $TextureDir"
     exit 0
 }

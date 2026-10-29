@@ -27,6 +27,11 @@ The `st-brielle-foundation` branch currently contains:
 See [Development status](design/DEVELOPMENT_STATUS.md) for the current boundaries,
 validation results, Windows playtest steps, and next production priorities.
 
+The [Municipal Gothic graphics pass](design/GRAPHICS_PASS.md) upgrades both maps
+with 512-pixel materials, practical lighting, selective shadows, and street detail.
+The Annex launcher regenerates textures and compiles maps automatically. Use a
+fresh run; launch with `run_stbrielle_annex.bat low` for the lower-cost profile.
+
 ## Development content layout
 
 - `def/` — St. Brielle entity declarations

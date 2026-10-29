@@ -104,7 +104,7 @@ class CityInvestigationTests(unittest.TestCase):
 
     def test_brush_budget_and_materials(self):
         source = MAP.read_text(encoding="utf-8")
-        self.assertLessEqual(source.count("brushDef3"), 40)
+        self.assertLessEqual(source.count("brushDef3"), 64)
         materials = "\n".join(p.read_text(encoding="utf-8") for p in (ROOT / "stbrielle/materials").glob("*.mtr"))
         for material in set(re.findall(r'"(textures/[^\"]+)"', source)):
             self.assertIn(material, materials)

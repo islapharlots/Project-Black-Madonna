@@ -247,11 +247,10 @@ textures/stbrielle/dev_office
 
 textures/stbrielle/dev_paper
 {
-	qer_editorimage	_white
-	{
-		map			_white
-		color		0.92, 0.82, 0.58, 1
-	}
+    qer_editorimage textures/stbrielle/annex/paper_d.tga
+    diffusemap textures/stbrielle/annex/paper_d.tga
+    bumpmap textures/stbrielle/annex/paper_local.tga
+    specularmap textures/stbrielle/annex/paper_s.tga
 }
 
 textures/stbrielle/dev_brass
@@ -365,7 +364,7 @@ textures/stbrielle/annex_burgundy
 	{
 		blend		diffusemap
 		map			textures/stbrielle/annex/paint_d.tga
-		color		0.46, 0.030, 0.060, 1
+		color		0.48, 0.085, 0.11, 1
 	}
 	{
 		blend		specularmap
@@ -407,7 +406,7 @@ textures/stbrielle/annex_greenstone
 	{
 		blend		diffusemap
 		map			textures/stbrielle/annex/paint_d.tga
-		color		0.11, 0.31, 0.26, 1
+		color		0.19, 0.39, 0.31, 1
 	}
 	{
 		blend		specularmap
@@ -427,11 +426,10 @@ textures/stbrielle/annex_ink
 
 textures/stbrielle/annex_notice
 {
-	qer_editorimage	_white
-	{
-		map			_white
-		color		0.63, 0.57, 0.45, 1
-	}
+    qer_editorimage textures/stbrielle/annex/paper_d.tga
+    diffusemap textures/stbrielle/annex/paper_d.tga
+    bumpmap textures/stbrielle/annex/paper_local.tga
+    specularmap textures/stbrielle/annex/paper_s.tga
 }
 
 textures/stbrielle/annex_light_warm
@@ -440,7 +438,7 @@ textures/stbrielle/annex_light_warm
 	noShadows
 	{
 		map			_white
-		color		0.92, 0.76, 0.52, 1
+		color		0.88, 0.68, 0.40, 1
 	}
 }
 
@@ -450,7 +448,7 @@ textures/stbrielle/annex_light_cold
 	noShadows
 	{
 		map			_white
-		color		0.56, 0.73, 0.92, 1
+		color		0.59, 0.71, 0.73, 1
 	}
 }
 
@@ -476,20 +474,18 @@ textures/stbrielle/annex_screen_green
 
 textures/stbrielle/annex_paper_white
 {
-	qer_editorimage	_white
-	{
-		map			_white
-		color		0.83, 0.80, 0.69, 1
-	}
+    qer_editorimage textures/stbrielle/annex/paper_d.tga
+    diffusemap textures/stbrielle/annex/paper_d.tga
+    bumpmap textures/stbrielle/annex/paper_local.tga
+    specularmap textures/stbrielle/annex/paper_s.tga
 }
 
 textures/stbrielle/annex_paper_old
 {
-	qer_editorimage	_white
-	{
-		map			_white
-		color		0.59, 0.49, 0.32, 1
-	}
+    qer_editorimage textures/stbrielle/annex/paper_d.tga
+    diffusemap textures/stbrielle/annex/paper_d.tga
+    bumpmap textures/stbrielle/annex/paper_local.tga
+    specularmap textures/stbrielle/annex/paper_s.tga
 }
 
 textures/stbrielle/annex_ghost
