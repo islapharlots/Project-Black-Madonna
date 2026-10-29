@@ -343,6 +343,9 @@ void idTarget_StBrielleNotice::Event_Activate( idEntity *activator ) {
 	player->hud->SetStateString( "sb_notice_line4", SB_ExpandNoticeTokens( spawnArgs.GetString( "notice_line4", "" ), player ).c_str() );
 	player->hud->SetStateString( "sb_notice_footer", SB_ExpandNoticeTokens( spawnArgs.GetString( "notice_footer", "" ), player ).c_str() );
 	player->hud->SetStateBool( "sb_notice_visible", true );
+	// A previously opened document must not dismiss a newer document when its
+	// own timeout expires. HUD state is already serialized with the player.
+	player->hud->SetStateString( "sb_notice_owner", GetName() );
 	player->hud->StateChanged( gameLocal.time );
 
 	CancelEvents( &EV_StBrielleNoticeClear );
@@ -354,7 +357,8 @@ void idTarget_StBrielleNotice::Event_Activate( idEntity *activator ) {
 
 void idTarget_StBrielleNotice::Event_Clear( void ) {
 	idPlayer *player = gameLocal.GetLocalPlayer();
-	if ( player && player->hud ) {
+	if ( player && player->hud &&
+		idStr::Icmp( player->hud->GetStateString( "sb_notice_owner", "" ), GetName() ) == 0 ) {
 		player->hud->SetStateBool( "sb_notice_visible", false );
 		player->hud->StateChanged( gameLocal.time );
 	}
