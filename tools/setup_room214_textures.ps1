@@ -11,7 +11,7 @@ if ([string]::IsNullOrWhiteSpace($Root)) {
 $Root = [System.IO.Path]::GetFullPath($Root)
 $TextureDir = Join-Path $Root "stbrielle\textures\stbrielle\annex"
 $Marker = Join-Path $TextureDir ".generated-room214-v2"
-$Version = "st-brielle-room214-corrected-v2-2026-10-29"
+$Version = "st-brielle-room214-corrected-v2-2026-10-29b"
 
 $Required = @(
     "room214_plaster_d.tga", "room214_plaster_local.tga", "room214_plaster_s.tga",
@@ -82,6 +82,20 @@ public static class StBrielleRoom214Textures
     {
         v %= N;
         return v < 0 ? v + N : v;
+    }
+
+    static int Cell(int value, int size) { value %= size; return value < 0 ? value + size : value; }
+    static double Noise2(int x, int y, int cellsX, int cellsY, int seed)
+    {
+        double gx = (double)x / N * cellsX, gy = (double)y / N * cellsY;
+        int ix = (int)Math.Floor(gx), iy = (int)Math.Floor(gy);
+        double tx = gx - ix, ty = gy - iy;
+        tx = tx * tx * (3 - 2 * tx); ty = ty * ty * (3 - 2 * ty);
+        double a = Grain(Cell(ix, cellsX), Cell(iy, cellsY), seed);
+        double b = Grain(Cell(ix + 1, cellsX), Cell(iy, cellsY), seed);
+        double c = Grain(Cell(ix, cellsX), Cell(iy + 1, cellsY), seed);
+        double d = Grain(Cell(ix + 1, cellsX), Cell(iy + 1, cellsY), seed);
+        return (a + (b - a) * tx) * (1 - ty) + (c + (d - c) * tx) * ty;
     }
 
     static void Put(byte[] rgb, int x, int y, double r, double g, double b)
@@ -212,12 +226,12 @@ public static class StBrielleRoom214Textures
 
         for (int y = 0; y < N; y++) for (int x = 0; x < N; x++)
         {
-            double horizontal = 0.5 + 0.5 * Math.Sin((x / (double)N) * Tau * 25.0 + Math.Sin((y / (double)N) * Tau) * 0.7);
-            double vertical = 0.5 + 0.5 * Math.Sin((y / (double)N) * Tau * 25.0 + Math.Sin((x / (double)N) * Tau) * 0.7);
+            double horizontal = Noise2(x, y, 64, 4, 1113) * 0.72 + Noise2(x, y, 128, 8, 1119) * 0.28;
+            double vertical = Noise2(x, y, 4, 64, 1113) * 0.72 + Noise2(x, y, 8, 128, 1119) * 0.28;
             double blend = 0.5 - 0.5 * Math.Cos(x / (double)N * Tau);
             double grain = horizontal * (1.0 - blend) + vertical * blend;
             double noise = (Grain(x, y, 1101) - 0.5) * 0.045;
-            double v = (grain - 0.5) * 0.085 + noise;
+            double v = (grain - 0.5) * 0.10 + noise * 0.25;
             Put(d, x, y, 0.215 + v, 0.105 + v * 0.52, 0.052 + v * 0.30);
             h[y * N + x] = 0.10 + grain * 0.018 + noise * 0.10;
             s[y * N + x] = 0.10 + grain * 0.10;
@@ -236,7 +250,7 @@ public static class StBrielleRoom214Textures
             double angleScratch = Math.Sin(x / (double)N * Tau * 3.0 + y / (double)N * Tau * 2.0 + Math.Sin((x - y) / (double)N * Tau) * 2.0);
             double scratch = Math.Pow(Clamp(angleScratch * 0.5 + 0.5, 0.0, 1.0), 18.0);
             double noise = (Grain(x, y, 1201) - 0.5) * 0.020;
-            double rust = Math.Pow(Clamp(Grain(x / 8, y / 8, 1229) - 0.62, 0.0, 1.0) * 2.7, 2.0);
+            double rust = Math.Pow(Clamp(Noise2(x, y, 16, 16, 1229) - 0.56, 0.0, 1.0) * 2.7, 2.0);
             Put(d, x, y, 0.078 + noise + rust * 0.090 + scratch * 0.018,
                            0.085 + noise + rust * 0.026 + scratch * 0.020,
                            0.087 + noise + rust * 0.006 + scratch * 0.018);

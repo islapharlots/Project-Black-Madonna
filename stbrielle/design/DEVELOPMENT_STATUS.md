@@ -1,5 +1,11 @@
 # Development status — 2026-10-29
 
+The subsequent [Municipal Gothic graphics pass](GRAPHICS_PASS.md) upgrades the
+materials, lighting, and street facade detail described below. The street is now
+56 brushes; the 32-brush figure below describes the original investigation pass.
+The new Windows workflow validates actual texture generation, but engine rendering
+and playthrough remain separate acceptance checks.
+
 ## Where the game is
 
 Repository: `islapharlots/Project-Black-Madonna`.

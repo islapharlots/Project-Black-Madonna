@@ -11,7 +11,7 @@ if ([string]::IsNullOrWhiteSpace($Root)) {
 $Root = [System.IO.Path]::GetFullPath($Root)
 $TextureDir = Join-Path $Root "stbrielle\textures\stbrielle\annex"
 $Marker = Join-Path $TextureDir ".generated-v2"
-$Version = "municipal-gothic-surfaces-v2-2026-10-29"
+$Version = "municipal-gothic-surfaces-v2-2026-10-29b"
 
 $Required = @(
     "plaster_d.tga", "plaster_local.tga", "plaster_s.tga",
@@ -97,17 +97,22 @@ public static class StBrielleAnnexTextures
 
     static double Noise(int x, int y, int cells, int seed)
     {
-        double gx = ((double)x / N) * cells;
-        double gy = ((double)y / N) * cells;
+        return Noise2(x, y, cells, cells, seed);
+    }
+
+    static double Noise2(int x, int y, int cellsX, int cellsY, int seed)
+    {
+        double gx = ((double)x / N) * cellsX;
+        double gy = ((double)y / N) * cellsY;
         int x0 = (int)Math.Floor(gx);
         int y0 = (int)Math.Floor(gy);
         double tx = Fade(gx - Math.Floor(gx));
         double ty = Fade(gy - Math.Floor(gy));
 
-        double a = Rand(Wrap(x0, cells), Wrap(y0, cells), seed);
-        double b = Rand(Wrap(x0 + 1, cells), Wrap(y0, cells), seed);
-        double c = Rand(Wrap(x0, cells), Wrap(y0 + 1, cells), seed);
-        double d = Rand(Wrap(x0 + 1, cells), Wrap(y0 + 1, cells), seed);
+        double a = Rand(Wrap(x0, cellsX), Wrap(y0, cellsY), seed);
+        double b = Rand(Wrap(x0 + 1, cellsX), Wrap(y0, cellsY), seed);
+        double c = Rand(Wrap(x0, cellsX), Wrap(y0 + 1, cellsY), seed);
+        double d = Rand(Wrap(x0 + 1, cellsX), Wrap(y0 + 1, cellsY), seed);
 
         double ab = a + (b - a) * tx;
         double cd = c + (d - c) * tx;
@@ -272,10 +277,10 @@ public static class StBrielleAnnexTextures
         byte[] d = new byte[N * N * 3]; double[] h = new double[N * N]; double[] s = new double[N * N];
         for (int y = 0; y < N; y++) for (int x = 0; x < N; x++)
         {
-            double warp = (Noise(x, y, 4, 501) - 0.5) * 0.08;
-            double grain = 0.5 + 0.5 * Math.Sin((x / (double)N + warp) * Math.PI * 44.0);
-            double fine = Noise(x, y, 64, 529), wear = Noise(x, y, 8, 547);
-            double v = (grain - 0.5) * 0.065 + (fine - 0.5) * 0.02 + (wear - 0.5) * 0.06;
+            int warpedX = Wrap(x + (int)((Noise2(x, y, 4, 2, 501) - 0.5) * 28.0), N);
+            double grain = Noise2(warpedX, y, 64, 4, 513) * 0.72 + Noise2(warpedX, y, 128, 8, 521) * 0.28;
+            double fine = Noise(x, y, 64, 529), wear = Noise2(x, y, 8, 2, 547);
+            double v = (grain - 0.5) * 0.10 + (fine - 0.5) * 0.012 + (wear - 0.5) * 0.07;
             Put(d, x, y, 0.235 + v, 0.115 + v * 0.65, 0.058 + v * 0.40);
             h[y * N + x] = grain * 0.015 + fine * 0.005;
             s[y * N + x] = 0.12 + wear * 0.14;
