@@ -15,6 +15,8 @@ if not exist "stbrielle.exe" (
 
 set "SBROOT=%CD%"
 set "SBSAVE=%APPDATA%\StBrielle\stbrielle"
+set "SBGRAPHICS=graphics_balanced.cfg"
+if /I "%~1"=="low" set "SBGRAPHICS=graphics_low.cfg"
 
 echo.
 echo Preparing Municipal Annex texture set...
@@ -129,9 +131,11 @@ echo   stbrielle\sound\annex\room214_threshold.wav
 echo.
 echo Launching Municipal Annex...
 echo Interaction: E
+echo Graphics: %SBGRAPHICS%
+echo For lower rendering cost, launch run_stbrielle_annex.bat low
 echo.
 
-stbrielle.exe +set fs_basepath "%SBROOT%" +set fs_devpath "%SBROOT%" +set fs_game stbrielle +set developer 1 +set con_noPrint 1 +set com_showFPS 0 +set fs_copyfiles 0 +set si_pure 0 +bind e _frob +devmap sb00_annex
+stbrielle.exe +set fs_basepath "%SBROOT%" +set fs_devpath "%SBROOT%" +set fs_game stbrielle +set developer 1 +set con_noPrint 1 +set com_showFPS 0 +set fs_copyfiles 0 +set si_pure 0 +bind e _frob +exec %SBGRAPHICS% +devmap sb00_annex
 
 if exist "%SBSAVE%\qconsole.log" copy /y "%SBSAVE%\qconsole.log" "%SBROOT%\annex_runtime.log" >nul
 

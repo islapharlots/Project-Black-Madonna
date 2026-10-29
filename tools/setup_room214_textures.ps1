@@ -10,8 +10,8 @@ if ([string]::IsNullOrWhiteSpace($Root)) {
 
 $Root = [System.IO.Path]::GetFullPath($Root)
 $TextureDir = Join-Path $Root "stbrielle\textures\stbrielle\annex"
-$Marker = Join-Path $TextureDir ".generated-room214-v1"
-$Version = "st-brielle-room214-corrected-v1-2026-10-17"
+$Marker = Join-Path $TextureDir ".generated-room214-v2"
+$Version = "st-brielle-room214-corrected-v2-2026-10-29"
 
 $Required = @(
     "room214_plaster_d.tga", "room214_plaster_local.tga", "room214_plaster_s.tga",
@@ -26,7 +26,8 @@ if (Test-Path $Marker) {
     if ($MarkerValue -eq $Version) {
         $Ready = $true
         foreach ($File in $Required) {
-            if (-not (Test-Path (Join-Path $TextureDir $File))) {
+            if (-not (Test-Path (Join-Path $TextureDir $File)) -or
+                (Get-Item (Join-Path $TextureDir $File)).Length -ne (18 + 512 * 512 * 3)) {
                 $Ready = $false
                 break
             }
@@ -47,7 +48,7 @@ using System.IO;
 
 public static class StBrielleRoom214Textures
 {
-    const int N = 256;
+    const int N = 512;
     const double Tau = Math.PI * 2.0;
 
     static double Clamp(double v, double lo, double hi)
@@ -134,8 +135,8 @@ public static class StBrielleRoom214Textures
             {
                 int xm = Wrap(x - 1);
                 int xp = Wrap(x + 1);
-                double dx = (height[y * N + xp] - height[y * N + xm]) * strength;
-                double dy = (height[yp * N + x] - height[ym * N + x]) * strength;
+                double dx = (height[y * N + xp] - height[y * N + xm]) * strength * (N / 256.0);
+                double dy = (height[yp * N + x] - height[ym * N + x]) * strength * (N / 256.0);
                 double nx = -dx;
                 double ny = -dy;
                 double nz = 1.0;
@@ -167,12 +168,12 @@ public static class StBrielleRoom214Textures
             double breath = Math.Sin(Tau * px + Math.Sin(Tau * py * 2.0) * 0.45) * 0.5 + 0.5;
 
             // Faint erased-writing stain: never cleanly readable, but too regular to be water damage.
-            double scriptA = Math.Sin((x + Math.Sin(py * Tau) * 11.0) * 0.105 + y * 0.037);
-            double scriptB = Math.Sin(x * 0.049 - y * 0.081 + Math.Sin(px * Tau * 3.0));
+            double scriptA = Math.Sin(px * Tau * 4.0 + Math.Sin(py * Tau) * 1.1);
+            double scriptB = Math.Sin(py * Tau * 3.0 + Math.Sin(px * Tau * 3.0));
             double erased = Math.Pow(Clamp((scriptA + scriptB) * 0.25 + 0.44, 0.0, 1.0), 5.0) * 0.055;
 
             double v = broad + fine - erased;
-            Put(d, x, y, 0.375 + v, 0.385 + v * 0.98, 0.365 + v * 0.92);
+            Put(d, x, y, 0.515 + v, 0.505 + v * 0.98, 0.435 + v * 0.92);
             h[y * N + x] = 0.42 + broad * 1.8 + fine * 0.5 + breath * 0.038 - erased * 0.45;
             s[y * N + x] = 0.105 + breath * 0.025 - erased * 0.18;
         }
@@ -189,15 +190,15 @@ public static class StBrielleRoom214Textures
         {
             // Vertical grout lines drift sideways over the texture while horizontal lines stay square.
             // The floor reads as ordinary tile until the eye tries to follow a joint across the room.
-            int shift = (int)Math.Round(Math.Sin((y / (double)N) * Tau) * 7.0);
-            int mx = Wrap(x + shift) % 64;
-            int my = y % 64;
-            double seam = (mx <= 1 || mx >= 63 || my <= 1 || my >= 63) ? 1.0 : 0.0;
+            int shift = (int)Math.Round(Math.Sin((y / (double)N) * Tau) * 14.0);
+            int mx = Wrap(x + shift) % (N / 4);
+            int my = y % (N / 4);
+            double seam = (mx <= 2 || mx >= N / 4 - 2 || my <= 2 || my >= N / 4 - 2) ? 1.0 : 0.0;
             double n = (Grain(x, y, 1001) - 0.5) * 0.035;
-            double sheen = 0.5 + 0.5 * Math.Sin((x + y) * 0.055);
+            double sheen = 0.5 + 0.5 * Math.Sin((x + y) / (double)N * Tau * 2.0);
             double v = n - seam * 0.040;
-            Put(d, x, y, 0.105 + v, 0.120 + v, 0.115 + v);
-            h[y * N + x] = 0.48 + n * 0.65 - seam * 0.23;
+            Put(d, x, y, 0.195 + v, 0.220 + v, 0.198 + v);
+            h[y * N + x] = 0.12 + n * 0.15 - seam * 0.10;
             s[y * N + x] = 0.18 + sheen * 0.11 - seam * 0.12;
         }
         WriteMaps(dir, "room214_tile", d, h, s, 3.1);
@@ -213,12 +214,12 @@ public static class StBrielleRoom214Textures
         {
             double horizontal = 0.5 + 0.5 * Math.Sin((x / (double)N) * Tau * 25.0 + Math.Sin((y / (double)N) * Tau) * 0.7);
             double vertical = 0.5 + 0.5 * Math.Sin((y / (double)N) * Tau * 25.0 + Math.Sin((x / (double)N) * Tau) * 0.7);
-            double blend = Clamp((x - 112.0) / 32.0, 0.0, 1.0);
+            double blend = 0.5 - 0.5 * Math.Cos(x / (double)N * Tau);
             double grain = horizontal * (1.0 - blend) + vertical * blend;
             double noise = (Grain(x, y, 1101) - 0.5) * 0.045;
             double v = (grain - 0.5) * 0.085 + noise;
-            Put(d, x, y, 0.095 + v, 0.038 + v * 0.52, 0.022 + v * 0.30);
-            h[y * N + x] = 0.36 + grain * 0.18 + noise * 0.4;
+            Put(d, x, y, 0.215 + v, 0.105 + v * 0.52, 0.052 + v * 0.30);
+            h[y * N + x] = 0.10 + grain * 0.018 + noise * 0.10;
             s[y * N + x] = 0.10 + grain * 0.10;
         }
         WriteMaps(dir, "room214_wood", d, h, s, 2.7);
@@ -232,13 +233,13 @@ public static class StBrielleRoom214Textures
 
         for (int y = 0; y < N; y++) for (int x = 0; x < N; x++)
         {
-            double angleScratch = Math.Sin((x * 0.075) + (y * 0.047) + Math.Sin((x - y) * 0.021) * 2.0);
+            double angleScratch = Math.Sin(x / (double)N * Tau * 3.0 + y / (double)N * Tau * 2.0 + Math.Sin((x - y) / (double)N * Tau) * 2.0);
             double scratch = Math.Pow(Clamp(angleScratch * 0.5 + 0.5, 0.0, 1.0), 18.0);
             double noise = (Grain(x, y, 1201) - 0.5) * 0.020;
             double rust = Math.Pow(Clamp(Grain(x / 8, y / 8, 1229) - 0.62, 0.0, 1.0) * 2.7, 2.0);
-            Put(d, x, y, 0.040 + noise + rust * 0.090 + scratch * 0.018,
-                           0.047 + noise + rust * 0.026 + scratch * 0.020,
-                           0.049 + noise + rust * 0.006 + scratch * 0.018);
+            Put(d, x, y, 0.078 + noise + rust * 0.090 + scratch * 0.018,
+                           0.085 + noise + rust * 0.026 + scratch * 0.020,
+                           0.087 + noise + rust * 0.006 + scratch * 0.018);
             h[y * N + x] = 0.25 + noise * 0.7 + rust * 0.06 - scratch * 0.08;
             s[y * N + x] = 0.34 - rust * 0.20 + scratch * 0.20;
         }
@@ -260,7 +261,6 @@ try {
     Write-Host "[BUILD] Generating Room 214 corrected texture set..."
     Add-Type -TypeDefinition $Source -Language CSharp
     [StBrielleRoom214Textures]::Generate($TextureDir)
-    Set-Content -Path $Marker -Value $Version -Encoding ASCII
 
     foreach ($File in $Required) {
         $Path = Join-Path $TextureDir $File
@@ -269,6 +269,7 @@ try {
         }
     }
 
+    Set-Content -Path $Marker -Value $Version -Encoding ASCII
     Write-Host "[OK] Room 214 corrected textures generated in $TextureDir"
     exit 0
 }
