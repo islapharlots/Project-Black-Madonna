@@ -18,6 +18,14 @@ The `st-brielle-foundation` branch currently contains:
 - Developer console commands for inspecting persistent state.
 - Two original greybox Record laboratory maps.
 - A Windows launcher that compiles and starts the laboratory.
+- A playable Municipal Annex sequence: work order, power restoration, Room 214,
+  occupancy ledger, corrected photograph, disconnected phone, Filed Person, exit.
+- `sb01_cityglimpse` — **Departure Count**, a street investigation with two
+  evidence sources, a permanent certification choice, and branching Mercuria orders.
+- Persistent street objectives, repeatable evidence, and guarded case completion.
+
+See [Development status](design/DEVELOPMENT_STATUS.md) for the current boundaries,
+validation results, Windows playtest steps, and next production priorities.
 
 ## Development content layout
 
@@ -99,10 +107,16 @@ and run:
 
 after building the x64 **stbrielle** target in Visual Studio 2022.
 
-## Next production target
+## Current playable route
 
-Once the Record lab compiles and behaves correctly on the local Windows build, development moves to the first playable vertical slice:
+Build the x64 **stbrielle** project in Visual Studio 2022 and run
+`run_stbrielle_annex.bat`. It prepares the existing original assets, compiles both
+maps, and launches the Annex. Use **E** to interact.
 
-`sb00_annex` — **Municipal Annex**
+The Annex leads into **Departure Count**. Read the north-side city roster and the
+south-side witness slip, choose one of the two seals at the east desk, then collect
+the resulting order from central dispatch. Both seals review your filed choice
+afterward; neither can overwrite it. Evidence remains readable.
 
-That map will turn these engine primitives into actual St. Brielle horror: the impossible work order, Room 214, environmental interaction, a first hostile encounter, and the first persistent consequence.
+St. Mercuria Memorial Hospital is the next production target. This case stores
+its entry conditions; the hospital map and onward transition are not built yet.

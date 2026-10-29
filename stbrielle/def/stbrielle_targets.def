@@ -27,6 +27,7 @@ entityDef target_stbrielle_recordcheck {
 	"editor_var record_compare"		"equals, not_equals, gt, gte, lt, lte, true, false, exists, or missing"
 	"editor_var record_value"		"Expected comparison value."
 	"editor_bool record_once"		"Remove after a successful activation."
+	"editor_var record_fail_target"	"Optional entity to activate on failure instead of the normal targets. Must not point to this check."
 	"editor_bool record_debug"		"Print the check result to the console."
 }
 
