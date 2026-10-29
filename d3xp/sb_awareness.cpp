@@ -66,6 +66,7 @@ void idStBrielleAwarenessDirector::Think( void ) {
 	// director handles the Annex sequence and the tiny post-Annex city handoff.
 	UpdateAnnexSequence();
 	ConfigureCityGlimpse();
+	UpdateCityInvestigation();
 
 	const int tier = static_cast<int>( idStBrielleRecord::GetAwarenessTier() );
 	if ( tier == lastTier ) {
@@ -376,6 +377,92 @@ void idStBrielleAwarenessDirector::ConfigureCityGlimpse( void ) {
 	}
 }
 
+void idStBrielleAwarenessDirector::UpdateCityInvestigation( void ) {
+	// Progression is authored in the map's Record targets. This method only
+	// presents it, so restoring a save or revisiting cannot re-award an outcome.
+	idEntity *dispatch = gameLocal.FindEntity( "city_dispatch" );
+	idPlayer *player = gameLocal.GetLocalPlayer();
+	if ( !dispatch ) {
+		if ( player && player->hud && player->hud->GetStateBool( "sb_assignment_visible" ) ) {
+			player->hud->SetStateBool( "sb_assignment_visible", false );
+			player->hud->StateChanged( gameLocal.time );
+		}
+		return;
+	}
+
+	const bool rosterRead = idStBrielleRecord::GetBool( "sb_city_roster_read", false );
+	const bool testimonyRead = idStBrielleRecord::GetBool( "sb_city_testimony_read", false );
+	const int decision = idStBrielleRecord::GetInt( "sb_city_certification", 0 );
+	const bool dispatched = idStBrielleRecord::GetBool( "sb_city_dispatch_received", false );
+	const bool ready = rosterRead && testimonyRead;
+
+	const char *objective;
+	if ( dispatched ) {
+		objective = "FILE CLOSED / MERCURIA ASSIGNMENT RECEIVED";
+	} else if ( decision != 0 ) {
+		objective = "COLLECT YOUR ASSIGNMENT / CENTRAL DISPATCH";
+	} else if ( ready ) {
+		objective = "EAST DESK / CHOOSE ONE SEAL / FILING IS FINAL";
+	} else if ( rosterRead ) {
+		objective = "READ THE WITNESS SLIP / SOUTH SIDE";
+	} else if ( testimonyRead ) {
+		objective = "READ THE CITY ROSTER / NORTH SIDE";
+	} else {
+		objective = "COMPARE CITY ROSTER AND WITNESS SLIP";
+	}
+
+	if ( player && player->hud ) {
+		player->hud->SetStateBool( "sb_assignment_visible", true );
+		player->hud->SetStateString( "sb_assignment_text", objective );
+		player->hud->StateChanged( gameLocal.time );
+	}
+
+	// Keep both plates usable for reviewing the filed decision. Map-side guards
+	// reject early or repeated certification, including between director ticks.
+	const char *action = decision != 0 ? "REVIEW" : ( ready ? "CERTIFY" : "CHECK" );
+	idEntity *official = gameLocal.FindEntity( "city_certify_official" );
+	idEntity *witness = gameLocal.FindEntity( "city_certify_witness" );
+	if ( official ) {
+		official->spawnArgs.Set( "stbrielle_action", action );
+	}
+	if ( witness ) {
+		witness->spawnArgs.Set( "stbrielle_action", action );
+	}
+	dispatch->spawnArgs.Set( "stbrielle_action", dispatched ? "REVIEW" : ( decision != 0 ? "COLLECT" : "CHECK" ) );
+
+	// The original evidence remains readable; the roster adds the filed result.
+	idEntity *roster = gameLocal.FindEntity( "city_roster_notice" );
+	if ( roster ) {
+		roster->spawnArgs.Set( "notice_line4", decision == 2 ?
+			"AMENDMENT: SECOND DEPARTURE RETAINED" : ( decision == 1 ?
+			"CERTIFIED: SECOND DEPARTURE STRUCK" : "SECOND DEPARTURE: NO SUCH PERSON" ) );
+	}
+
+	idEntity *light = gameLocal.FindEntity( "city_certification_light" );
+	if ( light ) {
+		if ( decision == 1 ) {
+			light->SetColor( 0.16f, 0.50f, 0.36f );
+		} else if ( decision == 2 ) {
+			light->SetColor( 0.62f, 0.12f, 0.08f );
+		} else if ( ready ) {
+			light->SetColor( 0.70f, 0.48f, 0.20f );
+		} else {
+			light->SetColor( 0.12f, 0.18f, 0.25f );
+		}
+	}
+
+	// The empty pavement acquires a second personnel image only if the player
+	// preserves the witness account. This is a consequence, not another enemy.
+	idEntity *trace = gameLocal.FindEntity( "city_retained_witness" );
+	if ( trace ) {
+		if ( decision == 2 && trace->IsHidden() ) {
+			trace->Show();
+		} else if ( decision != 2 && !trace->IsHidden() ) {
+			trace->Hide();
+		}
+	}
+}
+
 void idStBrielleAwarenessDirector::ApplyAnnexCorrection( void ) {
 	if ( annexCorrectionApplied ) {
 		return;
@@ -583,6 +670,12 @@ void idStBrielleAwarenessDirector::UpdateAnnexFiledPerson( idPlayer *player ) {
 		const float distance = toFiledPerson.Normalize();
 		const float facing = view->viewaxis[0] * toFiledPerson;
 		observed = distance < 1000.0f && facing > 0.84f;
+		if ( observed ) {
+			trace_t sight;
+			gameLocal.clip.TracePoint( sight, view->vieworg, filedCenter,
+				MASK_SOLID | CONTENTS_BODY, player );
+			observed = sight.fraction >= 1.0f || sight.c.entityNum == filedPerson->entityNumber;
+		}
 	}
 
 	if ( observed ) {

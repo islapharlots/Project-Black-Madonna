@@ -3,6 +3,19 @@ windowDef Desktop {
 	visible 1
 	noCursor 1
 
+	// The street assignment remains readable after the document card closes.
+	windowDef stbrielle_assignment {
+		rect 24, 24, 490, 26
+		visible "gui::sb_assignment_visible"
+		backcolor 0.012, 0.012, 0.016, 0.88
+		windowDef text {
+			rect 10, 6, 470, 16
+			text "gui::sb_assignment_text"
+			textscale 0.20
+			forecolor 0.78, 0.72, 0.59, 1
+		}
+	}
+
 	windowDef stbrielle_reticle_h {
 		rect 316, 239, 8, 2
 		visible 1

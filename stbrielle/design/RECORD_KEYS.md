@@ -48,6 +48,27 @@ Examples:
 - whether a prior conversation officially occurred;
 - which Cycle version of a location was left dominant.
 
+## Departure Count / city street
+
+| Key | Meaning |
+| --- | --- |
+| `sb_city_roster_read` | Official departure register examined (0/1). |
+| `sb_city_testimony_read` | Witness slip examined (0/1). |
+| `sb_city_certification` | Missing/0: undecided; 1: city copy certified; 2: witness retained. Final once filed. |
+| `sb_city_witness_retained` | Whether the second departure remains an acknowledged presence (0/1). |
+| `sb_mercuria_entry_mode` | 1: municipal service inspection; 2: disputed patient admission. Reserved hospital entry condition. |
+| `sb_city_dispatch_received` | Dispatch order collected (0/1). |
+| `sb_mercuria_assignment_received` | Hospital assignment issued (0/1); does not mean the hospital map exists. |
+| `sb_city_investigation_complete` | Evidence, certification, and dispatch loop finished (0/1). |
+
+The existing `sb_vertical_slice_complete` flag marks arrival after the Annex;
+use `sb_city_investigation_complete` for the new street case's completion.
+
+All case writes are synchronous, repeatable `set` targets behind persistent
+checks. A check can name `record_fail_target` to show rejection/review feedback
+without firing its successful targets. Failed checks are never consumed.
+Failure links must not form cycles or point back to the check itself.
+
 ## Debug commands
 
 The source branch exposes:

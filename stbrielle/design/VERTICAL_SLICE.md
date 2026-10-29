@@ -131,23 +131,21 @@ Current controls:
 
 Current authored interaction loop:
 
-1. Enter through the employee entrance.
-2. Interact with the pale work-order plate in the Continuity Office.
-   - sets `sb_annex_workorder_read = 1`
-   - adds 1 to `sb_awareness`
-   - activates the first Awareness response
-3. Enter the southern utility bay.
-4. Interact with **ARCHIVE AUXILIARY / 214**.
-   - sets `sb_room_214_exists = 1`
-   - runs a persistent Record check
-   - physically removes the blank wall where the Room 214 doorway should be
-   - powers the Room 214 light
-5. Interact with the street continuity terminal.
-   - sets `sb_annex_complete = 1`
+1. Read the impossible work order and restore Archive Auxiliary / 214.
+2. Enter Room 214 and inspect the occupancy ledger naming the player.
+3. Experience the corrected room/photograph and answer the disconnected phone.
+4. Complete exit continuity, survive the Filed Person, and choose **LEAVE**.
+5. Arrive in `sb01_cityglimpse`, compare the roster and witness slip, and certify
+   one account. Collect the resulting St. Mercuria order from central dispatch.
 
-The map also instantiates the Cycle director so the default Water Cycle is represented in a real mission space.
+The Annex's first hostile is an observation-driven scripted encounter. Full
+search/navigation AI, firearms, multiple combat approaches, final architecture,
+and a hospital mission remain future work. The street's hospital orders are
+persistent hooks, not a built onward level.
 
-This is still a systems greybox: final architecture, doors, text presentation, sound, combat, AI, save stations, and finished St. Brielle art are subsequent passes.
+See [Development status](DEVELOPMENT_STATUS.md) for current checks, limitations,
+and the required Windows playtest. The outline below records the original
+production sequence; it is not a list of completed systems.
 
 ## Development order
 
